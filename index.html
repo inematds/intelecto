@@ -1,17 +1,214 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=doc/framework-comparison-pt.html">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antidote — Redirecting...</title>
-  <link rel="canonical" href="doc/framework-comparison-pt.html">
-  <style>
-    body { margin: 0; background: #0a0a0f; color: #e4e4ef; font-family: monospace; display: flex; align-items: center; justify-content: center; height: 100vh; }
-    a { color: #00D26A; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antidote — The antidote to bloated AI frameworks</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a2e;
+    --border: #2a2a3e;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --green: #00D26A;
+    --green-dim: #00a854;
+    --cyan: #00BCD4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* NAV */
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .nav-logo {
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: var(--green);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 1.5rem; margin-left: auto; }
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+
+  /* HERO */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+
+  .banner {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: clamp(0.55rem, 1.5vw, 0.85rem);
+    line-height: 1.4;
+    color: var(--green);
+    margin-bottom: 2rem;
+    white-space: pre;
+    text-shadow: 0 0 20px rgba(0,210,106,0.4);
+  }
+
+  .tagline {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text-dim);
+    margin-bottom: 3.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* CARDS */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.25s;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--green);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .card:hover {
+    border-color: rgba(0,210,106,0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(0,210,106,0.08);
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-icon { font-size: 2rem; }
+  .card-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .card h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .card p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    flex: 1;
+  }
+  .card-arrow {
+    color: var(--green);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    transition: transform 0.2s;
+  }
+  .card:hover .card-arrow { transform: translateX(4px); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--green); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
 </head>
 <body>
-  <p>Redirecting to <a href="doc/framework-comparison-pt.html">framework comparison</a>...</p>
+
+<nav>
+  <a href="index.html" class="nav-logo">ANTIDOTE</a>
+  <div class="nav-links">
+    <a href="doc/framework-comparison-pt.html">Comparar Frameworks</a>
+    <a href="doc/como-construir.html">Como Construir</a>
+    <a href="https://github.com/inematds/antidote" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<div class="hero">
+
+  <div class="banner">    _   _  _ _____ ___ ___  ___ _____ ___
+   /_\ | \| |_   _|_ _|   \/ _ \_   _| __|
+  / _ \| .` | | |  | || |) | (_) || | | _|
+ /_/ \_\_|\_| |_| |___|___/ \___/ |_| |___|</div>
+
+  <p class="tagline">The antidote to bloated AI frameworks.</p>
+
+  <div class="cards">
+
+    <a href="doc/framework-comparison-pt.html" class="card">
+      <div class="card-icon">🛒</div>
+      <div class="card-label">Passo 1</div>
+      <h2>Comparar & Escolher</h2>
+      <p>Veja o que cada framework de IA tem a oferecer e escolha os ingredientes que fazem sentido para o seu negócio.</p>
+      <div class="card-arrow">Fazer minhas compras →</div>
+    </a>
+
+    <a href="doc/como-construir.html" class="card">
+      <div class="card-icon">🔨</div>
+      <div class="card-label">Passo 2</div>
+      <h2>Como Construir</h2>
+      <p>Entenda o processo completo: do documento de especificação ao assistente funcionando no Telegram, passo a passo.</p>
+      <div class="card-arrow">Ver os passos →</div>
+    </a>
+
+  </div>
+
+</div>
+
+<footer>
+  Antidote · <a href="https://github.com/inematds/antidote" target="_blank">github.com/inematds/antidote</a>
+</footer>
+
 </body>
 </html>

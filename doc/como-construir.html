@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como Construir Seu Assistente — Antidote</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a2e;
+    --border: #2a2a3e;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --green: #00D26A;
+    --green-dim: #00a854;
+    --cyan: #00BCD4;
+    --amber: #FFB020;
+    --red: #EF4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: var(--green);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 1.5rem; margin-left: auto; }
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(0,210,106,0.1);
+    border: 1px solid rgba(0,210,106,0.3);
+    color: var(--green);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+  .hero h1 span { color: var(--green); }
+  .hero p {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* SECTION TITLE */
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 4rem 0; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0 2rem;
+    position: relative;
+  }
+
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .step-number {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--green);
+    flex-shrink: 0;
+    z-index: 1;
+    transition: all 0.3s;
+  }
+
+  .step:hover .step-number {
+    border-color: var(--green);
+    background: rgba(0,210,106,0.1);
+    box-shadow: 0 0 20px rgba(0,210,106,0.2);
+  }
+
+  .step-line {
+    width: 2px;
+    flex: 1;
+    background: var(--border);
+    margin: 8px 0;
+    min-height: 40px;
+  }
+
+  .step:last-child .step-line { display: none; }
+
+  .step-content {
+    padding-bottom: 3rem;
+  }
+
+  .step-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    padding-top: 0.6rem;
+  }
+
+  .step-desc {
+    color: var(--text-dim);
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card.green { border-color: rgba(0,210,106,0.3); background: rgba(0,210,106,0.05); }
+  .card.cyan  { border-color: rgba(0,188,212,0.3); background: rgba(0,188,212,0.05); }
+  .card.amber { border-color: rgba(255,176,32,0.3); background: rgba(255,176,32,0.05); }
+
+  .card-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .card.green .card-label { color: var(--green); }
+  .card.cyan  .card-label { color: var(--cyan); }
+  .card.amber .card-label { color: var(--amber); }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 0.75rem 0;
+  }
+  .code-block .comment { color: #6e7681; }
+  .code-block .cmd     { color: var(--green); }
+  .code-block .str     { color: #a5d6ff; }
+  .code-block .kw      { color: #ff7b72; }
+
+  /* QUOTE — a instrução */
+  .instruction-box {
+    border-left: 3px solid var(--green);
+    background: rgba(0,210,106,0.05);
+    border-radius: 0 10px 10px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0;
+  }
+  .instruction-box .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+  .instruction-box p {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--text);
+  }
+  .instruction-box p strong { color: var(--green); font-style: normal; }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 1rem 0;
+  }
+  .flow-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+  }
+  .flow-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 44px;
+    width: 2px;
+    height: calc(100% - 20px);
+    background: var(--border);
+  }
+  .flow-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .flow-text { padding-bottom: 2rem; }
+  .flow-text strong { display: block; font-size: 1rem; margin-bottom: 0.2rem; }
+  .flow-text span { color: var(--text-dim); font-size: 0.9rem; }
+
+  /* COMPARISON TABLE */
+  .table-wrap { overflow-x: auto; margin: 1rem 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: var(--surface2);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .yes { color: var(--green); font-weight: 600; }
+  .no  { color: var(--text-dim); }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  .cta-section h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+  .cta-section p { color: var(--text-dim); margin-bottom: 2rem; }
+  .btn {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+  .btn-green {
+    background: var(--green);
+    color: #000;
+  }
+  .btn-green:hover { background: var(--green-dim); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+    margin-left: 1rem;
+  }
+  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin: 1.5rem 0;
+  }
+  .callout-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+  .callout-text h4 { font-size: 1rem; margin-bottom: 0.4rem; }
+  .callout-text p  { color: var(--text-dim); font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">ANTIDOTE</a>
+  <div class="nav-links">
+    <a href="../index.html">Início</a>
+    <a href="framework-comparison-pt.html">Comparar Frameworks</a>
+    <a href="como-construir.html" class="active">Como Construir</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Guia passo a passo</div>
+  <h1>Do zero ao seu<br><span>assistente funcionando</span></h1>
+  <p>Você não precisa saber programar. Escolha o que quer, passe o documento para o Claude Code, e ele constrói tudo.</p>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+  <!-- VISÃO GERAL DO FLUXO -->
+  <div class="section-label">O processo completo</div>
+  <div class="flow">
+    <div class="flow-item">
+      <div class="flow-dot">🛒</div>
+      <div class="flow-text">
+        <strong>Você faz as compras</strong>
+        <span>Olha a comparação de frameworks e escolhe o que quer: canal, memória, provedor de IA, segurança...</span>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-dot">📄</div>
+      <div class="flow-text">
+        <strong>O documento é gerado</strong>
+        <span>Suas escolhas viram um arquivo de especificação detalhado — o "plano de obra" do seu assistente.</span>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-dot">💬</div>
+      <div class="flow-text">
+        <strong>Você dá uma instrução ao Claude Code</strong>
+        <span>Uma frase. Só isso. "Leia o arquivo e construa tudo."</span>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-dot">⚙️</div>
+      <div class="flow-text">
+        <strong>Claude Code constrói</strong>
+        <span>Ele lê o documento e escreve cada arquivo de código, na ordem certa, pedindo confirmação antes de ações importantes.</span>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-dot">✅</div>
+      <div class="flow-text">
+        <strong>Você testa e ajusta</strong>
+        <span>Manda uma mensagem no Telegram. O assistente responde. Pede ajustes em português mesmo.</span>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- PASSO A PASSO DETALHADO -->
+  <div class="section-label" style="margin-bottom:2rem">Passo a passo detalhado</div>
+
+  <div class="steps">
+
+    <!-- PASSO 1 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-number">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Faça suas compras</div>
+        <p class="step-desc">Acesse a página de comparação de frameworks e escolha os ingredientes que fazem sentido para o seu dia a dia. Não precisa de conhecimento técnico — pense em funcionalidades.</p>
+
+        <div class="card cyan">
+          <div class="card-label">Exemplos de escolhas</div>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem; margin-top:0.5rem;">
+            <li>✓ &nbsp;Canal de comunicação → <strong>Telegram</strong></li>
+            <li>✓ &nbsp;Memória → <strong>Guarda tudo que eu falar (SQLite)</strong></li>
+            <li>✓ &nbsp;Cérebro (IA) → <strong>OpenRouter — acesso a 100+ modelos</strong></li>
+            <li>✓ &nbsp;Rodar em → <strong>Docker (qualquer máquina)</strong></li>
+            <li>✓ &nbsp;Personalidade → <strong>Arquivos de texto editáveis</strong></li>
+            <li>✗ &nbsp;Não preciso → automação de browser, agendamento de tarefas</li>
+          </ul>
+        </div>
+
+        <a href="framework-comparison-pt.html" class="btn btn-green" style="display:inline-block;margin-top:0.5rem">Ir para as compras →</a>
+      </div>
+    </div>
+
+    <!-- PASSO 2 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-number">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Receba o documento de especificação</div>
+        <p class="step-desc">Com base nas suas escolhas, é gerado um arquivo — chamemos de <code style="color:var(--green);background:rgba(0,210,106,0.1);padding:0.1rem 0.4rem;border-radius:4px">meu-assistente.md</code> — que descreve em detalhe o que precisa ser construído.</p>
+
+        <div class="card">
+          <div class="card-label">O que este arquivo contém</div>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.4rem; margin-top:0.5rem; color: var(--text-dim);">
+            <li>📁 &nbsp;Quais arquivos criar e para que serve cada um</li>
+            <li>🔗 &nbsp;Como as partes se conectam entre si</li>
+            <li>📋 &nbsp;A ordem em que tudo deve ser construído</li>
+            <li>⚙️ &nbsp;As configurações específicas das suas escolhas</li>
+            <li>🔒 &nbsp;As regras de segurança que o Claude deve respeitar</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <div class="callout-icon">💡</div>
+          <div class="callout-text">
+            <h4>Você não escreve este arquivo</h4>
+            <p>O documento é gerado automaticamente a partir das suas escolhas. Você só lê, revisa e aprova.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 3 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-number">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Abra o Claude Code</div>
+        <p class="step-desc">Coloque o documento gerado na pasta do projeto e abra o terminal nessa pasta.</p>
+
+        <div class="code-block">
+          <span class="comment"># Navegue até a pasta do projeto</span><br>
+          cd minha-pasta-do-projeto<br><br>
+          <span class="comment"># Abra o Claude Code</span><br>
+          <span class="cmd">claude</span>
+        </div>
+
+        <div class="callout">
+          <div class="callout-icon">📦</div>
+          <div class="callout-text">
+            <h4>Precisa instalar o Claude Code?</h4>
+            <p>Uma vez só: <code style="color:var(--green)">npm install -g @anthropic-ai/claude-code</code> no terminal. Depois é só usar o comando <code style="color:var(--green)">claude</code>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 4 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-number">4</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Dê a instrução — uma frase</div>
+        <p class="step-desc">Dentro do Claude Code, você digita uma única frase. O documento já tem todo o detalhe — você só manda o Claude ler e construir.</p>
+
+        <div class="instruction-box">
+          <div class="label">A instrução que você digita</div>
+          <p>"Leia o arquivo <strong>meu-assistente.md</strong> e construa tudo que está descrito nele"</p>
+        </div>
+
+        <p class="step-desc">Só isso. O Claude Code lê o documento, entende o plano e começa a trabalhar.</p>
+
+        <div class="card amber">
+          <div class="card-label">O que acontece depois que você manda a instrução</div>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem; margin-top:0.5rem;">
+            <li>1. Claude lê o documento inteiro</li>
+            <li>2. Cria os arquivos na ordem certa</li>
+            <li>3. Te mostra o que está fazendo em tempo real</li>
+            <li>4. Pede sua confirmação antes de ações importantes</li>
+            <li>5. Avisa quando terminar</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO 5 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-number">5</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Ligue o assistente</div>
+        <p class="step-desc">Quando o Claude Code terminar, você liga o assistente com um comando.</p>
+
+        <div class="card green">
+          <div class="card-label">Se você escolheu Docker</div>
+          <div class="code-block" style="margin-top:0.75rem">
+            <span class="cmd">docker compose up</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Se você escolheu instalação direta (Mac)</div>
+          <div class="code-block" style="margin-top:0.75rem">
+            <span class="cmd">./start.sh</span>
+          </div>
+        </div>
+
+        <p class="step-desc" style="margin-top:1rem">Abra o Telegram, mande uma mensagem para o seu bot. Ele responde.</p>
+      </div>
+    </div>
+
+    <!-- PASSO 6 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-number">6</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">Ajuste o que quiser</div>
+        <p class="step-desc">Se algo não ficou do jeito que queria, você fala em português mesmo, de volta no Claude Code.</p>
+
+        <div class="instruction-box">
+          <div class="label">Exemplos de pedidos de ajuste</div>
+          <p style="margin-bottom:0.5rem">"<strong>Quero que ele responda sempre em português</strong>"</p>
+          <p style="margin-bottom:0.5rem">"<strong>Muda a personalidade — quero que ele seja mais direto</strong>"</p>
+          <p>"<strong>Quero que ele lembre o nome das pessoas que me mandaram mensagem</strong>"</p>
+        </div>
+
+        <p class="step-desc">Não há limite de ajustes. É um processo contínuo de refinamento.</p>
+      </div>
+    </div>
+
+  </div><!-- /steps -->
+
+  <hr>
+
+  <!-- PERGUNTAS FREQUENTES -->
+  <div class="section-label" style="margin-bottom:2rem">Perguntas frequentes</div>
+
+  <div style="display:flex; flex-direction:column; gap:1.25rem; margin-bottom:3rem">
+
+    <div class="card">
+      <div class="card-label" style="color:var(--cyan)">Preciso saber programar?</div>
+      <p style="color:var(--text-dim);margin-top:0.5rem">Não. Você escolhe o que quer em linguagem simples, o Claude Code escreve o código. Você testa e pede ajustes em português.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label" style="color:var(--cyan)">O que é o CLAUDE.md? Preciso criar?</div>
+      <p style="color:var(--text-dim);margin-top:0.5rem">O CLAUDE.md é um arquivo opcional que guarda as regras do projeto para o Claude não precisar ser relembrado toda vez. Ele é gerado automaticamente junto com o seu documento de especificação. Se não existir, você só precisa ser um pouco mais específico na sua instrução.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label" style="color:var(--cyan)">Qual a diferença entre o documento das compras e o que o Claude constrói?</div>
+      <p style="color:var(--text-dim);margin-top:0.5rem">O documento das compras é o <em>plano</em> — descreve o que você quer. O que o Claude constrói são os <em>arquivos de código reais</em> — o assistente funcionando de verdade.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label" style="color:var(--cyan)">E se o Claude errar algo?</div>
+      <p style="color:var(--text-dim);margin-top:0.5rem">Você descreve o problema em português e pede para corrigir. O Claude relê o código e conserta. Esse ciclo de correção é normal e esperado.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-label" style="color:var(--cyan)">Docker vs instalação direta — qual escolher?</div>
+      <div style="overflow-x:auto; margin-top:0.75rem">
+        <table>
+          <tr>
+            <th></th>
+            <th>Docker</th>
+            <th>Instalação direta</th>
+          </tr>
+          <tr>
+            <td>Roda em qualquer máquina</td>
+            <td class="yes">✓ Sim</td>
+            <td class="no">Só no Mac</td>
+          </tr>
+          <tr>
+            <td>Mais simples de instalar</td>
+            <td class="no">Precisa do Docker instalado</td>
+            <td class="yes">✓ Sim</td>
+          </tr>
+          <tr>
+            <td>Servidor / VPS</td>
+            <td class="yes">✓ Ideal</td>
+            <td class="no">Difícil</td>
+          </tr>
+          <tr>
+            <td>Uso pessoal no Mac</td>
+            <td>Funciona</td>
+            <td class="yes">✓ Mais simples</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /container -->
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Pronto para começar?</h2>
+  <p>Compare os frameworks, escolha seus ingredientes e volte aqui para construir.</p>
+  <a href="framework-comparison-pt.html" class="btn btn-green">Fazer minhas compras →</a>
+  <a href="../index.html" class="btn btn-outline">Voltar ao início</a>
+</div>
+
+</body>
+</html>
