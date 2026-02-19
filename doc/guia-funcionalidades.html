@@ -185,6 +185,36 @@
     margin-bottom: 0.35rem;
   }
 
+  /* FILE TREE */
+  .file-tree-block {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .file-tree-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+  }
+  .file-tree {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.7rem;
+    line-height: 1.85;
+    color: var(--text-dim);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .file-tree .fn { color: var(--green); }
+  .file-tree .fd { color: var(--cyan); }
+  .file-tree .star { color: var(--amber); }
+
   footer {
     border-top: 1px solid var(--border);
     padding: 1.5rem 2rem;
@@ -270,6 +300,21 @@
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Perfis de Agente Intercambiáveis</div><div class="item-desc">Personas pré-criadas (desenvolvedor, pesquisador, escritor) entre as quais você pode alternar instantaneamente.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Regras de Comportamento Dinâmicas</div><div class="item-desc">Altere o comportamento da IA no meio da conversa, sem reinicialização. Adaptação imediata ao contexto.</div></div></div>
         </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
+          <div class="file-tree"><span class="fd">src/agents/</span>
+├── <span class="fn">identity.ts</span>              <span class="star">★</span> Formato AIEOS: serializa personalidade portátil
+├── <span class="fn">identity-file.ts</span>          Carrega SOUL.md e arquivos do workspace
+├── <span class="fn">identity-avatar.ts</span>        Avatar e apresentação visual do agente
+├── <span class="fn">system-prompt.ts</span>          Monta o system prompt enviado ao LLM
+├── <span class="fn">system-prompt-params.ts</span>   Parâmetros e variáveis do system prompt
+└── <span class="fn">workspace.ts</span>              Gerencia workspace e arquivos de identidade
+
+<span class="fd">src/hooks/bundled/</span>
+├── <span class="fn">boot-md/</span>                  Hook de boot: carrega CLAUDE.md ao iniciar
+└── <span class="fn">soul-evil/</span>                Hook de personalidade: aplica SOUL.md ao agente</div>
+        </div>
       </div>
     </div>
 
@@ -292,6 +337,23 @@
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Armazenamento Criptografado de Segredos</div><div class="item-desc">Chaves de API criptografadas com ChaCha20 ou Fernet. Mesmo roubando o arquivo, não dá para ler.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Gates de Aprovação de Execução</div><div class="item-desc">Três níveis de controle: somente leitura, supervisionado (pede permissão) e autonomia total. Você decide quanto confiar.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Lista de Bloqueio de Comandos Perigosos</div><div class="item-desc">Bloqueia automaticamente comandos destrutivos (deletar tudo, formatar discos, reiniciar) por correspondência de substring.</div></div></div>
+        </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
+          <div class="file-tree"><span class="fd">src/security/</span>
+├── <span class="fn">audit.ts</span>                 <span class="star">★</span> Audit log: registra todas as ações do agente
+├── <span class="fn">audit-fs.ts</span>               Auditoria de operações de filesystem
+├── <span class="fn">external-content.ts</span>       Detecta prompt injection em conteúdo externo
+└── <span class="fn">fix.ts</span>                    Correções automáticas de problemas detectados
+
+<span class="fd">src/agents/</span>
+├── <span class="fn">sandbox/sandbox.ts</span>        WASM sandbox: isola execução de ferramentas
+├── <span class="fn">tool-policy.ts</span>            Gates: readonly / supervisionado / autônomo
+├── <span class="fn">pi-tools.policy.ts</span>        Allowlist de ferramentas permitidas
+└── <span class="fn">bash-tools.ts</span>             Shell com blocklist de comandos perigosos
+
+<span class="fd">src/channels/allowlists/</span>       Allowlist por canal: quem pode interagir</div>
         </div>
       </div>
     </div>
@@ -316,6 +378,22 @@
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Painel Web</div><div class="item-desc">Interface no navegador com status em tempo real, memória visível e progresso de tarefas.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Palavra de Ativação por Voz</div><div class="item-desc">Diga "hey claude" e sua IA escuta. Controle de voz sempre ativo, como um alto-falante inteligente privado.</div></div></div>
         </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
+          <div class="file-tree"><span class="fn">src/telegram/bot/</span>         Bot Telegram (long-polling, mídia, botões inline)
+<span class="fn">src/whatsapp/</span>               WhatsApp via Baileys (QR code, grupos, business)
+<span class="fn">src/discord/</span>                Discord (slash commands, canais, threads)
+<span class="fn">src/slack/</span>                  Slack via Socket Mode (sem IP público necessário)
+<span class="fn">src/imessage/monitor/</span>       iMessage via macOS Shortcuts
+<span class="fn">src/signal/monitor/</span>         Signal
+<span class="fn">src/web/</span>                    Painel web (status, histórico, canvas visual)
+
+<span class="fd">src/channels/</span>
+├── <span class="fn">registry.ts</span>              <span class="star">★</span> Registro central de todos os canais ativos
+├── <span class="fn">session.ts</span>                Gestão de sessão por canal/usuário
+└── <span class="fn">plugins/</span>                  Plugins: outbound, normalize, ack, status</div>
+        </div>
       </div>
     </div>
 
@@ -338,6 +416,24 @@
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Base de Conhecimento em Documentos</div><div class="item-desc">Faça upload de PDFs, planilhas e documentos. A IA pesquisa e analisa. O conhecimento da sua empresa ao alcance do chat.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Compactação Automática de Sessão</div><div class="item-desc">Quando conversas ficam longas demais, resume automaticamente as partes antigas para manter a IA rápida.</div></div></div>
         </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
+          <div class="file-tree"><span class="fd">src/memory/</span>
+├── <span class="fn">index.ts</span>                 <span class="star">★</span> Interface pública da memória
+├── <span class="fn">manager.ts</span>                Coordena busca, armazenamento e deduplicação
+├── <span class="fn">hybrid.ts</span>                 Busca híbrida: vetorial + palavras-chave
+├── <span class="fn">sqlite.ts</span>                 Backend SQLite com FTS5 e ranking BM25
+├── <span class="fn">sqlite-vec.ts</span>             Extensão vetorial para busca semântica
+├── <span class="fn">embeddings.ts</span>             Embeddings via OpenAI ou Google Gemini
+└── <span class="fn">sync-session-files.ts</span>     Sincroniza histórico de sessões com memória
+
+<span class="fd">src/agents/</span>
+├── <span class="fn">compaction.ts</span>             Compactação automática de sessões longas
+└── <span class="fn">memory-search.ts</span>          Busca na memória a partir do agente
+
+<span class="fn">src/hooks/bundled/session-memory/</span>   Persiste memória a cada sessão</div>
+        </div>
       </div>
     </div>
 
@@ -359,6 +455,23 @@
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Gatilhos via Webhook</div><div class="item-desc">Serviços externos (Zapier, n8n, Shopify) acionam sua IA via URL. Conecta-se a qualquer ecossistema de automação existente.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Sub-Agentes em Segundo Plano</div><div class="item-desc">IA auxiliar para tarefas longas. O agente principal permanece responsivo enquanto trabalhadores fazem o trabalho pesado.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Colaboração em Equipe de Agentes</div><div class="item-desc">Múltiplos agentes especializados (@coder, @reviewer, @writer) passam trabalho uns para os outros automaticamente.</div></div></div>
+        </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
+          <div class="file-tree"><span class="fd">src/cron/</span>
+├── <span class="fn">service/service.ts</span>       <span class="star">★</span> Serviço de cron: executa tarefas agendadas
+├── <span class="fn">schedule.ts</span>               Parser de expressões cron (5-campos)
+├── <span class="fn">store.ts</span>                  Armazenamento de jobs agendados
+└── <span class="fn">isolated-agent/</span>           Agente isolado para execução de cron jobs
+
+<span class="fn">src/browser/</span>                  Automação de navegador via Playwright
+<span class="fn">src/auto-reply/reply/</span>         Respostas automáticas a mensagens
+
+<span class="fd">src/agents/</span>
+├── <span class="fn">subagent-registry.ts</span>      Registro e coordenação de sub-agentes
+├── <span class="fn">openclaw-tools.ts</span>         Ferramentas: spawn de agentes, sessões, status
+└── <span class="fn">subagent-announce.ts</span>      Notificações e @mentions entre agentes</div>
         </div>
       </div>
     </div>
@@ -383,6 +496,24 @@
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Provedores de Mídia Especializada (fal.ai, Kie.ai)</div><div class="item-desc">Para imagem, som e vídeo, use provedores especializados. LLMs de texto são fracos em mídia — fal.ai e Kie.ai são a escolha certa para criação de conteúdo.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Sistema de Skills / Plugins</div><div class="item-desc">Instale novas capacidades como apps no celular. Sem necessidade de codificação para adicionar integrações pré-construídas.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Controle de Hardware / IoT</div><div class="item-desc">Controle dispositivos físicos via pinos GPIO, I2C e SPI. A IA pode interagir com o mundo real em projetos embarcados.</div></div></div>
+        </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
+          <div class="file-tree"><span class="fd">src/agents/</span>
+├── <span class="fn">models-config.ts</span>         <span class="star">★</span> Configuração de provedores e modelos
+├── <span class="fn">model-fallback.ts</span>         Failover automático entre provedores
+├── <span class="fn">model-selection.ts</span>        Seleção de modelo por tipo de tarefa
+└── <span class="fn">model-catalog.ts</span>          Catálogo de modelos disponíveis (100+)
+
+<span class="fd">src/media-understanding/providers/</span>
+├── <span class="fn">openai/</span>  <span class="fn">anthropic/</span>       Visão: GPT-4V, Claude Vision
+├── <span class="fn">deepgram/</span>  <span class="fn">groq/</span>          Transcrição de voz (Deepgram, Whisper via Groq)
+└── <span class="fn">google/</span>  <span class="fn">minimax/</span>          Multimodal: Gemini, Minimax
+
+<span class="fn">src/acp/</span>                      Protocolo ACP/MCP: agentes ↔ ferramentas externas
+<span class="fn">src/agents/skills/</span>            Sistema de skills instaláveis
+<span class="fn">src/plugin-sdk/</span>               SDK para criação de plugins customizados</div>
         </div>
       </div>
     </div>
@@ -409,6 +540,23 @@
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Orquestração de Agentes de Codificação</div><div class="item-desc">Execute Codex CLI, Claude Code ou outros agentes de codificação programaticamente. IA gerenciando outras IAs.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Composio (1000+ Aplicativos)</div><div class="item-desc">Acesso OAuth com um clique a 1000+ apps: Gmail, Notion, GitHub, Slack e muito mais via Composio.</div></div></div>
         </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
+          <div class="file-tree"><span class="fd">src/agents/skills/</span>
+├── <span class="fn">skills.ts</span>                <span class="star">★</span> Gestão de skills: carregar e registrar no agente
+├── <span class="fn">skills-install.ts</span>         Instalação de skills do marketplace
+└── <span class="fn">skills-status.ts</span>          Status e saúde das skills instaladas
+
+<span class="fn">src/tts/</span>                      Text-to-Speech: ElevenLabs, local, macOS
+<span class="fn">src/media-understanding/</span>      Análise de imagens, áudio e vídeo
+<span class="fn">src/browser/</span>                  Automação de navegador (Playwright)
+
+<span class="fd">src/agents/</span>
+├── <span class="fn">bash-tools.ts</span>             Execução de shell com sandbox e blocklist
+├── <span class="fn">pi-tools.ts</span>               Ferramentas built-in do agente pi
+└── <span class="fn">channel-tools.ts</span>          Ferramentas de canal (enviar, mencionar)</div>
+        </div>
       </div>
     </div>
 
@@ -430,6 +578,20 @@
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Fila de Mensagens Baseada em Arquivos</div><div class="item-desc">Mensagens armazenadas como arquivos em diretórios (incoming → processing → outgoing). Simples, confiável, sem banco de dados.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Implantação com Binário Único</div><div class="item-desc">Um arquivo executável, sem dependências. Copie para qualquer lugar e funciona. A história de implantação mais simples possível.</div></div></div>
           <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Isolamento de Espaço de Trabalho por Projeto</div><div class="item-desc">Espaços separados por cliente ou projeto, cada um com sua própria memória e segredos. Sem mistura de dados.</div></div></div>
+        </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
+          <div class="file-tree"><span class="fn">src/gateway/server/server.ts</span>   <span class="star">★</span> Hub WebSocket central (torre de controle)
+<span class="fn">src/channels/registry.ts</span>        Registro de canais conectados ao gateway
+<span class="fn">src/sessions/</span>                   Sessões em arquivos JSONL por agente
+<span class="fn">src/routing/</span>                    Roteamento de mensagens entre canais/agentes
+<span class="fn">src/config/</span>                     Configuração global e por sessão
+<span class="fn">src/daemon/</span>                     Processo daemon com restart automático
+
+<span class="fd">src/agents/</span>
+├── <span class="fn">lanes.ts</span>                   Controle de concorrência (lanes)
+└── <span class="fn">pi-embedded-runner.ts</span>      Loop principal: recebe → pensa → responde</div>
         </div>
       </div>
     </div>
@@ -476,6 +638,22 @@
           <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">O Gateway é o ponto único de falha. Mais difícil de testar e de escalar horizontalmente.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Projetos que precisam de múltiplos canais, múltiplos agentes e interface visual ao mesmo tempo.</div></div>
         </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Estrutura de arquivos</div>
+          <div class="file-tree"><span class="fd">src/gateway/server/</span>
+├── <span class="fn">server.ts</span>               <span class="star">★</span> Servidor WebSocket central — ponto único de entrada
+├── <span class="fn">server-channels.ts</span>        Conecta e gerencia todos os canais no gateway
+├── <span class="fn">server-chat.ts</span>            Sessões de chat, histórico e streaming
+├── <span class="fn">server-cron.ts</span>            Tarefas agendadas integradas ao gateway
+├── <span class="fn">server-startup.ts</span>         Boot, health checks e recovery automático
+└── <span class="fn">ws-connection/</span>            Gestão de conexões WebSocket individuais
+
+<span class="fn">src/channels/registry.ts</span>      Descobre e registra canais disponíveis
+<span class="fn">src/sessions/</span>                 Sessões armazenadas em JSONL por agente
+<span class="fn">src/agents/pi-embedded-runner.ts</span>   Runner: recebe → pensa → responde
+<span class="fn">src/gateway/protocol/</span>         Protocolo de mensagens do gateway</div>
+        </div>
       </div>
     </div>
 
@@ -513,6 +691,25 @@
           <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Rust tem curva de aprendizado alta. O sistema de traits pode intimidar quem vem de linguagens dinâmicas.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Projetos que exigem eficiência extrema, hardware limitado ou troca frequente de provedores de IA.</div></div>
         </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Estrutura de arquivos — codebase Rust separado</div>
+          <div class="file-tree"><span class="fd">src/</span>
+├── <span class="fn">main.rs</span>                 <span class="star">★</span> Entry point e CLI
+└── <span class="fn">config.rs</span>                 Carrega config.toml e instancia implementações
+
+<span class="fd">traits/</span>
+├── <span class="fn">provider.rs</span>              <span class="star">★</span> Trait Provider: async chat() → LLMResponse
+├── <span class="fn">channel.rs</span>                Trait Channel: start(), send(), stop()
+└── <span class="fn">memory.rs</span>                 Trait Memory: save(), search(), forget()
+
+<span class="fd">providers/</span>                    Implementações intercambiáveis do Provider:
+├── <span class="fn">openai.rs</span>  <span class="fn">claude.rs</span>      Provedores de nuvem (OpenAI, Anthropic)
+└── <span class="fn">ollama.rs</span>                  Modelo local (zero custo, zero cloud)
+
+<span class="fd">channels/</span>                     Implementações intercambiáveis do Channel:
+└── <span class="fn">telegram.rs</span>  <span class="fn">discord.rs</span>   Troca de canal sem alterar o agente</div>
+        </div>
       </div>
     </div>
 
@@ -547,6 +744,23 @@
           <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">Isolamento total entre contextos. Ideal para uso empresarial onde dados de clientes diferentes não podem se misturar.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Overhead de contêiner por grupo. Não é o melhor para assistente pessoal de usuário único.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Empresas com múltiplos grupos no WhatsApp que precisam de contextos totalmente separados.</div></div>
+        </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Estrutura de arquivos — codebase NanoClaw</div>
+          <div class="file-tree"><span class="fd">src/</span>
+├── <span class="fn">host.ts</span>                  <span class="star">★</span> Host: gerencia conexão WhatsApp (Baileys)
+├── <span class="fn">message-store.ts</span>          SQLite: fila de mensagens por grupo
+└── <span class="fn">scheduler.ts</span>              Roteia mensagem para o container correto
+
+<span class="fd">containers/</span>
+├── <span class="fn">manager.ts</span>               <span class="star">★</span> Cria e destrói containers por grupo
+├── <span class="fn">dispatch.ts</span>               Roteia mensagens para o container certo
+└── <span class="fn">sandbox-fs.ts</span>             Filesystem isolado por container
+
+<span class="fd">agent-container/</span>
+├── <span class="fn">runner.ts</span>                 Executa Claude SDK dentro do container
+└── <span class="fn">claude-md.ts</span>              Carrega o CLAUDE.md específico do grupo</div>
         </div>
       </div>
     </div>
@@ -585,6 +799,22 @@
           <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">Cada agente usa o modelo mais adequado para sua especialidade. Processamento paralelo de tarefas complexas.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Coordenação entre agentes pode criar dependências circulares. Debugging de fluxos multi-agente é mais trabalhoso.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Pipelines de desenvolvimento de software onde revisão, escrita e codificação acontecem em paralelo.</div></div>
+        </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Estrutura de arquivos — OpenClaw (sub-agentes)</div>
+          <div class="file-tree"><span class="fd">src/agents/</span>
+├── <span class="fn">subagent-registry.ts</span>      <span class="star">★</span> Registro e coordenação de sub-agentes ativos
+├── <span class="fn">openclaw-tools.ts</span>         Ferramentas: spawn, sessões paralelas, status
+├── <span class="fn">subagent-announce.ts</span>      Notificações @mentions entre agentes
+└── <span class="fn">subagent-announce-queue.ts</span>  Fila de mensagens inter-agentes
+
+<span class="fn">src/cron/isolated-agent/</span>     Executa agentes em contexto totalmente isolado
+<span class="fn">src/agents/lanes.ts</span>          Controle de paralelismo entre agentes
+
+Fila baseada em arquivos (sem banco de dados):
+  incoming/ → processing/ → outgoing/
+  Cada agente lê de sua própria inbox em disco</div>
         </div>
       </div>
     </div>
@@ -625,6 +855,23 @@
           <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Cada camada adiciona latência. Configurar os allowlists de ferramentas exige planejamento cuidadoso.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Empresas com requisitos de compliance, dados de clientes ou onde um comando errado pode causar dano real.</div></div>
         </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Estrutura de arquivos — OpenClaw (camadas de segurança)</div>
+          <div class="file-tree"><span class="fd">src/security/</span>
+├── <span class="fn">audit.ts</span>                 <span class="star">★</span> Audit log completo de todas as ações do agente
+├── <span class="fn">audit-fs.ts</span>               Monitoramento e log de operações de filesystem
+└── <span class="fn">external-content.ts</span>       Detecção de prompt injection em entradas externas
+
+<span class="fd">src/agents/</span>
+├── <span class="fn">sandbox/sandbox.ts</span>        WASM sandbox: isola completamente as ferramentas
+├── <span class="fn">tool-policy.ts</span>            Gates de aprovação: 3 níveis de confiança
+├── <span class="fn">pi-tools.policy.ts</span>        Allowlist explícita de ferramentas permitidas
+└── <span class="fn">bash-tools.ts</span>             Blocklist de comandos perigosos (rm -rf, etc.)
+
+<span class="fn">src/channels/allowlists/</span>       Allowlist de usuários por canal
+<span class="fn">src/agents/context-window-guard.ts</span>  Proteção contra overflow de contexto</div>
+        </div>
       </div>
     </div>
 
@@ -664,6 +911,25 @@
           <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">Aprende com o uso. O paradigma "computador como ferramenta" permite que ele resolva problemas que ferramentas pré-construídas não cobrem.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Comportamento menos previsível — a IA pode tomar caminhos inesperados. Requer mais supervisão inicial.</div></div>
           <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Pesquisa, análise exploratória e tarefas abertas onde a flexibilidade importa mais que previsibilidade.</div></div>
+        </div>
+
+        <div class="file-tree-block">
+          <div class="file-tree-label">Estrutura de arquivos — codebase Python separado</div>
+          <div class="file-tree"><span class="fd">agent_zero/</span>
+├── <span class="fn">agent.py</span>                 <span class="star">★</span> Loop principal: pergunta → memória → resolve → salva
+├── <span class="fn">memory.py</span>                 Busca e armazena soluções de sessões anteriores
+└── <span class="fn">context.py</span>               Monta system prompt com memórias relevantes
+
+<span class="fd">tools/</span>
+├── <span class="fn">web_search.py</span>             Busca web para pesquisa exploratória
+├── <span class="fn">code_exec.py</span>              Execução de código em sandbox
+└── <span class="fn">file_ops.py</span>               Operações de arquivo e filesystem
+
+<span class="fd">workspace/</span>
+├── <span class="fn">memory.json</span>               Soluções salvas de sessões anteriores
+└── <span class="fn">prompts/</span>                  Templates de prompts por tipo de tarefa
+
+Fluxo: pergunta → busca memória → sub-agente → solução → salva</div>
         </div>
       </div>
     </div>
