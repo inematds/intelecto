@@ -1,11 +1,6 @@
 <div align="center">
 
-```
-    _   _  _ _____ ___ ___  ___ _____ ___
-   /_\ | \| |_   _|_ _|   \/ _ \_   _| __|
-  / _ \| .` | | |  | || |) | (_) || | | _|
- /_/ \_\_|\_| |_| |___|___/ \___/ |_| |___|
-```
+![INTELECTO](doc/banner.png)
 
 **Inteligência pessoal, sem frameworks inchados.**
 
