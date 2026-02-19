@@ -7,7 +7,7 @@
  /_/ \_\_|\_| |_| |___|___/ \___/ |_| |___|
 ```
 
-**The antidote to bloated AI frameworks.**
+**Inteligência pessoal, sem frameworks inchados.**
 
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![Telegram](https://img.shields.io/badge/Telegram-Bot-26A5E4?style=flat-square&logo=telegram&logoColor=white)](https://core.telegram.org/bots)
@@ -19,7 +19,7 @@
 
 *~3,000 lines · 35 files · 7 dependencies · 0 Docker containers*
 
-[Framework Comparison →](https://inematds.github.io/antidote/)
+[Framework Comparison →](https://inematds.github.io/intelecto/)
 
 </div>
 
@@ -27,14 +27,12 @@
 
 ## O que é
 
-**Antidote** é um assistente de IA pessoal construído do zero em Python — sem frameworks de agente pesados, sem cloud obrigatória, sem Docker, sem dashboard web. Roda no seu Mac, fala via Telegram, lembra de tudo, e tem personalidade definida por você.
-
-É exatamente o que o nome diz: o antídoto contra frameworks de IA inchados.
+**INTELECTO** é um assistente de IA pessoal construído do zero em Python — sem frameworks de agente pesados, sem cloud obrigatória, sem Docker, sem dashboard web. Roda no seu Mac, fala via Telegram, lembra de tudo, e tem personalidade definida por você.
 
 ```
 Você no Telegram
      ↓
-Antidote recebe via long-polling
+INTELECTO recebe via long-polling
      ↓
 Agent loop pensa, busca memória, usa ferramentas
      ↓
@@ -62,8 +60,8 @@ Você recebe a resposta no Telegram
 
 ```bash
 # Clone
-git clone https://github.com/inematds/antidote.git
-cd antidote
+git clone https://github.com/inematds/intelecto.git
+cd intelecto
 
 # Inicia tudo: cria venv, instala dependências, roda o wizard
 ./start.sh
@@ -73,13 +71,13 @@ O wizard guia você por tudo:
 
 ```
   ┌─────────────────────────────────────────────────────┐
-  │   Bem-vindo ao Antidote                              │
-  │   The antidote to bloated AI frameworks.             │
+  │   Bem-vindo ao INTELECTO                             │
+  │   Inteligência pessoal, sem frameworks inchados.     │
   └─────────────────────────────────────────────────────┘
 
   [1/6] Telegram Bot Token
         Abra o Telegram → @BotFather → /newbot → cole o token
-        ✓ Token válido — bot: @MeuAntidoteBot
+        ✓ Token válido — bot: @MeuIntelectoBot
 
   [2/6] OpenRouter API Key
         openrouter.ai/keys → crie uma chave → cole aqui
@@ -92,7 +90,7 @@ O wizard guia você por tudo:
           DeepSeek R1 (melhor custo-raciocínio)
 
   [4/6] Nome do seu assistente
-        > Antidote
+        > INTELECTO
 
   [5/6] Personalidade em uma frase
         > Direto, honesto, sem enrolação.
@@ -109,14 +107,14 @@ O wizard guia você por tudo:
 ## Arquitetura
 
 ```
-antidote/
+intelecto/
 ├── wizard.py                    # Wizard de setup (rich + questionary)
 ├── start.sh                     # Launcher: venv + install + run
-├── com.antidote.agent.plist     # macOS launchd — auto-restart
-├── pyproject.toml               # Pacote Python, entry point `antidote`
+├── com.intelecto.agent.plist    # macOS launchd — auto-restart
+├── pyproject.toml               # Pacote Python, entry point `intelecto`
 ├── requirements.txt             # 7 dependências
 │
-├── antidote/
+├── intelecto/
 │   ├── main.py                  # Entry point + CLI router
 │   ├── config.py                # Loader de config (singleton)
 │   │
@@ -179,7 +177,7 @@ AgentLoop.process_message()
 
 ## Stack de Identidade
 
-A personalidade do Antidote vive em arquivos Markdown editáveis — sem banco de dados especial, sem interface separada. Edite no editor de texto.
+A personalidade do INTELECTO vive em arquivos Markdown editáveis — sem banco de dados especial, sem interface separada. Edite no editor de texto.
 
 | Arquivo | O que define |
 |---------|-------------|
@@ -212,7 +210,7 @@ LIMIT 10;
 | `preference` | Como você gosta das coisas |
 
 - **Deduplicação automática**: se o conteúdo novo tem >80% de sobreposição com uma entrada existente, atualiza em vez de duplicar
-- **Persistência**: `~/.antidote/memory.db` — sobrevive a reinicializações
+- **Persistência**: `~/.intelecto/memory.db` — sobrevive a reinicializações
 - **Ferramentas do LLM**: `save_memory`, `search_memory`, `forget_memory` disponíveis diretamente na conversa
 
 ---
@@ -221,7 +219,7 @@ LIMIT 10;
 
 ### Secrets encriptados (Fernet)
 ```
-API Key → AES-128-CBC + HMAC-SHA256 → ~/.antidote/.secrets
+API Key → AES-128-CBC + HMAC-SHA256 → ~/.intelecto/.secrets
                 ↑
     Chave derivada do UUID do hardware macOS via PBKDF2
     (arquivo .secrets é inútil em outra máquina)
@@ -237,7 +235,7 @@ BLOCKED = ["rm -rf /", "mkfs", "dd if=", "shutdown", "reboot", "> /dev/sd"]
 - Path traversal: ferramentas de filesystem restritas ao `workspace/`
 - Timeout: 60s máximo por comando shell
 - Truncamento: output de comandos limitado a 10KB, leitura de arquivo a 100KB
-- Audit log: todo comando executado em `~/.antidote/audit.log`
+- Audit log: todo comando executado em `~/.intelecto/audit.log`
 - Gitignore: `config.json`, `.secrets`, `.env`, `*.db`, `*.log` nunca sobem
 
 ---
@@ -260,18 +258,18 @@ BLOCKED = ["rm -rf /", "mkfs", "dd if=", "shutdown", "reboot", "> /dev/sd"]
 
 ## Auto-restart (macOS launchd)
 
-O Antidote não morre com sleep, crash ou reboot.
+O INTELECTO não morre com sleep, crash ou reboot.
 
 ```bash
 # O wizard instala automaticamente. Para instalar manualmente:
-cp com.antidote.agent.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.antidote.agent.plist
+cp com.intelecto.agent.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.intelecto.agent.plist
 
 # Para parar:
-launchctl unload ~/Library/LaunchAgents/com.antidote.agent.plist
+launchctl unload ~/Library/LaunchAgents/com.intelecto.agent.plist
 ```
 
-Logs ficam em `~/.antidote/logs/` para diagnóstico.
+Logs ficam em `~/.intelecto/logs/` para diagnóstico.
 
 ---
 
@@ -280,8 +278,8 @@ Logs ficam em `~/.antidote/logs/` para diagnóstico.
 ```bash
 # Inicialização
 ./start.sh              # Tudo: venv + install + wizard (se necessário) + bot
-antidote                # Com venv ativo: auto-detecta config, inicia bot
-antidote setup          # Força re-execução do wizard
+intelecto               # Com venv ativo: auto-detecta config, inicia bot
+intelecto setup         # Força re-execução do wizard
 
 # Desenvolvimento
 source .venv/bin/activate
@@ -289,24 +287,24 @@ pip install -e .
 python -m pytest tests/ -v
 
 # Logs
-tail -f ~/.antidote/logs/antidote.log
-tail -f ~/.antidote/audit.log
+tail -f ~/.intelecto/logs/intelecto.log
+tail -f ~/.intelecto/audit.log
 
 # launchd
-launchctl list | grep antidote
-launchctl stop com.antidote.agent
-launchctl start com.antidote.agent
+launchctl list | grep intelecto
+launchctl stop com.intelecto.agent
+launchctl start com.intelecto.agent
 ```
 
 ---
 
 ## Configuração
 
-O wizard gera `~/.antidote/config.json` (gitignored). Estrutura:
+O wizard gera `~/.intelecto/config.json` (gitignored). Estrutura:
 
 ```json
 {
-  "name": "Antidote",
+  "name": "INTELECTO",
   "providers": {
     "default": "openrouter",
     "openrouter": { "model": "anthropic/claude-sonnet-4-20250514" },
@@ -316,7 +314,7 @@ O wizard gera `~/.antidote/config.json` (gitignored). Estrutura:
     "telegram": { "enabled": true }
   },
   "memory": {
-    "db_path": "~/.antidote/memory.db",
+    "db_path": "~/.intelecto/memory.db",
     "max_context_memories": 10
   },
   "safety": {
@@ -388,6 +386,6 @@ class MyChannel(BaseChannel):
 
 **~3,000 linhas · 35 arquivos · 7 dependências · 0 containers Docker**
 
-[Ver análise completa de frameworks →](https://inematds.github.io/antidote/)
+[Ver análise completa de frameworks →](https://inematds.github.io/intelecto/)
 
 </div>
