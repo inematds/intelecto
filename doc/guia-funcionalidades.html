@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INTELECTO — Guia de Funcionalidades e Arquiteturas</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a2e;
+    --border: #2a2a3e;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --green: #00D26A;
+    --green-dim: #00a854;
+    --cyan: #00BCD4;
+    --purple: #6c63ff;
+    --red: #ef5350;
+    --teal: #00d4aa;
+    --amber: #ffa726;
+    --blue: #42a5f5;
+    --gray: #607d8b;
+    --violet: #ab47bc;
+    --lime: #66bb6a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    line-height: 1.7;
+  }
+
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(20px);
+  }
+  .nav-logo { font-family: monospace; font-size: 1.1rem; color: var(--green); font-weight: 700; text-decoration: none; }
+  .nav-links { display: flex; gap: 1.5rem; margin-left: auto; flex-wrap: wrap; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; margin-bottom: 1rem; }
+  .hero h1 span { color: var(--green); }
+  .hero p { font-size: 1.1rem; color: var(--text-dim); max-width: 700px; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  section { padding: 3rem 0; border-top: 1px solid var(--border); }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .section-sub { color: var(--text-dim); margin-bottom: 2.5rem; font-size: 0.95rem; }
+
+  /* CORREDOR */
+  .corredor {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .corredor-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .corredor-icon { font-size: 1.75rem; }
+  .corredor-title { font-size: 1.15rem; font-weight: 700; }
+  .corredor-sub { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.15rem; }
+  .corredor-body { padding: 1.5rem; }
+  .corredor-intro { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.7; }
+
+  .items-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0.625rem;
+    align-items: flex-start;
+  }
+  .item-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+  }
+  .item-content { flex: 1; }
+  .item-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .item-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; }
+
+  /* ARQUITETURA */
+  .arch-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .arch-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .arch-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .arch-title { font-size: 1.1rem; font-weight: 700; }
+  .arch-lang { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem; }
+  .arch-body { padding: 1.5rem; }
+  .arch-desc { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.7; }
+
+  .arch-diagram {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    overflow-x: auto;
+    white-space: pre;
+    margin-bottom: 1.25rem;
+  }
+
+  .arch-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+  .pillar {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+  }
+  .pillar-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .pillar-desc { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    border: 1px solid;
+    margin-right: 0.35rem;
+    margin-bottom: 0.35rem;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 3rem;
+  }
+  footer a { color: var(--green); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">INTELECTO</a>
+  <div class="nav-links">
+    <a href="../index.html">Início</a>
+    <a href="framework-comparison-pt.html">Comparar Frameworks</a>
+    <a href="como-construir.html">Como Construir</a>
+    <a href="https://github.com/inematds/intelecto" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<div class="hero container">
+  <h1>Guia de <span>Funcionalidades</span> e Arquiteturas</h1>
+  <p>O que cada corredor da mercearia de frameworks oferece — e como os 6 principais padrões de arquitetura funcionam por dentro.</p>
+</div>
+
+<!-- CORREDORES -->
+<section>
+  <div class="container">
+    <h2>Os 8 Corredores de Funcionalidades</h2>
+    <p class="section-sub">Cada corredor agrupa um tipo de capacidade que você pode adicionar ao seu assistente. Pense neles como seções de uma mercearia — você escolhe os ingredientes que fazem sentido para o seu projeto.</p>
+
+    <!-- 1. Identidade -->
+    <div class="corredor">
+      <div class="corredor-header">
+        <span class="corredor-icon">🧬</span>
+        <div>
+          <div class="corredor-title">Identidade e Personalidade</div>
+          <div class="corredor-sub">Como sua IA se apresenta</div>
+        </div>
+      </div>
+      <div class="corredor-body">
+        <p class="corredor-intro">Define quem é sua IA — seu tom, valores, forma de falar e como ela se adapta a diferentes contextos. Sem isso, você tem um chatbot genérico. Com isso, você tem um assistente com voz própria.</p>
+        <div class="items-list">
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Arquivo de Personalidade Soul.md</div><div class="item-desc">Defina personalidade, valores e estilo de comunicação em um arquivo de texto simples. Como escrever uma ficha de personagem para sua IA.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Padrão de Identidade Portátil AIEOS</div><div class="item-desc">Formato universal para exportar a personalidade da IA (psicologia, linguística, motivações) para qualquer sistema compatível.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Memória Isolada por Grupo</div><div class="item-desc">Cada grupo de conversa tem seu próprio cérebro. Chat de trabalho e o de família nunca misturam contexto.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Perfis de Agente Intercambiáveis</div><div class="item-desc">Personas pré-criadas (desenvolvedor, pesquisador, escritor) entre as quais você pode alternar instantaneamente.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Regras de Comportamento Dinâmicas</div><div class="item-desc">Altere o comportamento da IA no meio da conversa, sem reinicialização. Adaptação imediata ao contexto.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Segurança -->
+    <div class="corredor">
+      <div class="corredor-header">
+        <span class="corredor-icon">🛡</span>
+        <div>
+          <div class="corredor-title">Segurança e Proteção</div>
+          <div class="corredor-sub">Protegendo seus dados e sistemas</div>
+        </div>
+      </div>
+      <div class="corredor-body">
+        <p class="corredor-intro">Camadas de proteção entre sua IA e o mundo externo — desde sandboxing de ferramentas até detecção de ataques de prompt injection. Essencial em qualquer ambiente que acesse dados sensíveis.</p>
+        <div class="items-list">
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">WASM Sandbox para Ferramentas</div><div class="item-desc">Ferramentas rodam em contêineres WebAssembly isolados. Fisicamente não podem acessar seus arquivos ou segredos. Mais leve que Docker.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Isolamento por Container VM</div><div class="item-desc">Cada conversa roda em sua própria máquina virtual. A barreira mais forte entre a IA e seu sistema operacional.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Defesa contra Injeção de Prompt</div><div class="item-desc">Detecta e bloqueia tentativas de enganar sua IA com instruções ocultas em páginas web ou mensagens recebidas.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Detecção de Vazamento de Segredos</div><div class="item-desc">Verifica saídas das ferramentas antes de chegarem à IA para garantir que chaves de API e senhas não sejam expostas acidentalmente.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Armazenamento Criptografado de Segredos</div><div class="item-desc">Chaves de API criptografadas com ChaCha20 ou Fernet. Mesmo roubando o arquivo, não dá para ler.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Gates de Aprovação de Execução</div><div class="item-desc">Três níveis de controle: somente leitura, supervisionado (pede permissão) e autonomia total. Você decide quanto confiar.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Lista de Bloqueio de Comandos Perigosos</div><div class="item-desc">Bloqueia automaticamente comandos destrutivos (deletar tudo, formatar discos, reiniciar) por correspondência de substring.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Comunicação -->
+    <div class="corredor">
+      <div class="corredor-header">
+        <span class="corredor-icon">💬</span>
+        <div>
+          <div class="corredor-title">Canais de Comunicação</div>
+          <div class="corredor-sub">Onde sua IA vive</div>
+        </div>
+      </div>
+      <div class="corredor-body">
+        <p class="corredor-intro">O canal é a "porta de entrada" da sua IA. Define em qual aplicativo o usuário vai interagir com ela. Cada canal tem características distintas — escolha onde seu público já está.</p>
+        <div class="items-list">
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">WhatsApp</div><div class="item-desc">O mais natural para uso empresarial diário no Brasil. Suporte a texto, imagens e notas de voz.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Telegram</div><div class="item-desc">Configuração mais simples (só um token). Mídia rica, botões inline, compartilhamento de arquivos. Ótimo para equipes técnicas.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Discord</div><div class="item-desc">Ideal para gerenciamento de comunidades e canais de equipe. Suporte a comandos com slash.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Slack</div><div class="item-desc">Integração sem IP público via Socket Mode. Perfeito para automação de processos internos.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">E-mail (IMAP/SMTP)</div><div class="item-desc">A IA lê seu e-mail e pode responder. Filtra spam, resume newsletters, rascunha respostas.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Painel Web</div><div class="item-desc">Interface no navegador com status em tempo real, memória visível e progresso de tarefas.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Palavra de Ativação por Voz</div><div class="item-desc">Diga "hey claude" e sua IA escuta. Controle de voz sempre ativo, como um alto-falante inteligente privado.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Memória -->
+    <div class="corredor">
+      <div class="corredor-header">
+        <span class="corredor-icon">🧠</span>
+        <div>
+          <div class="corredor-title">Memória e Conhecimento</div>
+          <div class="corredor-sub">Como sua IA lembra</div>
+        </div>
+      </div>
+      <div class="corredor-body">
+        <p class="corredor-intro">A diferença entre uma IA que esquece tudo ao reiniciar e uma que conhece você há meses. A escolha do sistema de memória define o custo, a precisão e a capacidade de recall a longo prazo.</p>
+        <div class="items-list">
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Busca Híbrida Vetorial + por Palavras-Chave</div><div class="item-desc">Combina entendimento semântico (o que você quer dizer) com busca exata (palavras específicas). O mais preciso, mas com custo de embedding.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">SQLite FTS5 (Busca por Palavras-Chave)</div><div class="item-desc">Full-text search com ranking BM25. Zero custo de API, sem modelos de embedding. Cobre 90% das necessidades de recall.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Sistema de Memória em Duas Camadas</div><div class="item-desc">Camada 1: fatos rápidos em MEMORY.md. Camada 2: log de histórico pesquisável. Simples e eficaz para projetos pequenos.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Memória de Soluções</div><div class="item-desc">A IA salva automaticamente soluções bem-sucedidas. Na próxima vez que enfrentar um problema similar, ela lembra do que funcionou.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Base de Conhecimento em Documentos</div><div class="item-desc">Faça upload de PDFs, planilhas e documentos. A IA pesquisa e analisa. O conhecimento da sua empresa ao alcance do chat.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Compactação Automática de Sessão</div><div class="item-desc">Quando conversas ficam longas demais, resume automaticamente as partes antigas para manter a IA rápida.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Automação -->
+    <div class="corredor">
+      <div class="corredor-header">
+        <span class="corredor-icon">⚙</span>
+        <div>
+          <div class="corredor-title">Automação e Agendamento</div>
+          <div class="corredor-sub">Trabalhe enquanto você dorme</div>
+        </div>
+      </div>
+      <div class="corredor-body">
+        <p class="corredor-intro">Transforma sua IA de reativa para proativa. Em vez de esperar você perguntar algo, ela executa tarefas em horários definidos, monitora eventos e trabalha em segundo plano.</p>
+        <div class="items-list">
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Agendamento Cron</div><div class="item-desc">"Toda segunda às 9h, me envie um briefing do dia." Funciona como um despertador confiável para tarefas recorrentes.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Heartbeat (Verificações Periódicas)</div><div class="item-desc">A IA acorda a cada 30 minutos para checar se algo precisa de atenção. Proativa, não apenas reativa.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Automação de Navegador</div><div class="item-desc">Controla um navegador real: preenche formulários, clica em botões, extrai dados, tira screenshots. Automatiza trabalho web repetitivo.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Gatilhos via Webhook</div><div class="item-desc">Serviços externos (Zapier, n8n, Shopify) acionam sua IA via URL. Conecta-se a qualquer ecossistema de automação existente.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Sub-Agentes em Segundo Plano</div><div class="item-desc">IA auxiliar para tarefas longas. O agente principal permanece responsivo enquanto trabalhadores fazem o trabalho pesado.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Colaboração em Equipe de Agentes</div><div class="item-desc">Múltiplos agentes especializados (@coder, @reviewer, @writer) passam trabalho uns para os outros automaticamente.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Integrações -->
+    <div class="corredor">
+      <div class="corredor-header">
+        <span class="corredor-icon">🔗</span>
+        <div>
+          <div class="corredor-title">Integrações e Protocolos</div>
+          <div class="corredor-sub">Conectando-se ao mundo</div>
+        </div>
+      </div>
+      <div class="corredor-body">
+        <p class="corredor-intro">Como sua IA se conecta a provedores de modelos, serviços externos e protocolos padrão. Aqui ficam as decisões de custo, privacidade e escalabilidade de modelos de IA.</p>
+        <div class="items-list">
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">OpenRouter — 100+ Modelos, 1 Chave</div><div class="item-desc">Acesse Claude, GPT-4, Gemini, Mistral, DeepSeek, Llama e mais de 100 modelos com uma única chave de API. Troque de modelo sem mudar o código.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Suporte a LLM Local (Ollama)</div><div class="item-desc">Execute modelos no seu próprio computador. Zero custo de API, privacidade total, sem internet. Use junto com OpenRouter: nuvem para potência, local para privacidade.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Failover Multi-Provedor</div><div class="item-desc">Se o Claude cair, alterna automaticamente para o GPT ou Gemini. Com OpenRouter você tem 100+ modelos como fallback em uma chave só.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Seleção de Modelo por Tarefa</div><div class="item-desc">Claude Sonnet para raciocínio complexo, Haiku para respostas rápidas e baratas, DeepSeek R1 para código. Controle total de custo e qualidade.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">MCP (Model Context Protocol)</div><div class="item-desc">Padrão universal para conectar IA a ferramentas externas. Um protocolo, milhares de integrações — o "USB" das ferramentas de IA.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Provedores de Mídia Especializada (fal.ai, Kie.ai)</div><div class="item-desc">Para imagem, som e vídeo, use provedores especializados. LLMs de texto são fracos em mídia — fal.ai e Kie.ai são a escolha certa para criação de conteúdo.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Sistema de Skills / Plugins</div><div class="item-desc">Instale novas capacidades como apps no celular. Sem necessidade de codificação para adicionar integrações pré-construídas.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Controle de Hardware / IoT</div><div class="item-desc">Controle dispositivos físicos via pinos GPIO, I2C e SPI. A IA pode interagir com o mundo real em projetos embarcados.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Skills -->
+    <div class="corredor">
+      <div class="corredor-header">
+        <span class="corredor-icon">🧰</span>
+        <div>
+          <div class="corredor-title">Skills Integradas e Ferramentas Prontas</div>
+          <div class="corredor-sub">O que vem pronto na caixa</div>
+        </div>
+      </div>
+      <div class="corredor-body">
+        <p class="corredor-intro">O corredor mais extenso — são as capacidades concretas que sua IA pode executar hoje, sem implementar do zero. Abrange produtividade, comunicação, casa inteligente, desenvolvimento e muito mais.</p>
+        <div class="items-list">
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Suite Google Workspace</div><div class="item-desc">Gmail, Calendar, Drive, Sheets, Docs e Slides. Integração completa com o Google: envie e-mails, crie planilhas, gerencie calendário.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">GitHub (Issues, PRs, CI, API)</div><div class="item-desc">Fluxo completo: gerencie issues, revise pull requests, acione CI. Gerenciamento de código pelo chat.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Notion, Obsidian, Apple Notes, Bear</div><div class="item-desc">Integrações com os principais apps de notas. Crie, edite e pesquise notas diretamente pelo assistente.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Whisper Speech-to-Text + ElevenLabs TTS</div><div class="item-desc">Converta voz em texto e texto em fala natural. Funciona local (sem API) ou na nuvem.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Geração de Imagens com IA</div><div class="item-desc">Gere imagens via OpenAI API, Gemini ou provedores especializados como fal.ai. Suporte a inpainting e geração em lote.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Resumidor de URL / Vídeo / Podcast</div><div class="item-desc">Resuma páginas web, vídeos do YouTube e podcasts. Obtenha o essencial sem ler ou assistir tudo.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Controle de Casa Inteligente (Philips Hue, Sonos)</div><div class="item-desc">Controle luzes, caixas de som e dispositivos inteligentes por comandos de linguagem natural.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Orquestração de Agentes de Codificação</div><div class="item-desc">Execute Codex CLI, Claude Code ou outros agentes de codificação programaticamente. IA gerenciando outras IAs.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Composio (1000+ Aplicativos)</div><div class="item-desc">Acesso OAuth com um clique a 1000+ apps: Gmail, Notion, GitHub, Slack e muito mais via Composio.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Arquitetura -->
+    <div class="corredor">
+      <div class="corredor-header">
+        <span class="corredor-icon">🏗</span>
+        <div>
+          <div class="corredor-title">Padrões de Arquitetura</div>
+          <div class="corredor-sub">Como estruturar seu framework</div>
+        </div>
+      </div>
+      <div class="corredor-body">
+        <p class="corredor-intro">Os padrões estruturais que definem como os componentes do seu assistente se conectam. A escolha aqui impacta manutenibilidade, escalabilidade e facilidade de extensão.</p>
+        <div class="items-list">
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Modularidade por Traits / Classes Abstratas</div><div class="item-desc">Cada componente definido por um contrato (interface). Troque implementações sem tocar no código do agente.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Hub WebSocket Gateway</div><div class="item-desc">Servidor central ao qual todos os canais se conectam. O padrão "torre de controle" — máximo controle, maior complexidade.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Arquitetura de Barramento de Mensagens</div><div class="item-desc">Canais e agentes se comunicam por uma fila central. Separação limpa, fácil de adicionar novos canais.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Fila de Mensagens Baseada em Arquivos</div><div class="item-desc">Mensagens armazenadas como arquivos em diretórios (incoming → processing → outgoing). Simples, confiável, sem banco de dados.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Implantação com Binário Único</div><div class="item-desc">Um arquivo executável, sem dependências. Copie para qualquer lugar e funciona. A história de implantação mais simples possível.</div></div></div>
+          <div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Isolamento de Espaço de Trabalho por Projeto</div><div class="item-desc">Espaços separados por cliente ou projeto, cada um com sua própria memória e segredos. Sem mistura de dados.</div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ARQUITETURAS -->
+<section>
+  <div class="container">
+    <h2>As 6 Arquiteturas em Detalhe</h2>
+    <p class="section-sub">Como cada framework organiza seus componentes internamente. Estes são os blueprints que você seguiria ao construir com cada abordagem.</p>
+
+    <!-- OpenClaw -->
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-badge" style="background: linear-gradient(135deg, #6c63ff, #8b5cf6)">OC</div>
+        <div>
+          <div class="arch-title">OpenClaw — Hub Gateway</div>
+          <div class="arch-lang">TypeScript · A arquitetura "torre de controle"</div>
+        </div>
+      </div>
+      <div class="arch-body">
+        <p class="arch-desc">O OpenClaw usa um servidor WebSocket central (Gateway) como ponto único de entrada para todos os canais. Mensagens do WhatsApp, Telegram, Slack, iMessage e voz passam pelo mesmo hub antes de chegar ao agente. Isso garante controle centralizado de sessões, roteamento entre múltiplos agentes e suporte a canvas visual e voz de forma unificada.</p>
+        <div class="arch-diagram">          CHANNELS                    AGENTS
+  WhatsApp  Telegram  Slack       Agent A  Agent B
+  Discord   iMessage  WebChat     (Work)   (Personal)
+      \       |       /               \       /
+       \      |      /                 \     /
+        v     v     v                   v   v
+       +------------------+      +------------------+
+       |     GATEWAY       |------|   SESSION STORE   |
+       |  (WebSocket Hub)  |      |  (JSONL files)    |
+       +------------------+      +------------------+
+              |
+     +--------+--------+
+     |        |        |
+  TOOLS    CANVAS    VOICE
+  Browser  Live UI   Wake Word
+  Files    Diagrams  TTS/STT
+  Shell    React     ElevenLabs</div>
+        <div class="arch-pillars">
+          <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">Máximo controle e visibilidade. Tudo passa pelo hub — log, roteamento e sessões ficam num lugar só.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">O Gateway é o ponto único de falha. Mais difícil de testar e de escalar horizontalmente.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Projetos que precisam de múltiplos canais, múltiplos agentes e interface visual ao mesmo tempo.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZeroClaw -->
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-badge" style="background: linear-gradient(135deg, #ef5350, #ff7043)">ZC</div>
+        <div>
+          <div class="arch-title">ZeroClaw — Contratos de Trait (Rust)</div>
+          <div class="arch-lang">Rust · A arquitetura "LEGO de componentes"</div>
+        </div>
+      </div>
+      <div class="arch-body">
+        <p class="arch-desc">Cada subsistema (provedor de IA, canal, memória) é definido por um trait — um contrato que diz "qualquer implementação precisa ter estes métodos". O arquivo config.toml decide quais implementações usar em runtime. Você pode trocar o provedor de IA de Claude para Ollama, ou o canal de Telegram para WhatsApp, sem tocar no código do agente. O resultado é uma pegada de memória abaixo de 5MB e boot em 10ms.</p>
+        <div class="arch-diagram">  config.toml define quais implementações usar:
+
+  +-----------+   +-----------+   +----------+
+  | Provider  |   | Channel   |   | Memory   |
+  | (trait)   |   | (trait)   |   | (trait)  |
+  +-----------+   +-----------+   +----------+
+       ^               ^              ^
+       |               |              |
+  +----+----+    +-----+-----+  +----+----+
+  |OpenAI   |    |Telegram   |  |SQLite   |
+  |Claude   |    |Discord    |  |Markdown |
+  |Ollama   |    |Slack      |  |None     |
+  |Gemini   |    |WhatsApp   |  +---------+
+  |22 more..|    |Email      |
+  +---------+    |Webhook    |
+                 +-----------+
+
+  Troque QUALQUER peça sem tocar no código do agente</div>
+        <div class="arch-pillars">
+          <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">Máxima modularidade e eficiência. Cada componente é testável de forma independente. Roda em hardware de $10.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Rust tem curva de aprendizado alta. O sistema de traits pode intimidar quem vem de linguagens dinâmicas.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Projetos que exigem eficiência extrema, hardware limitado ou troca frequente de provedores de IA.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NanoClaw -->
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-badge" style="background: linear-gradient(135deg, #00d4aa, #26c6da)">NC</div>
+        <div>
+          <div class="arch-title">NanoClaw — Isolamento por Container</div>
+          <div class="arch-lang">TypeScript · A arquitetura "cérebros separados"</div>
+        </div>
+      </div>
+      <div class="arch-body">
+        <p class="arch-desc">O NanoClaw resolve um problema específico do WhatsApp para empresas: como garantir que o contexto de um grupo de trabalho nunca vaze para o grupo de família? A resposta é radical — cada conversa roda em seu próprio contêiner isolado, com seu próprio arquivo CLAUDE.md e sistema de arquivos separado. O host gerencia a conexão WhatsApp e despacha mensagens para o contêiner certo.</p>
+        <div class="arch-diagram">  HOST (macOS/Linux)
+  +--------------------------------------------+
+  | WhatsApp Connection (Baileys)              |
+  | SQLite Message Store                       |
+  | Message Polling Loop                       |
+  | Task Scheduler                             |
+  +--------------------------------------------+
+           |              |              |
+  +-- Container --+  +-- Container --+  +-- Container --+
+  | Work Group    |  | Family Group  |  | Admin Chat   |
+  | Claude SDK    |  | Claude SDK    |  | Claude SDK   |
+  | Own CLAUDE.md |  | Own CLAUDE.md |  | Full access  |
+  | Sandboxed FS  |  | Sandboxed FS  |  | All groups   |
+  +---------------+  +---------------+  +--------------+
+
+  Cada grupo = cérebro isolado. Não se enxergam.</div>
+        <div class="arch-pillars">
+          <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">Isolamento total entre contextos. Ideal para uso empresarial onde dados de clientes diferentes não podem se misturar.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Overhead de contêiner por grupo. Não é o melhor para assistente pessoal de usuário único.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Empresas com múltiplos grupos no WhatsApp que precisam de contextos totalmente separados.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TinyClaw -->
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-badge" style="background: linear-gradient(135deg, #ab47bc, #ce93d8)">TC</div>
+        <div>
+          <div class="arch-title">TinyClaw — Equipes de Agentes</div>
+          <div class="arch-lang">TypeScript · A arquitetura "pequena empresa de IA"</div>
+        </div>
+      </div>
+      <div class="arch-body">
+        <p class="arch-desc">O TinyClaw trata cada agente como um colaborador especializado de uma equipe. Mensagens entram numa fila baseada em arquivos (sem banco de dados) e cada agente pega da sua própria caixa de entrada. Um agente pode mencionar outro (@reviewer, @writer) para passar o trabalho adiante. Processamento paralelo: enquanto o @coder escreve código, o @reviewer pode estar analisando outro PR.</p>
+        <div class="arch-diagram">  VOCÊ (via Discord / Telegram / WhatsApp)
+       |
+       v
+  +------------------+
+  | Message Queue     |  incoming/ -> processing/ -> outgoing/
+  | (File-Based)     |  Cada agente pega da sua própria inbox
+  +------------------+
+       |
+  +----+----+----+----+
+  |         |         |
+  @coder   @reviewer  @writer
+  Claude   OpenAI    Claude
+  Opus     GPT-5     Sonnet
+  |         ^         ^
+  |         |         |
+  +---menção----------+  Agentes passam trabalho entre si
+  "[@reviewer: confere esse código]"
+
+  Processamento paralelo. Sequencial por agente.</div>
+        <div class="arch-pillars">
+          <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">Cada agente usa o modelo mais adequado para sua especialidade. Processamento paralelo de tarefas complexas.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Coordenação entre agentes pode criar dependências circulares. Debugging de fluxos multi-agente é mais trabalhoso.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Pipelines de desenvolvimento de software onde revisão, escrita e codificação acontecem em paralelo.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IronClaw -->
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-badge" style="background: linear-gradient(135deg, #607d8b, #90a4ae)">IC</div>
+        <div>
+          <div class="arch-title">IronClaw — Segurança Zero-Trust</div>
+          <div class="arch-lang">TypeScript · A arquitetura "fortaleza em camadas"</div>
+        </div>
+      </div>
+      <div class="arch-body">
+        <p class="arch-desc">O IronClaw parte do princípio de que nenhuma entrada é confiável — nem mensagens do usuário, nem resultados de ferramentas, nem saídas do LLM. Cada estágio do pipeline tem sua própria camada de segurança: detecção de prompt injection na entrada, WASM sandbox para isolamento de ferramentas, e detector de vazamento de segredos na saída. O Job Scheduler permite até 5 execuções paralelas com controle de rate limiting.</p>
+        <div class="arch-diagram">  Mensagens entram        Camadas de Segurança
+  CLI  Slack  Telegram     |
+       |                    v
+  +----v----+    +--------------------+
+  | Channel |    | Prompt Injection   |
+  | Manager |--->| Pattern Detection  |
+  +---------+    +--------------------+
+       |                    |
+  +----v----+    +--------------------+
+  | Job     |    | WASM Sandbox       |
+  | Scheduler--->| Capability Allowlist|
+  | (5x //) |    | Rate Limiting      |
+  |         |    | Credential Inject  |
+  +---------+    +--------------------+
+       |                    |
+  +----v----+    +--------------------+
+  |  LLM    |    | Leak Detector      |
+  | NEAR AI |    | Escaneia saídas    |
+  | +Ollama |    | por segredos       |
+  +---------+    +--------------------+</div>
+        <div class="arch-pillars">
+          <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">A arquitetura mais segura disponível. Ideal para ambientes corporativos ou onde a IA acessa dados sensíveis.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Cada camada adiciona latência. Configurar os allowlists de ferramentas exige planejamento cuidadoso.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Empresas com requisitos de compliance, dados de clientes ou onde um comando errado pode causar dano real.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent Zero -->
+    <div class="arch-card">
+      <div class="arch-header">
+        <div class="arch-badge" style="background: linear-gradient(135deg, #66bb6a, #81c784)">A0</div>
+        <div>
+          <div class="arch-title">Agent Zero — Loop de Aprendizado</div>
+          <div class="arch-lang">Python · A arquitetura "IA que aprende fazendo"</div>
+        </div>
+      </div>
+      <div class="arch-body">
+        <p class="arch-desc">O Agent Zero é construído em torno de um loop de melhoria contínua: antes de resolver um problema, consulta a memória ("já resolvi isso antes?"). Ao resolver, salva a solução para uso futuro. Para tarefas complexas, delega sub-agentes especializados em pesquisa ou código. Com o tempo, fica cada vez mais eficiente nas tarefas que você mais usa — e pode reescrever suas próprias regras de comportamento no meio de uma conversa.</p>
+        <div class="arch-diagram">  Você faz uma pergunta
+       |
+       v
+  +-----------+     +-----------+
+  | Agent 0   |---->| Memory    |
+  | (Main)    |<----| Search    |  "Já resolvi isso antes?"
+  +-----------+     +-----------+
+       |
+  +----+----+
+  |         |
+  Sub-Agent  Sub-Agent    Delegação para
+  (Research)  (Code)      tarefas complexas
+  |         |
+  +----+----+
+       |
+  +----v----+     +-----------+
+  | Solução |---->| Memory    |
+  | Achada! |     | SALVAR    |  "Lembrar para a próxima"
+  +---------+     +-----------+
+
+  Fica mais inteligente a cada interação</div>
+        <div class="arch-pillars">
+          <div class="pillar"><div class="pillar-title" style="color: var(--purple)">Ponto forte</div><div class="pillar-desc">Aprende com o uso. O paradigma "computador como ferramenta" permite que ele resolva problemas que ferramentas pré-construídas não cobrem.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexidade</div><div class="pillar-desc">Comportamento menos previsível — a IA pode tomar caminhos inesperados. Requer mais supervisão inicial.</div></div>
+          <div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Melhor para</div><div class="pillar-desc">Pesquisa, análise exploratória e tarefas abertas onde a flexibilidade importa mais que previsibilidade.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  INTELECTO · <a href="https://github.com/inematds/intelecto" target="_blank">github.com/inematds/intelecto</a>
+</footer>
+
+</body>
+</html>
