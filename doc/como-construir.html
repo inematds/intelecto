@@ -338,6 +338,86 @@
   /* DIVIDER */
   hr { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
 
+  /* FLUXO REAL */
+  .real-flow {
+    border: 1px solid rgba(0,210,106,0.4);
+    border-radius: 16px;
+    background: rgba(0,210,106,0.04);
+    padding: 2rem 2rem 1.5rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .real-flow-label {
+    position: absolute;
+    top: -0.65rem;
+    left: 1.5rem;
+    background: var(--bg);
+    padding: 0 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .real-flow h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+  }
+  .real-flow > p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 1.75rem;
+  }
+  .real-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .real-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    position: relative;
+  }
+  .real-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 42px;
+    width: 2px;
+    height: calc(100% - 18px);
+    background: rgba(0,210,106,0.25);
+  }
+  .real-step-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,210,106,0.12);
+    border: 2px solid rgba(0,210,106,0.5);
+    color: var(--green);
+    font-weight: 800;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .real-step-body {
+    padding-bottom: 1.75rem;
+  }
+  .real-step-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    color: var(--text);
+  }
+  .real-step-sub {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+  }
+
   /* CALLOUT */
   .callout {
     background: var(--surface);
@@ -375,6 +455,59 @@
 
 <!-- CONTENT -->
 <div class="container">
+
+  <!-- FLUXO REAL — OS 5 PASSOS -->
+  <div class="real-flow">
+    <div class="real-flow-label">Como o Antidote foi construído de verdade</div>
+    <h2>Os 5 passos reais</h2>
+    <p>Não é teoria. É exatamente o que aconteceu para o Antidote sair do zero e funcionar no Telegram.</p>
+
+    <div class="real-steps">
+
+      <div class="real-step">
+        <div class="real-step-num">1</div>
+        <div class="real-step-body">
+          <div class="real-step-title">Passou o documento de referência</div>
+          <div class="real-step-sub">O arquivo <code style="color:var(--green);background:rgba(0,210,106,0.1);padding:0.1rem 0.4rem;border-radius:4px">my-framework-ingredients.md</code> — gerado pela seleção de features na página de comparação — foi entregue ao Claude Code como ponto de partida. Esse documento descreve tudo que você quer que o assistente faça.</div>
+        </div>
+      </div>
+
+      <div class="real-step">
+        <div class="real-step-num">2</div>
+        <div class="real-step-body">
+          <div class="real-step-title">Pediu para gerar um plano</div>
+          <div class="real-step-sub">Uma instrução simples: "leia o documento e me dê um plano de como construir isso". O Claude leu tudo e devolveu uma estrutura de workstreams, arquivos, dependências e ordem de execução — antes de escrever uma linha de código.</div>
+        </div>
+      </div>
+
+      <div class="real-step">
+        <div class="real-step-num">3</div>
+        <div class="real-step-body">
+          <div class="real-step-title">O Claude fez perguntas durante o planejamento</div>
+          <div class="real-step-sub">Docker ou instalação direta? OpenRouter ou só Ollama? Qual modelo padrão? O Claude identificou os pontos que dependiam de decisão sua e perguntou antes de assumir. Você respondeu em português. Ele ajustou o plano.</div>
+        </div>
+      </div>
+
+      <div class="real-step">
+        <div class="real-step-num">4</div>
+        <div class="real-step-body">
+          <div class="real-step-title">Executou o plano</div>
+          <div class="real-step-sub">Com o plano aprovado, o Claude criou cada arquivo na ordem certa: config, segurança, providers, memória, canal Telegram, agent loop, wizard de setup e o launcher. Mostrou o que estava fazendo em tempo real e pediu confirmação antes de ações importantes.</div>
+        </div>
+      </div>
+
+      <div class="real-step">
+        <div class="real-step-num">5</div>
+        <div class="real-step-body">
+          <div class="real-step-title">Você copiou o .env e subiu o Docker</div>
+          <div class="real-step-sub">Uma ação só: copiar o arquivo <code style="color:var(--green);background:rgba(0,210,106,0.1);padding:0.1rem 0.4rem;border-radius:4px">.env</code> com suas chaves de API (Telegram e OpenRouter) e rodar <code style="color:var(--green);background:rgba(0,210,106,0.1);padding:0.1rem 0.4rem;border-radius:4px">docker compose up</code>. O assistente subiu, conectou no Telegram e começou a responder.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr>
 
   <!-- VISÃO GERAL DO FLUXO -->
   <div class="section-label">O processo completo</div>
