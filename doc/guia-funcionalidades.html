@@ -213,6 +213,39 @@
   <p>O que cada corredor da mercearia de frameworks oferece — e como os 6 principais padrões de arquitetura funcionam por dentro.</p>
 </div>
 
+<!-- ÍNDICE -->
+<div class="container" style="padding-bottom: 3rem;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem;">
+      <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem;">8 Corredores</div>
+      <ol style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+        <li><a href="#corredor-identidade" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text)'"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">1</span>🧬 Identidade e Personalidade</a></li>
+        <li><a href="#corredor-seguranca" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text)'"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">2</span>🛡 Segurança e Proteção</a></li>
+        <li><a href="#corredor-comunicacao" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text)'"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">3</span>💬 Canais de Comunicação</a></li>
+        <li><a href="#corredor-memoria" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text)'"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">4</span>🧠 Memória e Conhecimento</a></li>
+        <li><a href="#corredor-automacao" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text)'"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">5</span>⚙ Automação e Agendamento</a></li>
+        <li><a href="#corredor-integracoes" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text)'"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">6</span>🔗 Integrações e Protocolos</a></li>
+        <li><a href="#corredor-skills" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text)'"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">7</span>🧰 Skills e Ferramentas Prontas</a></li>
+        <li><a href="#corredor-arquitetura" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--green)'" onmouseout="this.style.color='var(--text)'"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">8</span>🏗 Padrões de Arquitetura</a></li>
+      </ol>
+    </div>
+
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem;">
+      <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 1rem;">6 Arquiteturas</div>
+      <ol style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+        <li><a href="#arch-openclaw" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--purple)'" onmouseout="this.style.color='var(--text)'"><span style="background:linear-gradient(135deg,#6c63ff,#8b5cf6); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">OC</span>OpenClaw — Hub Gateway</a></li>
+        <li><a href="#arch-zeroclaw" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text)'"><span style="background:linear-gradient(135deg,#ef5350,#ff7043); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">ZC</span>ZeroClaw — Contratos de Trait</a></li>
+        <li><a href="#arch-nanoclaw" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--teal)'" onmouseout="this.style.color='var(--text)'"><span style="background:linear-gradient(135deg,#00d4aa,#26c6da); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">NC</span>NanoClaw — Isolamento por Container</a></li>
+        <li><a href="#arch-tinyclaw" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--violet)'" onmouseout="this.style.color='var(--text)'"><span style="background:linear-gradient(135deg,#ab47bc,#ce93d8); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">TC</span>TinyClaw — Equipes de Agentes</a></li>
+        <li><a href="#arch-ironclaw" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--gray)'" onmouseout="this.style.color='var(--text)'"><span style="background:linear-gradient(135deg,#607d8b,#90a4ae); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">IC</span>IronClaw — Segurança Zero-Trust</a></li>
+        <li><a href="#arch-agentzero" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--lime)'" onmouseout="this.style.color='var(--text)'"><span style="background:linear-gradient(135deg,#66bb6a,#81c784); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">A0</span>Agent Zero — Loop de Aprendizado</a></li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+
 <!-- CORREDORES -->
 <section>
   <div class="container">
@@ -220,7 +253,7 @@
     <p class="section-sub">Cada corredor agrupa um tipo de capacidade que você pode adicionar ao seu assistente. Pense neles como seções de uma mercearia — você escolhe os ingredientes que fazem sentido para o seu projeto.</p>
 
     <!-- 1. Identidade -->
-    <div class="corredor">
+    <div id="corredor-identidade" class="corredor">
       <div class="corredor-header">
         <span class="corredor-icon">🧬</span>
         <div>
@@ -241,7 +274,7 @@
     </div>
 
     <!-- 2. Segurança -->
-    <div class="corredor">
+    <div id="corredor-seguranca" class="corredor">
       <div class="corredor-header">
         <span class="corredor-icon">🛡</span>
         <div>
@@ -264,7 +297,7 @@
     </div>
 
     <!-- 3. Comunicação -->
-    <div class="corredor">
+    <div id="corredor-comunicacao" class="corredor">
       <div class="corredor-header">
         <span class="corredor-icon">💬</span>
         <div>
@@ -287,7 +320,7 @@
     </div>
 
     <!-- 4. Memória -->
-    <div class="corredor">
+    <div id="corredor-memoria" class="corredor">
       <div class="corredor-header">
         <span class="corredor-icon">🧠</span>
         <div>
@@ -309,7 +342,7 @@
     </div>
 
     <!-- 5. Automação -->
-    <div class="corredor">
+    <div id="corredor-automacao" class="corredor">
       <div class="corredor-header">
         <span class="corredor-icon">⚙</span>
         <div>
@@ -331,7 +364,7 @@
     </div>
 
     <!-- 6. Integrações -->
-    <div class="corredor">
+    <div id="corredor-integracoes" class="corredor">
       <div class="corredor-header">
         <span class="corredor-icon">🔗</span>
         <div>
@@ -355,7 +388,7 @@
     </div>
 
     <!-- 7. Skills -->
-    <div class="corredor">
+    <div id="corredor-skills" class="corredor">
       <div class="corredor-header">
         <span class="corredor-icon">🧰</span>
         <div>
@@ -380,7 +413,7 @@
     </div>
 
     <!-- 8. Arquitetura -->
-    <div class="corredor">
+    <div id="corredor-arquitetura" class="corredor">
       <div class="corredor-header">
         <span class="corredor-icon">🏗</span>
         <div>
@@ -411,7 +444,7 @@
     <p class="section-sub">Como cada framework organiza seus componentes internamente. Estes são os blueprints que você seguiria ao construir com cada abordagem.</p>
 
     <!-- OpenClaw -->
-    <div class="arch-card">
+    <div id="arch-openclaw" class="arch-card">
       <div class="arch-header">
         <div class="arch-badge" style="background: linear-gradient(135deg, #6c63ff, #8b5cf6)">OC</div>
         <div>
@@ -447,7 +480,7 @@
     </div>
 
     <!-- ZeroClaw -->
-    <div class="arch-card">
+    <div id="arch-zeroclaw" class="arch-card">
       <div class="arch-header">
         <div class="arch-badge" style="background: linear-gradient(135deg, #ef5350, #ff7043)">ZC</div>
         <div>
@@ -484,7 +517,7 @@
     </div>
 
     <!-- NanoClaw -->
-    <div class="arch-card">
+    <div id="arch-nanoclaw" class="arch-card">
       <div class="arch-header">
         <div class="arch-badge" style="background: linear-gradient(135deg, #00d4aa, #26c6da)">NC</div>
         <div>
@@ -519,7 +552,7 @@
     </div>
 
     <!-- TinyClaw -->
-    <div class="arch-card">
+    <div id="arch-tinyclaw" class="arch-card">
       <div class="arch-header">
         <div class="arch-badge" style="background: linear-gradient(135deg, #ab47bc, #ce93d8)">TC</div>
         <div>
@@ -557,7 +590,7 @@
     </div>
 
     <!-- IronClaw -->
-    <div class="arch-card">
+    <div id="arch-ironclaw" class="arch-card">
       <div class="arch-header">
         <div class="arch-badge" style="background: linear-gradient(135deg, #607d8b, #90a4ae)">IC</div>
         <div>
@@ -596,7 +629,7 @@
     </div>
 
     <!-- Agent Zero -->
-    <div class="arch-card">
+    <div id="arch-agentzero" class="arch-card">
       <div class="arch-header">
         <div class="arch-badge" style="background: linear-gradient(135deg, #66bb6a, #81c784)">A0</div>
         <div>
