@@ -302,18 +302,16 @@
         </div>
 
         <div class="file-tree-block">
-          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
-          <div class="file-tree"><span class="fd">src/agents/</span>
-├── <span class="fn">identity.ts</span>              <span class="star">★</span> Formato AIEOS: serializa personalidade portátil
-├── <span class="fn">identity-file.ts</span>          Carrega SOUL.md e arquivos do workspace
-├── <span class="fn">identity-avatar.ts</span>        Avatar e apresentação visual do agente
-├── <span class="fn">system-prompt.ts</span>          Monta o system prompt enviado ao LLM
-├── <span class="fn">system-prompt-params.ts</span>   Parâmetros e variáveis do system prompt
-└── <span class="fn">workspace.ts</span>              Gerencia workspace e arquivos de identidade
+          <div class="file-tree-label">Arquivos do INTELECTO</div>
+          <div class="file-tree"><span class="fd">intelecto/agent/</span>
+├── <span class="fn">context.py</span>               <span class="star">★</span> Carrega workspace/ e monta o system prompt final
+└── <span class="fn">loop.py</span>                   Repassa o system prompt ao LLM em cada turno
 
-<span class="fd">src/hooks/bundled/</span>
-├── <span class="fn">boot-md/</span>                  Hook de boot: carrega CLAUDE.md ao iniciar
-└── <span class="fn">soul-evil/</span>                Hook de personalidade: aplica SOUL.md ao agente</div>
+<span class="fd">workspace/</span>
+├── <span class="fn">SOUL.md</span>                  <span class="star">★</span> Personalidade: tom, valores, estilo de resposta
+├── <span class="fn">AGENTS.md</span>                 Regras de comportamento e uso de ferramentas
+├── <span class="fn">USER.md</span>                   Perfil e preferências do usuário
+└── <span class="fn">MEMORY.md</span>                 Fatos de bootstrap carregados na inicialização</div>
         </div>
       </div>
     </div>
@@ -340,20 +338,17 @@
         </div>
 
         <div class="file-tree-block">
-          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
-          <div class="file-tree"><span class="fd">src/security/</span>
-├── <span class="fn">audit.ts</span>                 <span class="star">★</span> Audit log: registra todas as ações do agente
-├── <span class="fn">audit-fs.ts</span>               Auditoria de operações de filesystem
-├── <span class="fn">external-content.ts</span>       Detecta prompt injection em conteúdo externo
-└── <span class="fn">fix.ts</span>                    Correções automáticas de problemas detectados
+          <div class="file-tree-label">Arquivos do INTELECTO</div>
+          <div class="file-tree"><span class="fd">intelecto/security/</span>
+├── <span class="fn">secrets.py</span>               <span class="star">★</span> Fernet + PBKDF2: criptografa chaves com UUID do hardware
+└── <span class="fn">safety.py</span>                 Blocklist de comandos + path traversal + audit log
 
-<span class="fd">src/agents/</span>
-├── <span class="fn">sandbox/sandbox.ts</span>        WASM sandbox: isola execução de ferramentas
-├── <span class="fn">tool-policy.ts</span>            Gates: readonly / supervisionado / autônomo
-├── <span class="fn">pi-tools.policy.ts</span>        Allowlist de ferramentas permitidas
-└── <span class="fn">bash-tools.ts</span>             Shell com blocklist de comandos perigosos
+<span class="fd">intelecto/tools/</span>
+└── <span class="fn">shell.py</span>                  run_command com timeout de 60s e blocklist embutida
 
-<span class="fd">src/channels/allowlists/</span>       Allowlist por canal: quem pode interagir</div>
+<span class="fd">~/.intelecto/</span>
+├── <span class="fn">.secrets</span>                  Chaves criptografadas (inúteis em outro hardware)
+└── <span class="fn">audit.log</span>                 Log de todos os comandos executados</div>
         </div>
       </div>
     </div>
@@ -380,19 +375,15 @@
         </div>
 
         <div class="file-tree-block">
-          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
-          <div class="file-tree"><span class="fn">src/telegram/bot/</span>         Bot Telegram (long-polling, mídia, botões inline)
-<span class="fn">src/whatsapp/</span>               WhatsApp via Baileys (QR code, grupos, business)
-<span class="fn">src/discord/</span>                Discord (slash commands, canais, threads)
-<span class="fn">src/slack/</span>                  Slack via Socket Mode (sem IP público necessário)
-<span class="fn">src/imessage/monitor/</span>       iMessage via macOS Shortcuts
-<span class="fn">src/signal/monitor/</span>         Signal
-<span class="fn">src/web/</span>                    Painel web (status, histórico, canvas visual)
+          <div class="file-tree-label">Arquivos do INTELECTO</div>
+          <div class="file-tree"><span class="fd">intelecto/channels/</span>
+├── <span class="fn">base.py</span>                  <span class="star">★</span> Contrato abstrato: start(on_message), send(), stop()
+└── <span class="fn">telegram.py</span>               Long-polling, split em >4096 chars, typing indicator
 
-<span class="fd">src/channels/</span>
-├── <span class="fn">registry.ts</span>              <span class="star">★</span> Registro central de todos os canais ativos
-├── <span class="fn">session.ts</span>                Gestão de sessão por canal/usuário
-└── <span class="fn">plugins/</span>                  Plugins: outbound, normalize, ack, status</div>
+<span class="fd"># Para adicionar novos canais — implemente BaseChannel:</span>
+<span class="fn">channels/whatsapp.py</span>          WhatsApp (sem tocar no código do agente)
+<span class="fn">channels/discord.py</span>           Discord (mesmo contrato)
+<span class="fn">channels/slack.py</span>             Slack Socket Mode</div>
         </div>
       </div>
     </div>
@@ -418,21 +409,20 @@
         </div>
 
         <div class="file-tree-block">
-          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
-          <div class="file-tree"><span class="fd">src/memory/</span>
-├── <span class="fn">index.ts</span>                 <span class="star">★</span> Interface pública da memória
-├── <span class="fn">manager.ts</span>                Coordena busca, armazenamento e deduplicação
-├── <span class="fn">hybrid.ts</span>                 Busca híbrida: vetorial + palavras-chave
-├── <span class="fn">sqlite.ts</span>                 Backend SQLite com FTS5 e ranking BM25
-├── <span class="fn">sqlite-vec.ts</span>             Extensão vetorial para busca semântica
-├── <span class="fn">embeddings.ts</span>             Embeddings via OpenAI ou Google Gemini
-└── <span class="fn">sync-session-files.ts</span>     Sincroniza histórico de sessões com memória
+          <div class="file-tree-label">Arquivos do INTELECTO</div>
+          <div class="file-tree"><span class="fd">intelecto/memory/</span>
+└── <span class="fn">store.py</span>                 <span class="star">★</span> SQLite FTS5 + BM25 + deduplicação automática (>80% = atualiza)
 
-<span class="fd">src/agents/</span>
-├── <span class="fn">compaction.ts</span>             Compactação automática de sessões longas
-└── <span class="fn">memory-search.ts</span>          Busca na memória a partir do agente
+<span class="fd">intelecto/agent/</span>
+└── <span class="fn">context.py</span>                memory.search(query) → injeta resultados no system prompt
 
-<span class="fn">src/hooks/bundled/session-memory/</span>   Persiste memória a cada sessão</div>
+<span class="fd">~/.intelecto/</span>
+└── <span class="fn">memory.db</span>                 Banco persistente — sobrevive a reinicializações
+
+<span class="fd"># Categorias armazenadas:</span>
+<span class="fn">fact</span>         · fatos sobre você e preferências
+<span class="fn">conversation</span> · resumos de conversas importantes
+<span class="fn">solution</span>     · soluções para problemas recorrentes</div>
         </div>
       </div>
     </div>
@@ -458,20 +448,17 @@
         </div>
 
         <div class="file-tree-block">
-          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
-          <div class="file-tree"><span class="fd">src/cron/</span>
-├── <span class="fn">service/service.ts</span>       <span class="star">★</span> Serviço de cron: executa tarefas agendadas
-├── <span class="fn">schedule.ts</span>               Parser de expressões cron (5-campos)
-├── <span class="fn">store.ts</span>                  Armazenamento de jobs agendados
-└── <span class="fn">isolated-agent/</span>           Agente isolado para execução de cron jobs
+          <div class="file-tree-label">Arquivos do INTELECTO — Roadmap Phase 2</div>
+          <div class="file-tree"><span class="fd">intelecto/tools/</span>               <span class="fd"># planejado — não implementado no v0.1</span>
+├── <span class="fn">cron.py</span>                   Agendamento: "toda segunda às 9h, me envie..."
+└── <span class="fn">web.py</span>                    Busca web e fetch de páginas/URLs
 
-<span class="fn">src/browser/</span>                  Automação de navegador via Playwright
-<span class="fn">src/auto-reply/reply/</span>         Respostas automáticas a mensagens
+<span class="fd">intelecto/agent/</span>
+└── <span class="fn">loop.py</span>                   Já suporta múltiplos rounds — base para automação
 
-<span class="fd">src/agents/</span>
-├── <span class="fn">subagent-registry.ts</span>      Registro e coordenação de sub-agentes
-├── <span class="fn">openclaw-tools.ts</span>         Ferramentas: spawn de agentes, sessões, status
-└── <span class="fn">subagent-announce.ts</span>      Notificações e @mentions entre agentes</div>
+<span class="fd"># Hoje implementado:</span>
+<span class="fn">com.intelecto.agent.plist</span>     Auto-restart via macOS launchd (ativo agora)
+<span class="fn">start.sh</span>                      Launcher com venv + install automático</div>
         </div>
       </div>
     </div>
@@ -499,21 +486,20 @@
         </div>
 
         <div class="file-tree-block">
-          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
-          <div class="file-tree"><span class="fd">src/agents/</span>
-├── <span class="fn">models-config.ts</span>         <span class="star">★</span> Configuração de provedores e modelos
-├── <span class="fn">model-fallback.ts</span>         Failover automático entre provedores
-├── <span class="fn">model-selection.ts</span>        Seleção de modelo por tipo de tarefa
-└── <span class="fn">model-catalog.ts</span>          Catálogo de modelos disponíveis (100+)
+          <div class="file-tree-label">Arquivos do INTELECTO</div>
+          <div class="file-tree"><span class="fd">intelecto/providers/</span>
+├── <span class="fn">base.py</span>                  <span class="star">★</span> Contrato abstrato: async chat() → LLMResponse
+├── <span class="fn">openrouter.py</span>              OpenRouter via LiteLLM (100+ modelos com 1 chave)
+└── <span class="fn">ollama.py</span>                  Ollama local (zero custo, zero cloud)
 
-<span class="fd">src/media-understanding/providers/</span>
-├── <span class="fn">openai/</span>  <span class="fn">anthropic/</span>       Visão: GPT-4V, Claude Vision
-├── <span class="fn">deepgram/</span>  <span class="fn">groq/</span>          Transcrição de voz (Deepgram, Whisper via Groq)
-└── <span class="fn">google/</span>  <span class="fn">minimax/</span>          Multimodal: Gemini, Minimax
+<span class="fd">intelecto/</span>
+└── <span class="fn">config.py</span>                  Configura provider padrão e modelo por tarefa
 
-<span class="fn">src/acp/</span>                      Protocolo ACP/MCP: agentes ↔ ferramentas externas
-<span class="fn">src/agents/skills/</span>            Sistema de skills instaláveis
-<span class="fn">src/plugin-sdk/</span>               SDK para criação de plugins customizados</div>
+<span class="fd">requirements.txt</span>
+└── <span class="fn">litellm ≥1.40.0</span>           Interface unificada: OpenRouter, Ollama, qualquer LLM
+
+<span class="fd"># Adicionar provedor = implementar BaseProvider:</span>
+<span class="fn">providers/gemini.py</span>  · <span class="fn">providers/groq.py</span>  · <span class="fn">providers/cohere.py</span></div>
         </div>
       </div>
     </div>
@@ -542,20 +528,16 @@
         </div>
 
         <div class="file-tree-block">
-          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
-          <div class="file-tree"><span class="fd">src/agents/skills/</span>
-├── <span class="fn">skills.ts</span>                <span class="star">★</span> Gestão de skills: carregar e registrar no agente
-├── <span class="fn">skills-install.ts</span>         Instalação de skills do marketplace
-└── <span class="fn">skills-status.ts</span>          Status e saúde das skills instaladas
+          <div class="file-tree-label">Arquivos do INTELECTO</div>
+          <div class="file-tree"><span class="fd">intelecto/tools/</span>
+├── <span class="fn">base.py</span>                  <span class="star">★</span> Contrato: name, description, parameters, execute()
+├── <span class="fn">registry.py</span>               Descoberta e dispatch de ferramentas
+├── <span class="fn">filesystem.py</span>             read_file, write_file, list_directory
+└── <span class="fn">shell.py</span>                  run_command com safety check e timeout 60s
 
-<span class="fn">src/tts/</span>                      Text-to-Speech: ElevenLabs, local, macOS
-<span class="fn">src/media-understanding/</span>      Análise de imagens, áudio e vídeo
-<span class="fn">src/browser/</span>                  Automação de navegador (Playwright)
-
-<span class="fd">src/agents/</span>
-├── <span class="fn">bash-tools.ts</span>             Execução de shell com sandbox e blocklist
-├── <span class="fn">pi-tools.ts</span>               Ferramentas built-in do agente pi
-└── <span class="fn">channel-tools.ts</span>          Ferramentas de canal (enviar, mencionar)</div>
+<span class="fd"># Adicionar skill = criar novo arquivo herdando BaseTool:</span>
+<span class="fn">tools/github.py</span>  · <span class="fn">tools/notion.py</span>  · <span class="fn">tools/calendar.py</span>
+<span class="fd"># Sem tocar em registry.py — descoberta automática</span></div>
         </div>
       </div>
     </div>
@@ -581,17 +563,20 @@
         </div>
 
         <div class="file-tree-block">
-          <div class="file-tree-label">Arquivos relevantes — OpenClaw</div>
-          <div class="file-tree"><span class="fn">src/gateway/server/server.ts</span>   <span class="star">★</span> Hub WebSocket central (torre de controle)
-<span class="fn">src/channels/registry.ts</span>        Registro de canais conectados ao gateway
-<span class="fn">src/sessions/</span>                   Sessões em arquivos JSONL por agente
-<span class="fn">src/routing/</span>                    Roteamento de mensagens entre canais/agentes
-<span class="fn">src/config/</span>                     Configuração global e por sessão
-<span class="fn">src/daemon/</span>                     Processo daemon com restart automático
+          <div class="file-tree-label">Arquivos do INTELECTO</div>
+          <div class="file-tree"><span class="fd">intelecto/</span>
+├── <span class="fn">main.py</span>                  <span class="star">★</span> Entry point: detecta config, inicia bot
+└── <span class="fn">config.py</span>                 Singleton de configuração (~/.intelecto/config.json)
 
-<span class="fd">src/agents/</span>
-├── <span class="fn">lanes.ts</span>                   Controle de concorrência (lanes)
-└── <span class="fn">pi-embedded-runner.ts</span>      Loop principal: recebe → pensa → responde</div>
+<span class="fd">intelecto/agent/</span>
+├── <span class="fn">loop.py</span>                   Core: recebe → pensa → responde (max 5 rounds)
+└── <span class="fn">context.py</span>                Monta system prompt + memórias relevantes
+
+<span class="fd"># Contratos — cada subsistema implementa sua interface:</span>
+<span class="fn">providers/base.py</span>    async chat() → LLMResponse
+<span class="fn">channels/base.py</span>     start(), send(), stop()
+<span class="fn">memory/store.py</span>      save(), search(), forget(), recent()
+<span class="fn">tools/base.py</span>        name, description, execute()</div>
         </div>
       </div>
     </div>
