@@ -1486,8 +1486,8 @@ function exportCart() {
   md += "> which reference frameworks implement it, and enough context for Claude Code to understand\n";
   md += "> the implementation requirements.\n";
   md += ">\n";
-  md += "> **Reference repos**: Located at `/Users/marwankashef/Desktop/YouTube/OpenClaw Antidote/`\n";
-  md += "> **Full analysis**: See `FRAMEWORK-DEEP-DIVE.md` in the same directory.\n\n";
+  md += "> **Reference repos**: Bundled in `reference-repos/` (openclaw, nanobot)\n";
+  md += "> **Full analysis**: See `doc/intelecto.md` (the full build plan).\n\n";
   md += "---\n\n";
   md += `**Total selected items: ${cart.length}**\n\n`;
 
@@ -1499,14 +1499,8 @@ function exportCart() {
       md += `**Reference implementations**: ${item.sources.join(', ')}\n\n`;
       // Add implementation hints based on source frameworks
       const hints = [];
-      if (item.sources.includes('OpenClaw')) hints.push('OpenClaw (`./openclaw/`): TypeScript, check `skills/` and `extensions/` directories');
-      if (item.sources.includes('ZeroClaw')) hints.push('ZeroClaw (`./zeroclaw/`): Rust trait-based, check `src/tools/` directory');
-      if (item.sources.includes('NanoClaw')) hints.push('NanoClaw (`./nanoclaw/`): TypeScript 5.2K lines, check `.claude/skills/` and `container/skills/`');
-      if (item.sources.includes('NanoBot')) hints.push('NanoBot (`./nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`');
-      if (item.sources.includes('PicoClaw')) hints.push('PicoClaw (`./picoclaw/`): Go, check `workspace/skills/` and `pkg/tools/`');
-      if (item.sources.includes('IronClaw')) hints.push('IronClaw (`./ironclaw/`): Rust + WASM, check `src/tools/builtin/` and `tools-src/`');
-      if (item.sources.includes('TinyClaw')) hints.push('TinyClaw (`./tinyclaw/`): TS/Bash, check `.agents/skills/` directory');
-      if (item.sources.includes('Agent Zero')) hints.push('Agent Zero (`./agent-zero/`): Python, check `python/tools/` and `python/extensions/`');
+      if (item.sources.includes('OpenClaw')) hints.push('OpenClaw (`./reference-repos/openclaw/`): TypeScript, check `skills/` and `extensions/` directories');
+      if (item.sources.includes('NanoBot')) hints.push('NanoBot (`./reference-repos/nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`');
       if (hints.length > 0) {
         md += `**Where to find reference code**:\n`;
         hints.forEach(h => { md += `- ${h}\n`; });
@@ -1522,7 +1516,7 @@ function exportCart() {
   md += "2. **Prefer simplicity** - If NanoClaw (5.2K lines) and OpenClaw (large) both implement a feature, start with NanoClaw's approach.\n";
   md += "3. **Keep it modular** - Use ZeroClaw/IronClaw's trait-based pattern so components can be swapped later.\n";
   md += "4. **Security by default** - Apply sandboxing, command blocklists, and pairing codes from the start.\n";
-  md += "5. **Full deep-dive reference** - See `FRAMEWORK-DEEP-DIVE.md` for complete architectural analysis of all 9 repos.\n\n";
+  md += "5. **Full deep-dive reference** - See `doc/intelecto.md` in this repo for the complete build plan.\n\n";
   md += "---\n\n";
   md += "*Generated from the AI Agent Framework Grocery Store comparison tool.*\n";
 

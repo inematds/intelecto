@@ -1,0 +1,41 @@
+# Docker Compose override for Ollama integration
+# Usage: docker compose -f docker-compose.yml -f docker-compose.ollama.yml up -d
+#
+# This adds a local Ollama instance for running LLMs without external API dependencies.
+# Recommended for VPS deployments with 8GB+ RAM.
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: openclaw-ollama
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 6G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  openclaw-gateway:
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+
+  openclaw-cli:
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+
+volumes:
+  ollama-data:

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**INTELECTO** is a personal AI assistant built in Python 3.11+. It runs locally on macOS, communicates via Telegram (long-polling), stores memories in SQLite FTS5, and talks to LLMs through OpenRouter or Ollama. The full specification lives in `doc/antidote.md`.
+**INTELECTO** is a personal AI assistant built in Python 3.11+. It runs locally on macOS, communicates via Telegram (long-polling), stores memories in SQLite FTS5, and talks to LLMs through OpenRouter or Ollama. The full specification lives in `doc/intelecto.md`.
 
 > Status: v0.1.0 — 35 files, 3,412 lines target. **No Python code written yet — implementation in progress.**
 
@@ -61,7 +61,7 @@ All modules MUST implement their abstract base. Do not break these signatures.
 
 **Tool** (`intelecto/tools/base.py`): class attributes `name`, `description`, `parameters` (JSON Schema) + `async execute(**kwargs) -> ToolResult`
 
-See `doc/antidote.md` for the full dataclass definitions (`Message`, `LLMResponse`, `IncomingMessage`, `OutgoingMessage`, `MemoryEntry`, `ToolResult`).
+See `doc/intelecto.md` for the full dataclass definitions (`Message`, `LLMResponse`, `IncomingMessage`, `OutgoingMessage`, `MemoryEntry`, `ToolResult`).
 
 ## Identity Stack
 
@@ -104,4 +104,4 @@ Phase A (parallel): W1 Config/Secrets → W2 Providers, W3 Memory/Identity, W4 T
 Phase B: Agent loop, main entry point, wizard
 Phase C: pyproject.toml, branding, README, packaging
 
-Full workstream breakdown with task-level detail is in `doc/antidote.md`.
+Full workstream breakdown with task-level detail is in `doc/intelecto.md`.

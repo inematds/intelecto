@@ -183,7 +183,7 @@
   .source-openrouter { background:rgba(0,212,170,0.15); color:#00d4aa; }
   .source-falai { background:rgba(255,107,157,0.15); color:#ff6b9d; }
   .source-kieai { background:rgba(108,99,255,0.15); color:#a5a0ff; }
-  .source-antidote { background:rgba(0,210,106,0.15); color:#00d26a; }
+  .source-intelecto { background:rgba(0,210,106,0.15); color:#00d26a; }
 
   /* Scrollbar */
   ::-webkit-scrollbar { width:6px; height:6px; }
@@ -779,7 +779,7 @@
         <div class="item-card" data-name="OpenRouter 100+ Models" onclick="toggleItem(this)">
           <div class="item-name">OpenRouter — 100+ Modelos, 1 Chave</div>
           <div class="item-desc">Acesse Claude, GPT-4, Gemini, Mistral, DeepSeek, Llama e mais de 100 modelos com uma única chave de API. Troque de modelo sem mudar o código. Ideal como provider principal com Ollama como fallback local.</div>
-          <div class="item-sources"><span class="item-source source-openrouter">OpenRouter</span><span class="item-source source-antidote">Antidote</span><span class="item-source source-nanobot">NanoBot</span></div>
+          <div class="item-sources"><span class="item-source source-openrouter">OpenRouter</span><span class="item-source source-intelecto">INTELECTO</span><span class="item-source source-nanobot">NanoBot</span></div>
         </div>
         <div class="item-card" data-name="Multi-Model Selection" onclick="toggleItem(this)">
           <div class="item-name">Seleção de Modelo por Tarefa</div>
@@ -789,7 +789,7 @@
         <div class="item-card" data-name="Local LLM Support" onclick="toggleItem(this)">
           <div class="item-name">Suporte a LLM Local (Ollama)</div>
           <div class="item-desc">Execute modelos de IA no seu próprio computador. Zero custo de API. Privacidade total. Sem necessidade de internet. Use junto com OpenRouter: nuvem quando precisa de potência, local quando precisa de privacidade.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-antidote">Antidote</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-intelecto">INTELECTO</span></div>
         </div>
         <div class="item-card" data-name="Specialized Media Providers" onclick="toggleItem(this)">
           <div class="item-name">Provedores de Mídia Especializada (fal.ai, Kie.ai)</div>
@@ -1505,8 +1505,8 @@ function exportCart() {
   md += "> which reference frameworks implement it, and enough context for Claude Code to understand\n";
   md += "> the implementation requirements.\n";
   md += ">\n";
-  md += "> **Reference repos**: Located at `/Users/marwankashef/Desktop/YouTube/OpenClaw Antidote/`\n";
-  md += "> **Full analysis**: See `FRAMEWORK-DEEP-DIVE.md` in the same directory.\n\n";
+  md += "> **Reference repos**: Bundled in `reference-repos/` (openclaw, nanobot)\n";
+  md += "> **Full analysis**: See `doc/intelecto.md` (the full build plan).\n\n";
   md += "---\n\n";
   md += `**Total selected items: ${cart.length}**\n\n`;
 
@@ -1518,14 +1518,8 @@ function exportCart() {
       md += `**Reference implementations**: ${item.sources.join(', ')}\n\n`;
       // Add implementation hints based on source frameworks
       const hints = [];
-      if (item.sources.includes('OpenClaw')) hints.push('OpenClaw (`./openclaw/`): TypeScript, check `skills/` and `extensions/` directories');
-      if (item.sources.includes('ZeroClaw')) hints.push('ZeroClaw (`./zeroclaw/`): Rust trait-based, check `src/tools/` directory');
-      if (item.sources.includes('NanoClaw')) hints.push('NanoClaw (`./nanoclaw/`): TypeScript 5.2K lines, check `.claude/skills/` and `container/skills/`');
-      if (item.sources.includes('NanoBot')) hints.push('NanoBot (`./nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`');
-      if (item.sources.includes('PicoClaw')) hints.push('PicoClaw (`./picoclaw/`): Go, check `workspace/skills/` and `pkg/tools/`');
-      if (item.sources.includes('IronClaw')) hints.push('IronClaw (`./ironclaw/`): Rust + WASM, check `src/tools/builtin/` and `tools-src/`');
-      if (item.sources.includes('TinyClaw')) hints.push('TinyClaw (`./tinyclaw/`): TS/Bash, check `.agents/skills/` directory');
-      if (item.sources.includes('Agent Zero')) hints.push('Agent Zero (`./agent-zero/`): Python, check `python/tools/` and `python/extensions/`');
+      if (item.sources.includes('OpenClaw')) hints.push('OpenClaw (`./reference-repos/openclaw/`): TypeScript, check `skills/` and `extensions/` directories');
+      if (item.sources.includes('NanoBot')) hints.push('NanoBot (`./reference-repos/nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`');
       if (hints.length > 0) {
         md += `**Where to find reference code**:\n`;
         hints.forEach(h => { md += `- ${h}\n`; });
@@ -1541,7 +1535,7 @@ function exportCart() {
   md += "2. **Prefer simplicity** - If NanoClaw (5.2K lines) and OpenClaw (large) both implement a feature, start with NanoClaw's approach.\n";
   md += "3. **Keep it modular** - Use ZeroClaw/IronClaw's trait-based pattern so components can be swapped later.\n";
   md += "4. **Security by default** - Apply sandboxing, command blocklists, and pairing codes from the start.\n";
-  md += "5. **Full deep-dive reference** - See `FRAMEWORK-DEEP-DIVE.md` for complete architectural analysis of all 9 repos.\n\n";
+  md += "5. **Full deep-dive reference** - See `doc/intelecto.md` in this repo for the complete build plan.\n\n";
   md += "---\n\n";
   md += "*Generated from the AI Agent Framework Grocery Store comparison tool.*\n";
 
