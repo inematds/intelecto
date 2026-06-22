@@ -185,6 +185,13 @@
   .source-kieai { background:rgba(108,99,255,0.15); color:#a5a0ff; }
   .source-intelecto { background:rgba(0,210,106,0.15); color:#00d26a; }
 
+  .c-claudeclaw { --c:#d97757; } .c-claudeclaw .fw-icon { background:linear-gradient(135deg,#d97757,#e8a87c); }
+  .c-hermes { --c:#eab308; } .c-hermes .fw-icon { background:linear-gradient(135deg,#eab308,#fde047); }
+  .c-aios { --c:#7c3aed; } .c-aios .fw-icon { background:linear-gradient(135deg,#7c3aed,#a78bfa); }
+  .source-claudeclaw { background:rgba(217,119,87,0.15); color:#e8a87c; }
+  .source-hermes { background:rgba(234,179,8,0.15); color:#fde047; }
+  .source-aios { background:rgba(124,58,237,0.15); color:#c4b5fd; }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width:6px; height:6px; }
   ::-webkit-scrollbar-track { background:var(--bg); }
@@ -209,12 +216,12 @@
 <!-- HERO -->
 <section class="hero">
   <h1>Mercearia de Frameworks de Agentes de IA</h1>
-  <p>9 frameworks analisados. Centenas de funcionalidades extraídas. Escolha os ingredientes que importam para o SEU negócio.</p>
+  <p>12 frameworks analisados. Centenas de funcionalidades extraídas. Escolha os ingredientes que importam para o SEU negócio.</p>
   <div class="stats">
-    <div class="stat"><div class="stat-num">9</div><div class="stat-label">Frameworks</div></div>
+    <div class="stat"><div class="stat-num">12</div><div class="stat-label">Frameworks</div></div>
     <div class="stat"><div class="stat-num">7</div><div class="stat-label">Linguagens</div></div>
-    <div class="stat"><div class="stat-num">130+</div><div class="stat-label">Funcionalidades Disponíveis</div></div>
-    <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Modelos de IA Suportados</div></div>
+    <div class="stat"><div class="stat-num">170+</div><div class="stat-label">Funcionalidades Disponíveis</div></div>
+    <div class="stat"><div class="stat-num">40+</div><div class="stat-label">Modelos de IA Suportados</div></div>
   </div>
 </section>
 
@@ -230,7 +237,7 @@
 
 <!-- OVERVIEW -->
 <section id="overview" class="container">
-  <h2 style="margin-bottom:0.5rem">Os 9 Frameworks em Resumo</h2>
+  <h2 style="margin-bottom:0.5rem">Os 12 Frameworks em Resumo</h2>
   <p style="color:var(--text-dim);margin-bottom:2rem">Cada cartão mostra a essência do framework. Pense neles como as "marcas" da sua mercearia.</p>
 
   <div class="frameworks-grid">
@@ -421,6 +428,81 @@
       </div>
     </div>
 
+    <!-- ClaudeClaw -->
+    <div class="fw-card c-claudeclaw">
+      <div class="fw-card-header">
+        <div class="fw-icon">CC</div>
+        <div><h3>ClaudeClaw</h3><small style="color:var(--text-dim)">O Quartel-General de Bolso</small></div>
+        <span class="fw-lang">TypeScript/Node</span>
+      </div>
+      <div class="fw-card-body">
+        <p>Um "sistema operacional" de assistente pessoal entregue no seu celular via Telegram, que roda o Claude Code na sua própria máquina e devolve o resultado no chat. Seu diferencial é orquestrar um TIME de agentes especialistas que conversam entre si (War Room em texto e voz), compartilham um "cérebro coletivo" visualizável em 3D (Hive Mind) e podem até entrar em reuniões de vídeo reais como avatares. Tudo local: SQLite, sem nuvem.</p>
+        <div class="fw-tags">
+          <span class="fw-tag" style="border-color:#d97757;color:#e8a87c">War Room Multi-Agente</span>
+          <span class="fw-tag" style="border-color:#d97757;color:#e8a87c">Hive Mind 3D</span>
+          <span class="fw-tag" style="border-color:#d97757;color:#e8a87c">Mission Control Kanban</span>
+          <span class="fw-tag" style="border-color:#d97757;color:#e8a87c">Live Meetings</span>
+          <span class="fw-tag" style="border-color:#d97757;color:#e8a87c">Exfiltration Guard</span>
+          <span class="fw-tag" style="border-color:#d97757;color:#e8a87c">Kill Switches</span>
+        </div>
+        <div class="fw-metrics">
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#d97757">8</div><div class="fw-metric-label">Superfícies</div></div>
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#d97757">5</div><div class="fw-metric-label">Camadas de Memória</div></div>
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#d97757">N</div><div class="fw-metric-label">Agentes em Time</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hermes -->
+    <div class="fw-card c-hermes">
+      <div class="fw-card-header">
+        <div class="fw-icon">HM</div>
+        <div><h3>Hermes</h3><small style="color:var(--text-dim)">O Agente que Cresce com Você</small></div>
+        <span class="fw-lang">Python</span>
+      </div>
+      <div class="fw-card-body">
+        <p>Runtime de agente open source (MIT) da Nous Research: um agente que FAZ, não só fala. Combina um loop de raciocínio (perceive → act → reflect → save), memória persistente local nativa (SQLite + FTS5) e um sistema de skills dinâmicas em que o próprio agente escreve novas habilidades quando detecta um padrão repetido. Local-first, multi-canal e model-agnostic via OpenRouter (200+ modelos). Quanto mais você usa, mais ele te conhece.</p>
+        <div class="fw-tags">
+          <span class="fw-tag" style="border-color:#eab308;color:#fde047">Skills Autônomas</span>
+          <span class="fw-tag" style="border-color:#eab308;color:#fde047">Loop Reflexivo</span>
+          <span class="fw-tag" style="border-color:#eab308;color:#fde047">Memória Auto-Curada</span>
+          <span class="fw-tag" style="border-color:#eab308;color:#fde047">Heartbeat 24/7</span>
+          <span class="fw-tag" style="border-color:#eab308;color:#fde047">Cliente MCP</span>
+          <span class="fw-tag" style="border-color:#eab308;color:#fde047">Honcho User Modeling</span>
+        </div>
+        <div class="fw-metrics">
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#eab308">200+</div><div class="fw-metric-label">Modelos via OpenRouter</div></div>
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#eab308">40+</div><div class="fw-metric-label">Tools Nativas</div></div>
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#eab308">7</div><div class="fw-metric-label">Backends de Deploy</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AIOS -->
+    <div class="fw-card c-aios">
+      <div class="fw-card-header">
+        <div class="fw-icon">AI</div>
+        <div><h3>AIOS</h3><small style="color:var(--text-dim)">O Kernel dos Agentes</small></div>
+        <span class="fw-lang">Python</span>
+      </div>
+      <div class="fw-card-body">
+        <p>O projeto da AGI Research (Rutgers) que embute LLMs dentro de uma camada de sistema operacional para agentes. Não é wrapper de chat nem framework de cadeias: é um kernel persistente onde vários agentes LLM coexistem, compartilham modelos, memória e ferramentas, e são escalonados como processos de SO. O agente fala com o kernel por syscalls (LLMCall, MemoryRead/Write, ToolCall, ContextSwitch) via SDK Cerebrum. Base científica em papers COLM/NAACL/ICLR.</p>
+        <div class="fw-tags">
+          <span class="fw-tag" style="border-color:#7c3aed;color:#c4b5fd">Agente-como-Processo</span>
+          <span class="fw-tag" style="border-color:#7c3aed;color:#c4b5fd">Scheduler de Fairness</span>
+          <span class="fw-tag" style="border-color:#7c3aed;color:#c4b5fd">Context Switch</span>
+          <span class="fw-tag" style="border-color:#7c3aed;color:#c4b5fd">Syscalls</span>
+          <span class="fw-tag" style="border-color:#7c3aed;color:#c4b5fd">Agent Hub</span>
+          <span class="fw-tag" style="border-color:#7c3aed;color:#c4b5fd">Kernel + SDK</span>
+        </div>
+        <div class="fw-metrics">
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#7c3aed">6</div><div class="fw-metric-label">Módulos do Kernel</div></div>
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#7c3aed">5</div><div class="fw-metric-label">Papers Publicados</div></div>
+          <div class="fw-metric"><div class="fw-metric-val" style="color:#7c3aed">7+</div><div class="fw-metric-label">Provedores de IA</div></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Awesome OpenClaw -->
     <div class="fw-card c-awesome">
       <div class="fw-card-header">
@@ -517,6 +599,72 @@
       <div class="concept-node" style="border-color:var(--accent4)"><strong>Criar Sub-Agentes</strong><small>OC, PC, NB, TC, A0</small></div>
     </div>
   </div>
+
+  <!-- Multi-Agent Swarm (ClaudeClaw) -->
+  <div class="concept-deep">
+    <h3>Enxame Multi-Agente ao Vivo (War Room e Hive)</h3>
+    <p style="color:var(--text-dim);margin-bottom:1rem">Os frameworks da família "Claw" costumam ter <strong>um</strong> agente que conversa com você. O ClaudeClaw vira a chave: em vez de um, você tem um <strong>time</strong> de agentes especialistas, cada um sendo seu próprio bot no Telegram, que conversam entre si em uma sala ao vivo (a "War Room", em texto ou em voz) e dividem um <strong>cérebro coletivo</strong>. Pense numa empresa onde cada funcionário registra o que fez num quadro central — esse quadro é o "Hive Mind", e o ClaudeClaw ainda o desenha como um cérebro 3D para você enxergar o que o enxame andou fazendo.</p>
+    <div class="concept-flow">
+      <div class="concept-node" style="border-color:#d97757"><strong>@comms</strong><small>Agente</small></div>
+      <div class="concept-node" style="border-color:#d97757"><strong>@ops</strong><small>Agente</small></div>
+      <div class="concept-node" style="border-color:#d97757"><strong>@research</strong><small>Agente</small></div>
+      <span class="concept-arrow">&rarr;</span>
+      <div class="concept-node" style="border-color:var(--accent);background:rgba(217,119,87,0.1)"><strong>WAR ROOM</strong><small>Reunião ao vivo (texto/voz)</small></div>
+      <span class="concept-arrow">&rarr;</span>
+      <div class="concept-node" style="border-color:var(--accent2)"><strong>HIVE MIND</strong><small>Cérebro 3D compartilhado</small></div>
+    </div>
+    <p style="color:var(--text-dim);font-size:0.85rem"><strong>Quem usa:</strong> ClaudeClaw (War Room texto+voz, Hive Mind 3D). TinyClaw e Agent Zero têm times de agentes, mas sem reunião ao vivo nem visualização cross-agente.</p>
+  </div>
+
+  <!-- Reflective Loop (Hermes) -->
+  <div class="concept-deep">
+    <h3>Loop Reflexivo (a IA que cria as próprias skills)</h3>
+    <p style="color:var(--text-dim);margin-bottom:1rem">Um chat comum responde e esquece. O Hermes roda um <strong>loop fechado</strong>: ele percebe (perceive), age (act), <strong>reflete</strong> (reflect) e salva (save). O passo de reflexão usa um modelo barato só para decidir <strong>o que vale a pena lembrar</strong> — assim a memória se cura sozinha. E tem mais: quando o Hermes nota que você pediu a mesma sequência de coisas 3 vezes, ele <strong>escreve uma nova skill</strong> (um arquivo SKILL.md em rascunho) e te pede aprovação. Em outras palavras, a IA aprende um novo "truque" a partir do uso, sem você programar nada.</p>
+    <div class="concept-flow">
+      <div class="concept-node" style="border-color:#eab308"><strong>perceive</strong><small>Lê a mensagem</small></div>
+      <span class="concept-arrow">&rarr;</span>
+      <div class="concept-node" style="border-color:#eab308"><strong>act</strong><small>Usa tools</small></div>
+      <span class="concept-arrow">&rarr;</span>
+      <div class="concept-node" style="border-color:var(--accent);background:rgba(234,179,8,0.1)"><strong>reflect</strong><small>Modelo barato cura memória</small></div>
+      <span class="concept-arrow">&rarr;</span>
+      <div class="concept-node" style="border-color:var(--accent2)"><strong>save</strong><small>Memória + skill nova</small></div>
+    </div>
+    <p style="color:var(--text-dim);font-size:0.85rem"><strong>Quem usa:</strong> Hermes (geração autônoma de skills + curadoria de memória no reflect). Agent Zero também aprende com soluções passadas, mas não gera SKILL.md sozinho.</p>
+  </div>
+
+  <!-- Agent as OS Process (AIOS) -->
+  <div class="concept-deep">
+    <h3>Agente como Processo de Sistema Operacional (Kernel LLM)</h3>
+    <p style="color:var(--text-dim);margin-bottom:1rem">Todos os outros frameworks rodam o agente como uma "sessão" ou um "loop". O AIOS pensa diferente: ele trata cada agente como um <strong>processo de sistema operacional</strong>, igual aos programas que rodam no seu computador. Existe um <strong>kernel</strong> (o núcleo) que embute a LLM, e um <strong>Scheduler</strong> que decide qual agente fala com o modelo agora — para que um agente demorado não trave todos os outros. O agente conversa com o kernel por <strong>syscalls</strong> (pedidos explícitos como "chame a LLM", "leia a memória", "use uma tool"). E o Context Manager consegue <strong>pausar</strong> um agente, salvar seu estado e <strong>retomar</strong> depois — exatamente como um SO faz com processos.</p>
+    <div class="concept-flow">
+      <div class="concept-node" style="border-color:#7c3aed"><strong>Agentes</strong><small>Aplicação</small></div>
+      <span class="concept-arrow">&rarr;</span>
+      <div class="concept-node" style="border-color:#7c3aed"><strong>Cerebrum SDK</strong><small>syscalls</small></div>
+      <span class="concept-arrow">&rarr;</span>
+      <div class="concept-node" style="border-color:var(--accent);background:rgba(124,58,237,0.1)"><strong>KERNEL + Scheduler</strong><small>arbitra o LLM</small></div>
+      <span class="concept-arrow">&rarr;</span>
+      <div class="concept-node" style="border-color:var(--accent2)"><strong>Providers</strong><small>OpenAI/Claude/...</small></div>
+    </div>
+    <p style="color:var(--text-dim);font-size:0.85rem"><strong>Quem usa:</strong> AIOS (único com scheduler de fairness, context switch e syscalls). Frameworks como LangChain, AutoGen e CrewAI podem rodar <em>em cima</em> dele.</p>
+  </div>
+
+  <!-- Glossary of new axes -->
+  <div class="concept-deep">
+    <h3>Glossário: os Novos Eixos de Comparação</h3>
+    <p style="color:var(--text-dim);margin-bottom:1rem">Termos que aparecem na tabela comparativa, em linguagem simples:</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.75rem;margin-top:1rem">
+      <div class="concept-node" style="text-align:left"><strong>War Room ao vivo</strong><small>Sala onde vários agentes se reúnem em tempo real (texto ou voz) para discutir uma tarefa.</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Hive Mind</strong><small>Um "quadro" de eventos que todos os agentes leem e escrevem — memória de equipe, desenhada como cérebro 3D.</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Loop reflexivo</strong><small>Ciclo perceive→act→reflect→save em que a IA decide sozinha o que lembrar.</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Skill autônoma</strong><small>Habilidade que a própria IA escreve ao detectar um padrão repetido, para aprovação.</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Scheduler / Fairness</strong><small>Quem decide qual agente usa o modelo agora, repartindo de forma justa (FIFO / Round-Robin).</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Context switch</strong><small>Salvar o estado de um agente e retomá-lo depois — pausar um para dar vez a outro.</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Syscall</strong><small>Pedido explícito do agente ao kernel (chamar LLM, ler memória, usar tool) — auditável e schedulável.</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Cliente MCP</strong><small>Conector que pluga ferramentas externas via Model Context Protocol, sem escrever código.</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Exfiltration guard</strong><small>Filtro que varre a saída e redige segredos (chaves, tokens) antes de enviar.</small></div>
+      <div class="concept-node" style="text-align:left"><strong>Kill switch hot-reload</strong><small>Flag que desliga uma função em segundos, sem reiniciar o processo.</small></div>
+    </div>
+  </div>
 </section>
 
 <!-- FEATURE SHOPPING -->
@@ -571,6 +719,11 @@
           <div class="item-desc">Altere o comportamento da IA no meio da conversa. Sem necessidade de reinicialização. Ela se adapta imediatamente.</div>
           <div class="item-sources"><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-openclaw">OpenClaw</span></div>
         </div>
+        <div class="item-card" data-name="Per-Agent Telegram Bots" onclick="toggleItem(this)">
+          <div class="item-name">Cada Agente é Seu Próprio Bot no Telegram</div>
+          <div class="item-desc">Cada agente especialista (comms/content/ops/research) é seu próprio bot no Telegram, com personalidade, janela de contexto e avatar próprios, delegáveis via @agente: prompt.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
       </div>
     </div>
 
@@ -595,7 +748,7 @@
         <div class="item-card" data-name="Prompt Injection Defense" onclick="toggleItem(this)">
           <div class="item-name">Defesa contra Injeção de Prompt</div>
           <div class="item-desc">Detecta e bloqueia tentativas de enganar sua IA com instruções ocultas em páginas web ou mensagens. Detecção de padrões em múltiplas camadas.</div>
-          <div class="item-sources"><span class="item-source source-ironclaw">IronClaw</span></div>
+          <div class="item-sources"><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-hermes">Hermes</span><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
         </div>
         <div class="item-card" data-name="Secret Leak Detection" onclick="toggleItem(this)">
           <div class="item-name">Detecção de Vazamento de Segredos</div>
@@ -622,6 +775,36 @@
           <div class="item-desc">A IA deve pedir sua permissão antes de executar certos comandos. Três níveis: somente leitura, supervisionado, autonomia total.</div>
           <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span></div>
         </div>
+        <div class="item-card" data-name="Outbound Exfiltration Guard" onclick="toggleItem(this)">
+          <div class="item-name">Guard de Exfiltração na Saída</div>
+          <div class="item-desc">Varre toda resposta de saída por regex (chaves de API, tokens Slack/GitHub, AWS, hex longos) e redige segredos antes de mandar pro chat — barreira contra vazamento por prompt-injection.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Hot-Reload Kill Switches" onclick="toggleItem(this)">
+          <div class="item-name">Kill Switches Hot-Reload</div>
+          <div class="item-desc">Flags no .env re-lidas a cada ~1.5s: desliga spawn de LLM, mutações do dashboard, scheduler ou War Room em menos de 2s, sem reiniciar processo, com contador de recusas.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="War Room Tool Policy (default-deny)" onclick="toggleItem(this)">
+          <div class="item-name">Política de Ferramentas Default-Deny</div>
+          <div class="item-desc">Na sala multi-agente, ferramentas com efeito colateral (Bash/Write/Edit/Skill/MCP) são negadas por padrão e liberadas só por opt-in no agent.yaml, com orçamento de 8 tools por turno.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="OAuth Health Monitor" onclick="toggleItem(this)">
+          <div class="item-name">Monitor de Saúde do Token OAuth</div>
+          <div class="item-desc">Avisa no Telegram antes do token OAuth do Claude expirar — essencial em deploy daemon (launchd/systemd) onde a expiração causa falha silenciosa.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Egress Allowlist + Sandbox Hardening" onclick="toggleItem(this)">
+          <div class="item-name">Allowlist de Egress + Sandbox Endurecido</div>
+          <div class="item-desc">Sandbox de execução (firejail/bubblewrap/docker), allowlist de egress e audit log imutável; blacklist de ~/.ssh ~/.aws para conter exfiltration.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Local-First Data Map" onclick="toggleItem(this)">
+          <div class="item-name">Mapa de Dados Local-First</div>
+          <div class="item-desc">Mapa explícito do que fica no seu hardware (config, SQLite, skills, secrets em env) vs o que sai (prompts ao provider, memória opt para Honcho cloud).</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
       </div>
     </div>
 
@@ -636,22 +819,22 @@
         <div class="item-card" data-name="WhatsApp Integration" onclick="toggleItem(this)">
           <div class="item-name">Integração com WhatsApp</div>
           <div class="item-desc">Converse com sua IA pelo WhatsApp. Envie mensagens, imagens, notas de voz. O mais natural para uso empresarial diário.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-nanoclaw">NanoClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-tinyclaw">TinyClaw</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-nanoclaw">NanoClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-tinyclaw">TinyClaw</span><span class="item-source source-claudeclaw">ClaudeClaw</span><span class="item-source source-hermes">Hermes</span></div>
         </div>
         <div class="item-card" data-name="Telegram Bot" onclick="toggleItem(this)">
           <div class="item-name">Bot do Telegram</div>
           <div class="item-desc">Configuração mais fácil — apenas um token. Suporte a mídia rica, botões inline, compartilhamento de arquivos. Ótimo para equipes.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-tinyclaw">TinyClaw</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-tinyclaw">TinyClaw</span><span class="item-source source-claudeclaw">ClaudeClaw</span><span class="item-source source-hermes">Hermes</span></div>
         </div>
         <div class="item-card" data-name="Discord Integration" onclick="toggleItem(this)">
           <div class="item-name">Bot do Discord</div>
           <div class="item-desc">Assistente de IA no seu servidor Discord. Perfeito para gerenciamento de comunidade, canais de equipe.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-tinyclaw">TinyClaw</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-tinyclaw">TinyClaw</span><span class="item-source source-hermes">Hermes</span></div>
         </div>
         <div class="item-card" data-name="Slack Integration" onclick="toggleItem(this)">
           <div class="item-name">Integração com Slack</div>
           <div class="item-desc">Sua IA no Slack. Sem necessidade de IP público (Socket Mode). Perfeito para automação no ambiente de trabalho.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-ironclaw">IronClaw</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-claudeclaw">ClaudeClaw</span><span class="item-source source-hermes">Hermes</span></div>
         </div>
         <div class="item-card" data-name="Voice Wake Word" onclick="toggleItem(this)">
           <div class="item-name">Palavra de Ativação por Voz</div>
@@ -667,6 +850,16 @@
           <div class="item-name">Painel no Navegador Web</div>
           <div class="item-desc">Converse com sua IA pelo navegador. Veja status em tempo real, memória, progresso de tarefas. Sem necessidade de instalar aplicativo.</div>
           <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-agentzero">Agent Zero</span></div>
+        </div>
+        <div class="item-card" data-name="Multi-Agent War Room" onclick="toggleItem(this)">
+          <div class="item-name">War Room Multi-Agente</div>
+          <div class="item-desc">Sala de reunião com seu TIME de agentes — em texto (/standup, /discuss, rosters ad-hoc) ou em voz ao vivo via Gemini Live, cada agente com sua própria voz, sub-segundo, sem Deepgram nem Cartesia.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Live Video Meeting Avatar" onclick="toggleItem(this)">
+          <div class="item-name">Avatar em Reunião de Vídeo Real</div>
+          <div class="item-desc">Manda um agente pra dentro de uma chamada de vídeo real (Daily.co/Meet/Zoom) como participante com avatar Pika que fala em tempo real.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
         </div>
       </div>
     </div>
@@ -704,6 +897,56 @@
           <div class="item-desc">Quando as conversas ficam muito longas, resume automaticamente as partes antigas para manter a IA rápida enquanto preserva informações essenciais.</div>
           <div class="item-sources"><span class="item-source source-nanoclaw">NanoClaw</span><span class="item-source source-ironclaw">IronClaw</span></div>
         </div>
+        <div class="item-card" data-name="Hive Mind 3D Brain" onclick="toggleItem(this)">
+          <div class="item-name">Cérebro Coletivo 3D (Hive Mind)</div>
+          <div class="item-desc">Cada ação de qualquer agente vira um evento num cérebro anatômico 3D (WebGL/Three.js) com lobos, dots e arcos de sinapse — mais fallback 2D em canvas — pra você ver o que o enxame andou fazendo.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="5-Layer Memory with Decay" onclick="toggleItem(this)">
+          <div class="item-name">Memória de 5 Camadas com Decaimento</div>
+          <div class="item-desc">Memória que extrai fatos via Gemini (score de importância), guarda embeddings vetoriais, busca em 5 frentes, consolida padrões a cada 30min e decai/ganha saliência conforme o uso.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Memory Hygiene & Sharing" onclick="toggleItem(this)">
+          <div class="item-name">Higiene e Compartilhamento de Memória</div>
+          <div class="item-desc">Revisão periódica que propõe (nunca escreve sozinha) o que fixar, quais conflitos resolver e duplicatas colapsar, mais promoção seletiva de fatos universais pro tier compartilhado entre agentes.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Cross-Agent Hive Log" onclick="toggleItem(this)">
+          <div class="item-name">Log de Atividade Cross-Agente</div>
+          <div class="item-desc">Barramento de eventos (tabela hive_mind) que todo agente escreve e todo agente lê: o time inteiro enxerga o que cada um fez nas últimas 24h dentro do contexto de memória.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Reflect-Step Memory Curation" onclick="toggleItem(this)">
+          <div class="item-name">Memória Auto-Curada no Passo Reflect</div>
+          <div class="item-desc">Loop perceive->act->reflect->save: um modelo barato (&lt;1k tokens) decide o que vale ser lembrado e cura a memória sozinho, em vez de você ditar tudo.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="SQLite FTS5 / BM25 Recall" onclick="toggleItem(this)">
+          <div class="item-name">Recall SQLite FTS5 / BM25 (sem embeddings)</div>
+          <div class="item-desc">Memória persistente local em 3 camadas (conversas com TTL, fatos sem TTL, skills) com busca full-text BM25 — sem embeddings, offline, recall em milissegundos.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span><span class="item-source source-intelecto">INTELECTO</span></div>
+        </div>
+        <div class="item-card" data-name="Honcho User Modeling" onclick="toggleItem(this)">
+          <div class="item-name">Modelagem do Usuário com Honcho</div>
+          <div class="item-desc">Engine de user representations (dialectic agent) que constrói um modelo evolutivo de quem você é a cada conversa; roda local ou cloud.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Semantic File System (LSFS)" onclick="toggleItem(this)">
+          <div class="item-name">Sistema de Arquivos Semântico (LSFS)</div>
+          <div class="item-desc">Storage que indexa por embeddings: você acha arquivo por significado em linguagem natural ("o PDF sobre AIOS da semana passada"), não por path. Paper ICLR 2025; complementa o FS, não substitui.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
+        <div class="item-card" data-name="Agentic Memory Curada (A-MEM)" onclick="toggleItem(this)">
+          <div class="item-name">Memória Agêntica Curada (A-MEM)</div>
+          <div class="item-desc">Memória em que o próprio agente decide o que guardar, comprime o redundante e indexa o buscável — combate o context bloat de agentes long-running. Evolução do Memory Manager.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
+        <div class="item-card" data-name="Memory vs Storage (RAM volátil × disco durável)" onclick="toggleItem(this)">
+          <div class="item-name">Memory vs Storage (RAM × Disco)</div>
+          <div class="item-desc">Distinção explícita de kernel: Memory Manager é cache rápido por agente que some no restart; Storage Manager persiste em disco e é compartilhável entre agentes. Não confunda os dois.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
       </div>
     </div>
 
@@ -723,7 +966,7 @@
         <div class="item-card" data-name="Heartbeat System" onclick="toggleItem(this)">
           <div class="item-name">Heartbeat (Verificações Periódicas)</div>
           <div class="item-desc">A IA acorda a cada 30 minutos para verificar se algo precisa de atenção. Proativa, não apenas reativa.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-hermes">Hermes</span></div>
         </div>
         <div class="item-card" data-name="Browser Automation" onclick="toggleItem(this)">
           <div class="item-name">Automação de Navegador</div>
@@ -738,12 +981,52 @@
         <div class="item-card" data-name="Background Sub-Agents" onclick="toggleItem(this)">
           <div class="item-name">Sub-Agentes em Segundo Plano</div>
           <div class="item-desc">Crie trabalhadores de IA auxiliares para tarefas longas. O agente principal permanece responsivo enquanto os trabalhadores fazem o trabalho pesado em segundo plano.</div>
-          <div class="item-sources"><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-tinyclaw">TinyClaw</span></div>
+          <div class="item-sources"><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-tinyclaw">TinyClaw</span><span class="item-source source-hermes">Hermes</span></div>
         </div>
         <div class="item-card" data-name="Agent Team Collaboration" onclick="toggleItem(this)">
           <div class="item-name">Colaboração em Equipe de Agentes</div>
           <div class="item-desc">Múltiplos agentes especializados (@coder, @reviewer, @writer) passam trabalho uns para os outros automaticamente. Como uma pequena empresa de IA.</div>
           <div class="item-sources"><span class="item-source source-tinyclaw">TinyClaw</span><span class="item-source source-nanoclaw">NanoClaw</span><span class="item-source source-agentzero">Agent Zero</span></div>
+        </div>
+        <div class="item-card" data-name="Mission Control Kanban" onclick="toggleItem(this)">
+          <div class="item-name">Mission Control (Kanban por Agente)</div>
+          <div class="item-desc">Quadro kanban com uma coluna por agente, auto-assign de tarefas por Gemini, drag-drop pra reatribuir e drawer de histórico de tudo que foi concluído.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Acceptance Checks" onclick="toggleItem(this)">
+          <div class="item-name">Acceptance Checks (Sucesso Verificável)</div>
+          <div class="item-desc">Tarefa agendada só conta como sucesso se a saída contém um marcador definido — um "turno retornou" deixa de ser confundido com "objetivo cumprido".</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Heartbeat Proactive Agent" onclick="toggleItem(this)">
+          <div class="item-name">Agente Proativo por Heartbeat</div>
+          <div class="item-desc">Scheduler embutido (APScheduler) com zombie detection, reclaim e retries: briefings, lembretes e check-ins proativos que fazem o agente parecer vivo 24/7.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Northstar Goal Function" onclick="toggleItem(this)">
+          <div class="item-name">Função de Meta (Northstar)</div>
+          <div class="item-desc">Em vez de pergunta->resposta, você dá uma meta e o agente gasta um orçamento de turnos (~20) ou gera 4-10 ações com barra de progresso até bater o objetivo.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Parallel Sub-Agents" onclick="toggleItem(this)">
+          <div class="item-name">Sub-Agentes Paralelos (Time)</div>
+          <div class="item-desc">Orquestrador sobe N sub-agentes com contexto fresco que trabalham em paralelo como time e entregam um relatório (1h em vez de 6h).</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Computer-Use Actions" onclick="toggleItem(this)">
+          <div class="item-name">Ações Reais no Computador</div>
+          <div class="item-desc">Ações reais no PC: browser vision com Chrome DevTools, leitura visual da tela e movimentos reais de cursor (fused) — habilitável nas tools, com responsabilidade.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Computer-Use via VM + MCP Server (LiteCUA)" onclick="toggleItem(this)">
+          <div class="item-name">Computer-Use por VM + MCP (LiteCUA)</div>
+          <div class="item-desc">Expõe o computador inteiro como tools MCP (screenshot/click/type) dentro de uma VM sandbox (KVM/Firecracker). Loop perceive-decide-act com LLM multimodal para operar GUIs sem API.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
+        <div class="item-card" data-name="Multi-Agent Fan-out / Fan-in com Storage compartilhado" onclick="toggleItem(this)">
+          <div class="item-name">Fan-out / Fan-in Multi-Agente</div>
+          <div class="item-desc">Coordenador divide a tarefa em N subtarefas, N agentes processam em paralelo (escalonados pelo Scheduler), cada um deposita no Storage, e o coordenador agrega quando todos terminam.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
         </div>
       </div>
     </div>
@@ -759,12 +1042,12 @@
         <div class="item-card" data-name="MCP Protocol" onclick="toggleItem(this)">
           <div class="item-name">MCP (Model Context Protocol)</div>
           <div class="item-desc">Padrão universal para conectar IA a ferramentas externas. Um protocolo, milhares de integrações. O "USB" das ferramentas de IA.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-agentzero">Agent Zero</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-claudeclaw">ClaudeClaw</span><span class="item-source source-hermes">Hermes</span></div>
         </div>
         <div class="item-card" data-name="Skills System" onclick="toggleItem(this)">
           <div class="item-name">Sistema de Skills / Plugins</div>
           <div class="item-desc">Instale novas capacidades como aplicativos no celular. "Instalar skill de clima" ou "instalar skill do GitHub." Sem necessidade de codificação.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-nanoclaw">NanoClaw</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-tinyclaw">TinyClaw</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-nanoclaw">NanoClaw</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-tinyclaw">TinyClaw</span><span class="item-source source-hermes">Hermes</span><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
         </div>
         <div class="item-card" data-name="Plugin SDK" onclick="toggleItem(this)">
           <div class="item-name">Plugin SDK (Construa o Seu)</div>
@@ -774,12 +1057,12 @@
         <div class="item-card" data-name="Multi-Provider Failover" onclick="toggleItem(this)">
           <div class="item-name">Failover Multi-Provedor de IA</div>
           <div class="item-desc">Se o Claude cair, alterne automaticamente para o GPT. Se o GPT estiver lento, tente o Gemini ou OpenRouter. Com OpenRouter você tem 100+ modelos como fallback automático em uma única chave. Nunca perca o serviço.</div>
-          <div class="item-sources"><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-openrouter">OpenRouter</span></div>
+          <div class="item-sources"><span class="item-source source-ironclaw">IronClaw</span><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-openrouter">OpenRouter</span><span class="item-source source-hermes">Hermes</span></div>
         </div>
         <div class="item-card" data-name="OpenRouter 100+ Models" onclick="toggleItem(this)">
           <div class="item-name">OpenRouter — 100+ Modelos, 1 Chave</div>
           <div class="item-desc">Acesse Claude, GPT-4, Gemini, Mistral, DeepSeek, Llama e mais de 100 modelos com uma única chave de API. Troque de modelo sem mudar o código. Ideal como provider principal com Ollama como fallback local.</div>
-          <div class="item-sources"><span class="item-source source-openrouter">OpenRouter</span><span class="item-source source-intelecto">INTELECTO</span><span class="item-source source-nanobot">NanoBot</span></div>
+          <div class="item-sources"><span class="item-source source-openrouter">OpenRouter</span><span class="item-source source-intelecto">INTELECTO</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-hermes">Hermes</span><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
         </div>
         <div class="item-card" data-name="Multi-Model Selection" onclick="toggleItem(this)">
           <div class="item-name">Seleção de Modelo por Tarefa</div>
@@ -789,7 +1072,7 @@
         <div class="item-card" data-name="Local LLM Support" onclick="toggleItem(this)">
           <div class="item-name">Suporte a LLM Local (Ollama)</div>
           <div class="item-desc">Execute modelos de IA no seu próprio computador. Zero custo de API. Privacidade total. Sem necessidade de internet. Use junto com OpenRouter: nuvem quando precisa de potência, local quando precisa de privacidade.</div>
-          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-intelecto">INTELECTO</span></div>
+          <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span><span class="item-source source-zeroclaw">ZeroClaw</span><span class="item-source source-picoclaw">PicoClaw</span><span class="item-source source-agentzero">Agent Zero</span><span class="item-source source-nanobot">NanoBot</span><span class="item-source source-intelecto">INTELECTO</span><span class="item-source source-hermes">Hermes</span><span class="item-source source-aios">AIOS</span></div>
         </div>
         <div class="item-card" data-name="Specialized Media Providers" onclick="toggleItem(this)">
           <div class="item-name">Provedores de Mídia Especializada (fal.ai, Kie.ai)</div>
@@ -800,6 +1083,31 @@
           <div class="item-name">Controle de Hardware / IoT</div>
           <div class="item-desc">Controle dispositivos físicos: luzes, sensores, motores. A IA pode interagir com o mundo real através de pinos GPIO.</div>
           <div class="item-sources"><span class="item-source source-picoclaw">PicoClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Normalized Provider Engine (ACP)" onclick="toggleItem(this)">
+          <div class="item-name">Engine de Provider Normalizada (ACP)</div>
+          <div class="item-desc">Camada de engine única com adapters pra Claude SDK, OpenRouter nativo e ACP (OpenCode/Gemini CLI/Codex/custom), com sessões separadas por provider pra não cruzar histórico.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Toggleable Toolsets" onclick="toggleItem(this)">
+          <div class="item-name">Toolsets Liga/Desliga</div>
+          <div class="item-desc">40+ tools nativas agrupadas em toolsets liga/desliga no config.yaml; regra de no máximo ~25 tools ativas para preservar a precisão do modelo.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Tool Gateway (@hermes.tool)" onclick="toggleItem(this)">
+          <div class="item-name">Tool Gateway por Decorator</div>
+          <div class="item-desc">Vira qualquer função Python em tool decorando com @hermes.tool; o schema é inferido por type hints — lógica imperativa sem empacotar um MCP server.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Build-Your-Own MCP Server" onclick="toggleItem(this)">
+          <div class="item-name">Construa Seu Próprio MCP Server</div>
+          <div class="item-desc">Crie um MCP server próprio em Python (FastMCP) ou Node (@modelcontextprotocol/sdk) com auth OAuth/JWT e publique via Docker/npm/pip.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Multi-LLM Core Routing por Tarefa" onclick="toggleItem(this)">
+          <div class="item-name">Roteamento Multi-LLM Core por Tarefa</div>
+          <div class="item-desc">Múltiplos LLM Cores em paralelo (1 por provider/modelo); o agente pede "modelo X" por syscall e o kernel roteia. Modelo barato p/ classificação, top p/ raciocínio — sem refactor.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
         </div>
       </div>
     </div>
@@ -1095,6 +1403,31 @@
           <div class="item-desc">Recupere credenciais e segredos do seu cofre 1Password com segurança via CLI.</div>
           <div class="item-sources"><span class="item-source source-openclaw">OpenClaw</span></div>
         </div>
+        <div class="item-card" data-name="Auto-Registered Skill Commands" onclick="toggleItem(this)">
+          <div class="item-name">Skills Auto-Registradas como /comandos</div>
+          <div class="item-desc">Qualquer skill com user_invocable:true vira automaticamente um /comando no menu do Telegram (setMyCommands), sem mexer em código — é só soltar a pasta da skill.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Autonomous Skill Generation" onclick="toggleItem(this)">
+          <div class="item-name">Geração Autônoma de Skills</div>
+          <div class="item-desc">O agente detecta um workflow repetido (>=3x) no passo reflect e ele mesmo escreve uma SKILL.md em draft para você aprovar — habilidades que nascem do uso, sem programar.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="agentskills.io Portable Skills" onclick="toggleItem(this)">
+          <div class="item-name">Skills Portáveis (agentskills.io)</div>
+          <div class="item-desc">Skills como pasta autocontida com SKILL.md (frontmatter YAML + markdown), padrão aberto portável entre Hermes, Claude Code e Codex.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Skill Composition & State Machines" onclick="toggleItem(this)">
+          <div class="item-name">Composição de Skills e Máquinas de Estado</div>
+          <div class="item-desc">Skills pequenas se compõem via hermes.invoke() (grafo, não monolito) e workflows de N passos usam @hermes.step com checkpointing automático.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Agent Hub (publish / discover / install)" onclick="toggleItem(this)">
+          <div class="item-name">Agent Hub (o "PyPI dos Agentes")</div>
+          <div class="item-desc">Registry onde se publica agente versionado (semver) e instala com 1 comando (cerebrum hub publish/search/install/run). Reuso de agente sai do laboratório.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
       </div>
     </div>
 
@@ -1146,6 +1479,56 @@
           <div class="item-desc">Em vez de integrações pré-construídas, a IA escreve código na hora para realizar tarefas. Infinitamente flexível, sem necessidade de manutenção.</div>
           <div class="item-sources"><span class="item-source source-agentzero">Agent Zero</span></div>
         </div>
+        <div class="item-card" data-name="Smart Model Routing" onclick="toggleItem(this)">
+          <div class="item-name">Roteamento Inteligente de Modelo</div>
+          <div class="item-desc">Classificador de complexidade decide manda mensagem trivial ("ok", "thanks") pra um modelo leve e tarefa pesada pro modelo cheio, economizando token e tempo.</div>
+          <div class="item-sources"><span class="item-source source-claudeclaw">ClaudeClaw</span></div>
+        </div>
+        <div class="item-card" data-name="Unified Message Gateway" onclick="toggleItem(this)">
+          <div class="item-name">Gateway de Mensagens Unificado</div>
+          <div class="item-desc">Um gateway normaliza CLI, Discord, Slack, WhatsApp, HTTP e cron no mesmo objeto Message — um cérebro, todas as bocas, agente desacoplado do canal.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Multi-Backend Deploy (7 backends)" onclick="toggleItem(this)">
+          <div class="item-name">Deploy Multi-Backend (7 backends)</div>
+          <div class="item-desc">Local, Docker, SSH, Modal, Vercel Sandbox, Singularity/Daytona e AWS Bedrock AgentCore — do laptop velho 24/7 até Firecracker microVM por sessão.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Request Trace (6 hops)" onclick="toggleItem(this)">
+          <div class="item-name">Trace de Requisição (6 hops)</div>
+          <div class="item-desc">HERMES_TRACE=1 expõe o caminho end-to-end (webhook -> gateway -> memory FTS5 -> LLM -> tool exec -> resposta+write) com latências P50/P95/P99.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Declarative config.yaml" onclick="toggleItem(this)">
+          <div class="item-name">Config 100% Declarativa (config.yaml)</div>
+          <div class="item-desc">Provider, modelo, toolsets, MCPs, canais, cron e system prompts num único YAML versionado com perfis dev/prod e ${VAR} para secrets.</div>
+          <div class="item-sources"><span class="item-source source-hermes">Hermes</span></div>
+        </div>
+        <div class="item-card" data-name="Agent-as-OS-Process Scheduling (FIFO / Round-Robin)" onclick="toggleItem(this)">
+          <div class="item-name">Agente-como-Processo (Scheduler de Fairness)</div>
+          <div class="item-desc">Vários agentes LLM viram processos escalonados por um Scheduler com fairness — em vez de um agente longo travar todos, o kernel reparte o acesso ao LLM (FIFO p/ 1-2 agentes, Round-Robin p/ 3+).</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
+        <div class="item-card" data-name="LLM Kernel with Syscall Interface" onclick="toggleItem(this)">
+          <div class="item-name">Kernel LLM com Interface de Syscalls</div>
+          <div class="item-desc">A LLM é embutida como núcleo do kernel e o agente fala por syscalls (LLMCall, MemoryRead/Write, ToolCall, ContextSwitch). Cada ação vira request explícito, auditável e schedulável — o "strace" do agente.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
+        <div class="item-card" data-name="Context Switch (Snapshot / Restore / Migrate)" onclick="toggleItem(this)">
+          <div class="item-name">Context Switch (Snapshot / Restore / Migrate)</div>
+          <div class="item-desc">Salva o estado completo de um agente (memória, posição no plano, working set) e restaura depois — permite pausar um agente longo para dar vez a outro, ou migrar o agente para outro kernel.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
+        <div class="item-card" data-name="Kernel + SDK Separation (operador vs dev)" onclick="toggleItem(this)">
+          <div class="item-name">Separação Kernel + SDK</div>
+          <div class="item-desc">Dois repos espelhando Linux kernel × glibc: o kernel gerencia recursos (operador toca aqui), o SDK constrói agentes (dev toca aqui). Habilita modos Local/Remote e o Agent Hub.</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
+        <div class="item-card" data-name="Framework Adapter Layer (LangChain/AutoGen/CrewAI/MetaGPT/OpenAGI rodam em cima)" onclick="toggleItem(this)">
+          <div class="item-name">Camada de Adapter (frameworks rodam em cima)</div>
+          <div class="item-desc">Camada de execução abaixo dos frameworks: troca a chamada direta de LLM por uma syscall (adapter pattern) e qualquer framework (LangChain/AutoGen/CrewAI/MetaGPT/OpenAGI) herda scheduling, fairness e persistência — migração incremental (strangler).</div>
+          <div class="item-sources"><span class="item-source source-aios">AIOS</span></div>
+        </div>
       </div>
     </div>
 
@@ -1169,31 +1552,42 @@
           <th style="color:#90a4ae">IronClaw</th>
           <th style="color:#ab47bc">TinyClaw</th>
           <th style="color:#66bb6a">Agent Zero</th>
+          <th style="color:#d97757">ClaudeClaw</th>
+          <th style="color:#eab308">Hermes</th>
+          <th style="color:#7c3aed">AIOS</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>Linguagem</td><td>TypeScript</td><td>Rust</td><td>TypeScript</td><td>Python</td><td>Go</td><td>Rust</td><td>TS/Bash</td><td>Python</td></tr>
-        <tr><td>WhatsApp</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-best">Principal</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-partial">Planejado</td><td class="cell-yes">Sim</td><td class="cell-no">-</td></tr>
-        <tr><td>Telegram</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-partial">Via skill</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td></tr>
-        <tr><td>Discord</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td></tr>
-        <tr><td>Slack</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-partial">Via skill</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
-        <tr><td>Interface Web</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td></tr>
-        <tr><td>Controle por Voz</td><td class="cell-best">Palavra de Ativação</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-partial">Via Groq</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
-        <tr><td>Canvas Visual</td><td class="cell-best">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
-        <tr><td>Multi-Agente</td><td class="cell-yes">Sim</td><td class="cell-partial">Config</td><td class="cell-yes">Enxames</td><td class="cell-partial">Spawn</td><td class="cell-partial">Spawn</td><td class="cell-yes">Paralelo</td><td class="cell-best">Equipes</td><td class="cell-yes">Hierarquia</td></tr>
-        <tr><td>Agendamento Cron</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-partial">Via código</td></tr>
-        <tr><td>Heartbeat</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td></tr>
-        <tr><td>Controle de Navegador</td><td class="cell-yes">CDP</td><td class="cell-partial">WebDriver</td><td class="cell-yes">Chromium</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-partial">Visão</td><td class="cell-yes">CLI tool</td><td class="cell-yes">Visão</td></tr>
-        <tr><td>Suporte MCP</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td></tr>
-        <tr><td>Skills/Plugins</td><td class="cell-best">SDK + 5.7K</td><td class="cell-yes">TOML</td><td class="cell-yes">Claude Code</td><td class="cell-yes">Markdown</td><td class="cell-yes">Markdown</td><td class="cell-yes">WASM</td><td class="cell-yes">Pasta</td><td class="cell-yes">SKILL.md</td></tr>
-        <tr><td>Tipo de Sandbox</td><td class="cell-partial">Aprovação</td><td class="cell-yes">Landlock</td><td class="cell-best">Container VM</td><td class="cell-partial">Workspace</td><td class="cell-partial">Workspace</td><td class="cell-best">WASM</td><td class="cell-partial">Dir por agente</td><td class="cell-yes">Docker</td></tr>
-        <tr><td>Sistema de Memória</td><td class="cell-yes">Embeddings</td><td class="cell-best">Híbrido FTS+Vec</td><td class="cell-yes">CLAUDE.md</td><td class="cell-yes">2 Camadas</td><td class="cell-yes">2 Camadas</td><td class="cell-best">Híbrido FTS+Vec</td><td class="cell-partial">Por agente</td><td class="cell-best">Vetor+Soluções</td></tr>
-        <tr><td>LLM Local</td><td class="cell-yes">Ollama</td><td class="cell-yes">Ollama+vLLM</td><td class="cell-no">-</td><td class="cell-yes">Ollama+vLLM</td><td class="cell-yes">Ollama+vLLM</td><td class="cell-yes">Ollama</td><td class="cell-no">-</td><td class="cell-yes">Ollama+LM Studio</td></tr>
-        <tr><td>Provedores de IA</td><td>6+</td><td class="cell-best">22+</td><td>1 (Claude)</td><td>13+</td><td>7+</td><td>NEAR AI</td><td>2</td><td class="cell-best">20+</td></tr>
-        <tr><td>Segredos Criptografados</td><td class="cell-partial">Keychain</td><td class="cell-best">ChaCha20</td><td class="cell-no">-</td><td class="cell-partial">chmod 600</td><td class="cell-no">-</td><td class="cell-yes">Keychain</td><td class="cell-no">-</td><td class="cell-yes">secrets.env</td></tr>
-        <tr><td>Uso de RAM</td><td>~1GB</td><td class="cell-best">&lt;5MB</td><td>~200MB</td><td>~100MB</td><td class="cell-best">&lt;10MB</td><td>~50MB</td><td>~300MB</td><td>~500MB</td></tr>
-        <tr><td>IoT/Hardware</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">GPIO/I2C/SPI</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
-        <tr><td>Apps Mobile</td><td class="cell-best">iOS+Android</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
+        <tr><td>Linguagem</td><td>TypeScript</td><td>Rust</td><td>TypeScript</td><td>Python</td><td>Go</td><td>Rust</td><td>TS/Bash</td><td>Python</td><td>TypeScript</td><td>Python</td><td>Python</td></tr>
+        <tr><td>WhatsApp</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-best">Principal</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-partial">Planejado</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-partial">Experimental</td><td class="cell-yes">Sim</td><td class="cell-no">-</td></tr>
+        <tr><td>Telegram</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-partial">Via skill</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-best">Principal</td><td class="cell-yes">Sim</td><td class="cell-no">-</td></tr>
+        <tr><td>Discord</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td></tr>
+        <tr><td>Slack</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-partial">Via skill</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td></tr>
+        <tr><td>Interface Web</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-yes">Dashboard</td><td class="cell-partial">TUI</td><td class="cell-yes">Web UI</td></tr>
+        <tr><td>Controle por Voz</td><td class="cell-best">Palavra de Ativação</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-partial">Via Groq</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">War Room voz</td><td class="cell-partial">TTS/STT</td><td class="cell-no">-</td></tr>
+        <tr><td>Canvas / Visualização</td><td class="cell-best">Canvas</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">Cérebro 3D</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
+        <tr><td>Multi-Agente</td><td class="cell-yes">Sim</td><td class="cell-partial">Config</td><td class="cell-yes">Enxames</td><td class="cell-partial">Spawn</td><td class="cell-partial">Spawn</td><td class="cell-yes">Paralelo</td><td class="cell-best">Equipes</td><td class="cell-yes">Hierarquia</td><td class="cell-best">Time (War Room)</td><td class="cell-yes">Sub-agentes</td><td class="cell-best">Processos</td></tr>
+        <tr><td>Agendamento Cron</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-partial">Via código</td><td class="cell-yes">Sim</td><td class="cell-yes">APScheduler</td><td class="cell-partial">Via código</td></tr>
+        <tr><td>Heartbeat</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-best">Zombie detect</td><td class="cell-no">-</td></tr>
+        <tr><td>Controle de Navegador</td><td class="cell-yes">CDP</td><td class="cell-partial">WebDriver</td><td class="cell-yes">Chromium</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-partial">Visão</td><td class="cell-yes">CLI tool</td><td class="cell-yes">Visão</td><td class="cell-no">-</td><td class="cell-yes">Chrome DevTools</td><td class="cell-yes">LiteCUA/VM</td></tr>
+        <tr><td>Suporte MCP</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-best">Cliente first-class</td><td class="cell-yes">Via LiteCUA</td></tr>
+        <tr><td>Skills/Plugins</td><td class="cell-best">SDK + 5.7K</td><td class="cell-yes">TOML</td><td class="cell-yes">Claude Code</td><td class="cell-yes">Markdown</td><td class="cell-yes">Markdown</td><td class="cell-yes">WASM</td><td class="cell-yes">Pasta</td><td class="cell-yes">SKILL.md</td><td class="cell-yes">Auto-/comandos</td><td class="cell-best">Auto-geradas</td><td class="cell-yes">Agent Hub</td></tr>
+        <tr><td>Tipo de Sandbox</td><td class="cell-partial">Aprovação</td><td class="cell-yes">Landlock</td><td class="cell-best">Container VM</td><td class="cell-partial">Workspace</td><td class="cell-partial">Workspace</td><td class="cell-best">WASM</td><td class="cell-partial">Dir por agente</td><td class="cell-yes">Docker</td><td class="cell-partial">Tool-policy</td><td class="cell-yes">firejail/bwrap</td><td class="cell-best">VM KVM/Firecracker</td></tr>
+        <tr><td>Sistema de Memória</td><td class="cell-yes">Embeddings</td><td class="cell-best">Híbrido FTS+Vec</td><td class="cell-yes">CLAUDE.md</td><td class="cell-yes">2 Camadas</td><td class="cell-yes">2 Camadas</td><td class="cell-best">Híbrido FTS+Vec</td><td class="cell-partial">Por agente</td><td class="cell-best">Vetor+Soluções</td><td class="cell-best">5 Camadas+Decay</td><td class="cell-yes">FTS5/BM25</td><td class="cell-yes">A-MEM+LSFS</td></tr>
+        <tr><td>LLM Local</td><td class="cell-yes">Ollama</td><td class="cell-yes">Ollama+vLLM</td><td class="cell-no">-</td><td class="cell-yes">Ollama+vLLM</td><td class="cell-yes">Ollama+vLLM</td><td class="cell-yes">Ollama</td><td class="cell-no">-</td><td class="cell-yes">Ollama+LM Studio</td><td class="cell-no">-</td><td class="cell-yes">Ollama+vLLM+llama.cpp</td><td class="cell-yes">HuggingFace+vLLM</td></tr>
+        <tr><td>Provedores de IA</td><td>6+</td><td class="cell-best">22+</td><td>1 (Claude)</td><td>13+</td><td>7+</td><td>NEAR AI</td><td>2</td><td class="cell-best">20+</td><td>8 engines</td><td class="cell-best">14+ (200+ modelos)</td><td>7+</td></tr>
+        <tr><td>Segredos Criptografados</td><td class="cell-partial">Keychain</td><td class="cell-best">ChaCha20</td><td class="cell-no">-</td><td class="cell-partial">chmod 600</td><td class="cell-no">-</td><td class="cell-yes">Keychain</td><td class="cell-no">-</td><td class="cell-yes">secrets.env</td><td class="cell-best">AES-256-GCM</td><td class="cell-partial">env vars</td><td class="cell-partial">config.yaml</td></tr>
+        <tr><td>Uso de RAM</td><td>~1GB</td><td class="cell-best">&lt;5MB</td><td>~200MB</td><td>~100MB</td><td class="cell-best">&lt;10MB</td><td>~50MB</td><td>~300MB</td><td>~500MB</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>IoT/Hardware</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">GPIO/I2C/SPI</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
+        <tr><td>Apps Mobile</td><td class="cell-best">iOS+Android</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-partial">Via Telegram</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
+        <tr><td>War Room ao Vivo (texto/voz)</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">Texto + Voz</td><td class="cell-partial">Sub-agentes</td><td class="cell-no">-</td></tr>
+        <tr><td>Visualização Cross-Agente (cérebro)</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">Hive Mind 3D</td><td class="cell-no">-</td><td class="cell-no">-</td></tr>
+        <tr><td>Geração Autônoma de Skills</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-partial">Cria tools</td><td class="cell-no">-</td><td class="cell-best">SKILL.md draft</td><td class="cell-no">-</td></tr>
+        <tr><td>Memória Auto-Curada / Decaimento</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-partial">Soluções</td><td class="cell-best">5 camadas+decay</td><td class="cell-best">Reflect-step</td><td class="cell-yes">A-MEM</td></tr>
+        <tr><td>Agente como Processo de SO / Scheduler</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">FIFO/Round-Robin</td></tr>
+        <tr><td>Context Switch / Preempção</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">Snapshot/Restore</td></tr>
+        <tr><td>Cliente MCP Declarativo</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-no">-</td><td class="cell-yes">Sim</td><td class="cell-yes">Sim</td><td class="cell-best">stdio + SSE</td><td class="cell-yes">LiteCUA</td></tr>
+        <tr><td>Guard de Exfiltração na Saída</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-yes">Leak detection</td><td class="cell-no">-</td><td class="cell-no">-</td><td class="cell-best">Regex outbound</td><td class="cell-yes">Egress allowlist</td><td class="cell-no">-</td></tr>
       </tbody>
     </table>
   </div>
@@ -1339,6 +1733,76 @@
 
   <span class="highlight2">Gets smarter with every interaction</span></div></div>
     </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header"><div class="fw-icon" style="width:36px;height:36px;font-size:1rem;background:linear-gradient(135deg,#d97757,#e8a87c)">CC</div><h4>ClaudeClaw: Enxame Local + Hive Bus</h4></div>
+      <div class="arch-body"><div class="arch-diagram">  <span class="highlight">YOU</span> (Telegram / Dashboard / War Room voz)
+       |
+       v
+  +----------------------+
+  | <span class="highlight2">Per-Agent Telegram Bots</span> |  @comms @content @ops @research
+  +----------------------+
+     |        |        |
+  <span class="highlight3">Agent A</span>  <span class="highlight3">Agent B</span>  <span class="highlight3">Agent C</span>   delegate_to_agent (@agente:)
+     \        |        /
+      \       |       /        <span class="highlight">WAR ROOM</span> (texto + voz Gemini Live)
+       v      v      v
+  +------------------------------+
+  | <span class="highlight2">HIVE BUS</span> (tabela hive_mind)    |---> <span class="highlight3">Cérebro 3D</span> (Three.js)
+  | barramento de eventos shared |     visualização cross-agente
+  +------------------------------+
+       |                |
+  <span class="highlight">SQLite único</span>      <span class="highlight2">Runtime Guard</span>
+  store/*.db        kill-switches + tool-policy
+  memória 5 cam.    + exfiltration guard (saída)
+
+  <span class="highlight2">N agentes, 1 máquina, 1 cérebro compartilhado</span></div></div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header"><div class="fw-icon" style="width:36px;height:36px;font-size:1rem;background:linear-gradient(135deg,#eab308,#fde047)">HM</div><h4>Hermes: Loop Reflexivo + Skills Autônomas</h4></div>
+      <div class="arch-body"><div class="arch-diagram">  CLI Discord Slack WhatsApp HTTP cron
+       \    |     |      |      |    /
+        v   v     v      v      v   v
+  +---------------------------+
+  | <span class="highlight">GATEWAY</span> (normaliza -> Message)|  um cérebro, N bocas
+  +---------------------------+
+       |
+       v   <span class="highlight2">LOOP DO AGENTE</span>
+  +---------------------------------------+
+  | perceive -> act -> <span class="highlight3">reflect</span> -> save     |
+  |             (modelo barato no reflect)|
+  +---------------------------------------+
+       |  reflect detecta padrão >=3x       |  cura
+       v                                    v
+  +-----------------+            +------------------+
+  | <span class="highlight3">Skill auto-gerada</span> |            | <span class="highlight2">Memória SQLite</span>   |
+  | SKILL.md (draft)|            | FTS5/BM25 3 cam. |
+  +-----------------+            +------------------+
+
+  <span class="highlight2">O agente melhora a si mesmo (skills + memória)</span></div></div>
+    </div>
+
+    <div class="arch-card">
+      <div class="arch-card-header"><div class="fw-icon" style="width:36px;height:36px;font-size:1rem;background:linear-gradient(135deg,#7c3aed,#a78bfa)">AI</div><h4>AIOS: Agente-como-Processo / Kernel LLM</h4></div>
+      <div class="arch-body"><div class="arch-diagram">  <span class="highlight">APPLICATION</span>   Agent A   Agent B   Agent C
+                    |         |         |
+  -------------------------------------------------
+  <span class="highlight2">CEREBRUM SDK</span>   Agent base + syscall wrappers + @tool
+                    |   (LLMCall, MemoryRead/Write,
+                    |    ToolCall, ContextSwitch)
+  -------------------------------------------------
+  <span class="highlight3">AIOS KERNEL</span>  +----------------------------------+
+                 | <span class="highlight">Scheduler</span> (FIFO / Round-Robin)  |
+                 | LLM Core(s)  | Memory | Storage |
+                 | Tool Manager | <span class="highlight3">Context Manager</span>  |
+                 |               (snapshot/restore) |
+                 +----------------------------------+
+  -------------------------------------------------
+  OS / PROVIDERS  OpenAI Anthropic Gemini vLLM ...
+
+  <span class="highlight2">Cada agente = processo escalonado. LangChain/AutoGen rodam em cima.</span></div></div>
+    </div>
   </div>
 </section>
 
@@ -1402,6 +1866,21 @@
       <h4>"Preciso de ajuda para decidir / pesquisar"</h4>
       <p>Base de conhecimento completa com calculadoras de custo, auditorias de segurança e 5.700+ exemplos de plugins.</p>
       <div class="pick" style="color:#ff6b9d">Escolha: Awesome OpenClaw (o guia de recursos)</div>
+    </div>
+    <div class="verdict-card">
+      <h4>"Quero um TIME de agentes trabalhando ao vivo"</h4>
+      <p>Vários agentes especialistas que se reúnem em tempo real (texto e voz), dividem um cérebro coletivo visualizável em 3D e podem até entrar em reuniões de vídeo. A abordagem "quartel-general".</p>
+      <div class="pick" style="color:#d97757">Escolha: ClaudeClaw</div>
+    </div>
+    <div class="verdict-card">
+      <h4>"Quero uma IA que melhore sozinha"</h4>
+      <p>Cria as próprias skills ao detectar padrões repetidos e cura a própria memória no passo reflect. Local-first, model-agnostic, proativa 24/7. A abordagem "agente que cresce com você".</p>
+      <div class="pick" style="color:#eab308">Escolha: Hermes</div>
+    </div>
+    <div class="verdict-card">
+      <h4>"Preciso de muitos agentes concorrentes, como um SO"</h4>
+      <p>Escalona agentes como processos, com Scheduler de fairness, context switch e syscalls auditáveis. Frameworks existentes rodam por baixo. A abordagem "sistema operacional de agentes".</p>
+      <div class="pick" style="color:#7c3aed">Escolha: AIOS</div>
     </div>
     <div class="verdict-card">
       <h4>"Quero construir MEU PRÓPRIO framework customizado"</h4>
@@ -1505,7 +1984,7 @@ function exportCart() {
   md += "> which reference frameworks implement it, and enough context for Claude Code to understand\n";
   md += "> the implementation requirements.\n";
   md += ">\n";
-  md += "> **Reference repos**: Bundled in `reference-repos/` (openclaw, nanobot)\n";
+  md += "> **Reference repos**: Bundled in `reference-repos/` (openclaw, nanobot, claudeclaw-os). Hermes (Nous Research) and AIOS (AGI Research/Rutgers) are external upstreams referenced below.\n";
   md += "> **Full analysis**: See `doc/intelecto.md` (the full build plan).\n\n";
   md += "---\n\n";
   md += `**Total selected items: ${cart.length}**\n\n`;
@@ -1520,6 +1999,9 @@ function exportCart() {
       const hints = [];
       if (item.sources.includes('OpenClaw')) hints.push('OpenClaw (`./reference-repos/openclaw/`): TypeScript, check `skills/` and `extensions/` directories');
       if (item.sources.includes('NanoBot')) hints.push('NanoBot (`./reference-repos/nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`');
+      if (item.sources.includes('ClaudeClaw')) hints.push('ClaudeClaw (`./reference-repos/claudeclaw-os/`): TypeScript/Node + Python (warroom); veja `src/`, `skills/`, `warroom/`');
+      if (item.sources.includes('Hermes')) hints.push('Hermes (Nous Research): upstream `github.com/NousResearch/hermes-agent`; curso local `hermes21c`');
+      if (item.sources.includes('AIOS')) hints.push('AIOS (AGI Research/Rutgers): upstream `github.com/agiresearch/AIOS` + Cerebrum; curso local `aiosagi`');
       if (hints.length > 0) {
         md += `**Where to find reference code**:\n`;
         hints.forEach(h => { md += `- ${h}\n`; });
@@ -1535,14 +2017,16 @@ function exportCart() {
   md += "2. **Prefer simplicity** - If NanoClaw (5.2K lines) and OpenClaw (large) both implement a feature, start with NanoClaw's approach.\n";
   md += "3. **Keep it modular** - Use ZeroClaw/IronClaw's trait-based pattern so components can be swapped later.\n";
   md += "4. **Security by default** - Apply sandboxing, command blocklists, and pairing codes from the start.\n";
-  md += "5. **Full deep-dive reference** - See `doc/intelecto.md` in this repo for the complete build plan.\n\n";
+  md += "5. **Start single-agent, go multi-agent only if you need a team** - A reflective single-agent loop (Hermes-style) covers most personal-assistant needs. Add a War Room / swarm (ClaudeClaw) or an OS-style scheduler (AIOS) only when several concurrent agents must coordinate or compete for the same model.\n";
+  md += "6. **Guard the boundaries at runtime** - For any setup with side-effecting tools, add an outbound exfiltration guard (redact secrets in output) and hot-reload kill switches per surface, as ClaudeClaw does; combine with Hermes' egress allowlist + sandbox hardening.\n";
+  md += "7. **Full deep-dive reference** - See `doc/intelecto.md` in this repo for the complete build plan.\n\n";
   md += "---\n\n";
   md += "*Generated from the AI Agent Framework Grocery Store comparison tool.*\n";
 
   const blob = new Blob([md], {type:'text/markdown'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'my-framework-ingredients.md';
+  a.href = url; a.download = 'meu-assistente.md';
   a.click(); URL.revokeObjectURL(url);
 }
 
