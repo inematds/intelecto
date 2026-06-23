@@ -1984,7 +1984,7 @@ function exportCart() {
   md += "> which reference frameworks implement it, and enough context for Claude Code to understand\n";
   md += "> the implementation requirements.\n";
   md += ">\n";
-  md += "> **Reference repos**: Bundled in `reference-repos/` (openclaw, nanobot, claudeclaw-os). Hermes (Nous Research) and AIOS (AGI Research/Rutgers) are external upstreams referenced below.\n";
+  md += "> **Reference repos**: Bundled in `reference-repos/` (openclaw, nanobot). ClaudeClaw (earlyaidopters), Hermes (Nous Research) and AIOS (AGI Research/Rutgers) are external upstreams referenced below.\n";
   md += "> **Full analysis**: See `doc/intelecto.md` (the full build plan).\n\n";
   md += "---\n\n";
   md += `**Total selected items: ${cart.length}**\n\n`;
@@ -1999,7 +1999,7 @@ function exportCart() {
       const hints = [];
       if (item.sources.includes('OpenClaw')) hints.push('OpenClaw (`./reference-repos/openclaw/`): TypeScript, check `skills/` and `extensions/` directories');
       if (item.sources.includes('NanoBot')) hints.push('NanoBot (`./reference-repos/nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`');
-      if (item.sources.includes('ClaudeClaw')) hints.push('ClaudeClaw (`./reference-repos/claudeclaw-os/`): TypeScript/Node + Python (warroom); veja `src/`, `skills/`, `warroom/`');
+      if (item.sources.includes('ClaudeClaw')) hints.push('ClaudeClaw (earlyaidopters): upstream `github.com/earlyaidopters/claudeclaw-os` — TypeScript/Node + Python (warroom); licença source-available');
       if (item.sources.includes('Hermes')) hints.push('Hermes (Nous Research): upstream `github.com/NousResearch/hermes-agent`; curso local `hermes21c`');
       if (item.sources.includes('AIOS')) hints.push('AIOS (AGI Research/Rutgers): upstream `github.com/agiresearch/AIOS` + Cerebrum; curso local `aiosagi`');
       if (hints.length > 0) {

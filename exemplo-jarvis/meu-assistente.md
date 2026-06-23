@@ -5,7 +5,7 @@
 > which reference frameworks implement it, and enough context for Claude Code to understand
 > the implementation requirements.
 >
-> **Reference repos**: Bundled in `reference-repos/` (openclaw, nanobot, claudeclaw-os). Hermes (Nous Research) and AIOS (AGI Research/Rutgers) are external upstreams referenced below.
+> **Reference repos**: Bundled in `reference-repos/` (openclaw, nanobot). ClaudeClaw (earlyaidopters), Hermes (Nous Research) and AIOS (AGI Research/Rutgers) are external upstreams referenced below.
 > **Full analysis**: See `doc/intelecto.md` (the full build plan).
 
 ---
@@ -48,7 +48,7 @@
 **Where to find reference code**:
 - OpenClaw (`./reference-repos/openclaw/`): TypeScript, check `skills/` and `extensions/` directories
 - NanoBot (`./reference-repos/nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`
-- ClaudeClaw (`./reference-repos/claudeclaw-os/`): TypeScript/Node + Python (warroom); veja `src/`, `skills/`, `warroom/`
+- ClaudeClaw (earlyaidopters): upstream `github.com/earlyaidopters/claudeclaw-os` — TypeScript/Node + Python (warroom); licença source-available
 - Hermes (Nous Research): upstream `github.com/NousResearch/hermes-agent`; curso local `hermes21c`
 
 ---
@@ -106,7 +106,7 @@
 
 **Where to find reference code**:
 - NanoBot (`./reference-repos/nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`
-- ClaudeClaw (`./reference-repos/claudeclaw-os/`): TypeScript/Node + Python (warroom); veja `src/`, `skills/`, `warroom/`
+- ClaudeClaw (earlyaidopters): upstream `github.com/earlyaidopters/claudeclaw-os` — TypeScript/Node + Python (warroom); licença source-available
 - Hermes (Nous Research): upstream `github.com/NousResearch/hermes-agent`; curso local `hermes21c`
 
 ---
@@ -134,7 +134,7 @@
 **Where to find reference code**:
 - OpenClaw (`./reference-repos/openclaw/`): TypeScript, check `skills/` and `extensions/` directories
 - NanoBot (`./reference-repos/nanobot/`): Python, check `nanobot/skills/` and `nanobot/agent/tools/`
-- ClaudeClaw (`./reference-repos/claudeclaw-os/`): TypeScript/Node + Python (warroom); veja `src/`, `skills/`, `warroom/`
+- ClaudeClaw (earlyaidopters): upstream `github.com/earlyaidopters/claudeclaw-os` — TypeScript/Node + Python (warroom); licença source-available
 - Hermes (Nous Research): upstream `github.com/NousResearch/hermes-agent`; curso local `hermes21c`
 
 ---
@@ -159,7 +159,7 @@
 
 **Where to find reference code**:
 - OpenClaw (`./reference-repos/openclaw/`): TypeScript, check `skills/` and `extensions/` directories
-- ClaudeClaw (`./reference-repos/claudeclaw-os/`): TypeScript/Node + Python (warroom); veja `src/`, `skills/`, `warroom/`
+- ClaudeClaw (earlyaidopters): upstream `github.com/earlyaidopters/claudeclaw-os` — TypeScript/Node + Python (warroom); licença source-available
 - Hermes (Nous Research): upstream `github.com/NousResearch/hermes-agent`; curso local `hermes21c`
 
 ---
@@ -203,7 +203,7 @@
 **Reference implementations**: IronClaw, Hermes, ClaudeClaw
 
 **Where to find reference code**:
-- ClaudeClaw (`./reference-repos/claudeclaw-os/`): TypeScript/Node + Python (warroom); veja `src/`, `skills/`, `warroom/`
+- ClaudeClaw (earlyaidopters): upstream `github.com/earlyaidopters/claudeclaw-os` — TypeScript/Node + Python (warroom); licença source-available
 - Hermes (Nous Research): upstream `github.com/NousResearch/hermes-agent`; curso local `hermes21c`
 
 ---
@@ -215,7 +215,7 @@
 **Reference implementations**: ClaudeClaw
 
 **Where to find reference code**:
-- ClaudeClaw (`./reference-repos/claudeclaw-os/`): TypeScript/Node + Python (warroom); veja `src/`, `skills/`, `warroom/`
+- ClaudeClaw (earlyaidopters): upstream `github.com/earlyaidopters/claudeclaw-os` — TypeScript/Node + Python (warroom); licença source-available
 
 ---
 

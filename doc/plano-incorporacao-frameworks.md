@@ -18,7 +18,7 @@ Escopo de idioma: **somente PT**. O gêmeo EN `framework-comparison.html` fica c
 
 | Fonte | Repo / curso | Natureza | Vendorizado? |
 |---|---|---|---|
-| **ClaudeClaw** | `earlyaidopters/claudeclaw-os` (TS/Py) | código real | **Sim** → `reference-repos/claudeclaw-os/` |
+| **ClaudeClaw** | `earlyaidopters/claudeclaw-os` (TS/Py) | código real | **Não** (licença commercial/source-available) → upstream `github.com/earlyaidopters/claudeclaw-os` |
 | **Hermes** | Nous Research `hermes-agent`; cursos `hermes21c`, `hermesagent` | conceitos (curso autoral) | Não — aponta upstream + cursos |
 | **AIOS** | AGI Research/Rutgers `agiresearch/AIOS`+`Cerebrum`; curso `aiosagi` | conceitos (curso autoral) | Não — aponta upstream + curso |
 
@@ -83,7 +83,7 @@ Renderização: funções `renderBrands()`, `renderAisles()`, `renderMatrix()` n
 
 ### 3. Gerador (`exportCart()`)
 - Lê de `FRAMEWORKS`/`ITEMS` (não mais do DOM cru).
-- Aponta os repos de referência certos por item: `reference-repos/claudeclaw-os` (local), Hermes → `github.com/NousResearch/hermes-agent` + curso, AIOS → `github.com/agiresearch/AIOS` + curso.
+- Aponta os repos de referência certos por item: ClaudeClaw → upstream `github.com/earlyaidopters/claudeclaw-os` (não vendorizado — licença commercial), Hermes → `github.com/NousResearch/hermes-agent` + curso, AIOS → `github.com/agiresearch/AIOS` + curso.
 - "Implementation Notes for Claude Code" enriquecidas (princípios + ponteiro a `doc/intelecto.md`).
 - **Corrigir bug de nome**: padronizar o arquivo gerado (`meu-assistente.md`) e bater com `como-construir.html` (que oscila entre `my-framework-ingredients.md` e `meu-assistente.md`).
 
