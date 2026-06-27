@@ -142,6 +142,109 @@
   }
   .card:hover .card-arrow { transform: translateX(4px); }
 
+  /* ECOSYSTEM */
+  .ecosystem {
+    border-top: 1px solid var(--border);
+    padding: 4rem 2rem;
+    background: var(--surface);
+  }
+  .eco-inner { max-width: 1000px; margin: 0 auto; }
+  .eco-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .eco-title .accent { color: var(--green); }
+  .eco-sub {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+  }
+  .eco-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .eco-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .eco-card:hover { border-color: rgba(0,210,106,0.35); transform: translateY(-3px); }
+  .eco-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .eco-tag {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--green);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+  }
+  .eco-tag.alt { background: var(--cyan); }
+  .eco-card p {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .eco-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .eco-links a {
+    color: var(--green);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .eco-links a:hover { text-decoration: underline; }
+  .eco-links a.git { color: var(--text-dim); }
+  .eco-links a.git:hover { color: var(--cyan); }
+  .eco-subhead {
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--cyan);
+    margin: 3rem 0 0.4rem;
+  }
+  .fw-note {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
+  }
+  .fw-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  .fw-chip {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.5rem 1.1rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .fw-chip:hover { border-color: rgba(0,188,212,0.5); color: var(--cyan); }
+
   /* FOOTER */
   footer {
     border-top: 1px solid var(--border);
@@ -160,7 +263,10 @@
   <a href="index.html" class="nav-logo">INTELECTO</a>
   <div class="nav-links">
     <a href="doc/framework-comparison-pt.html">Comparar Frameworks</a>
+    <a href="doc/framework-comparison.html">Comparar (EN)</a>
     <a href="doc/como-construir.html">Como Construir</a>
+    <a href="doc/guia-funcionalidades.html">Funcionalidades</a>
+    <a href="#ecossistema">Ecossistema</a>
     <a href="https://github.com/inematds/intelecto" target="_blank">GitHub</a>
   </div>
 </nav>
@@ -200,6 +306,71 @@
   </div>
 
 </div>
+
+<section class="ecosystem" id="ecossistema">
+  <div class="eco-inner">
+    <h2 class="eco-title">Ecossistema <span class="accent">INTELECTO</span></h2>
+    <p class="eco-sub">Todas as páginas e repositórios da família INTELECTO.</p>
+    <div class="eco-grid">
+
+      <article class="eco-card">
+        <h3>INTELECTO <span class="eco-tag">principal</span></h3>
+        <p>Inteligência pessoal, sem frameworks inchados — o projeto-base.</p>
+        <div class="eco-links">
+          <a href="https://inematds.github.io/intelecto/">Página ↗</a>
+          <a class="git" href="https://github.com/inematds/intelecto" target="_blank">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="eco-card">
+        <h3>INTELECTO Guia <span class="eco-tag alt">guia</span></h3>
+        <p>Guia de uso do assistente pessoal, passo a passo.</p>
+        <div class="eco-links">
+          <a href="https://inematds.github.io/intelecto-guia/" target="_blank">Página ↗</a>
+          <a class="git" href="https://github.com/inematds/intelecto-guia" target="_blank">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="eco-card">
+        <h3>INTELECTO Curso <span class="eco-tag alt">curso</span></h3>
+        <p>Do Zero ao Expert em IA — a trilha completa de aprendizado.</p>
+        <div class="eco-links">
+          <a href="https://inematds.github.io/intelecto-curso/" target="_blank">Página ↗</a>
+          <a class="git" href="https://github.com/inematds/intelecto-curso" target="_blank">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="eco-card">
+        <h3>INTELECTO 4D <span class="eco-tag alt">workshop</span></h3>
+        <p>Do Zero ao seu Jarvis em 2 dias — workshop ao vivo.</p>
+        <div class="eco-links">
+          <a href="https://inematds.github.io/intelecto4d/" target="_blank">Página ↗</a>
+          <a class="git" href="https://github.com/inematds/intelecto4d" target="_blank">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="eco-card">
+        <h3>INTELECTO Testes <span class="eco-tag alt">WhatsApp</span></h3>
+        <p>Variante do agente de IA no WhatsApp via Evolution API.</p>
+        <div class="eco-links">
+          <a href="https://inematds.github.io/intelecto-testes/" target="_blank">Página ↗</a>
+          <a class="git" href="https://github.com/inematds/intelecto-testes" target="_blank">GitHub ↗</a>
+        </div>
+      </article>
+
+    </div>
+
+    <h3 class="eco-subhead">Frameworks de referência</h3>
+    <p class="fw-note">Os "ingredientes" que o INTELECTO compara e incorpora — detalhados na <a href="doc/framework-comparison-pt.html" style="color:var(--green);text-decoration:none;">página de comparação</a>.</p>
+    <div class="fw-chips">
+      <a class="fw-chip" href="https://github.com/HKUDS/nanobot" target="_blank">nanobot ↗</a>
+      <a class="fw-chip" href="https://github.com/openclaw/openclaw" target="_blank">openclaw ↗</a>
+      <a class="fw-chip" href="https://github.com/earlyaidopters/claudeclaw-os" target="_blank">claudeclaw-os ↗</a>
+      <a class="fw-chip" href="https://github.com/NousResearch/hermes-agent" target="_blank">hermes-agent ↗</a>
+      <a class="fw-chip" href="https://github.com/agiresearch/AIOS" target="_blank">AIOS ↗</a>
+    </div>
+  </div>
+</section>
 
 <footer>
   INTELECTO · <a href="https://github.com/inematds/intelecto" target="_blank">github.com/inematds/intelecto</a>
