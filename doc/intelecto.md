@@ -643,7 +643,7 @@ The primary (and for now, only) way to talk to INTELECTO.
 - Long-polling mode (no webhook, no public URL needed)
 - Bot token from secrets store, falls back to `TELEGRAM_BOT_TOKEN` env var
 - Handle text messages, photos (with captions), documents, voice messages
-- Voice messages: save to temp file, note in message that transcription is a future feature
+- Voice messages: save to temp file, note in message that transcription is a future feature (design of the voice feature — STT/TTS, `/voz`, providers: [voz-telegram.md](voz-telegram.md))
 - Photos: save to temp file, pass file path in `IncomingMessage.media`
 - Long responses (>4096 chars): split into multiple Telegram messages at paragraph boundaries
 - Markdown formatting: send with `parse_mode="Markdown"`, fall back to plain text if Telegram rejects the formatting
