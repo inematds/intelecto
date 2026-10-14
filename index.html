@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>INTELECTO — Inteligência pessoal, sem frameworks inchados</title>
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/intelecto/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/intelecto/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/intelecto/es/">
 <style>
   :root {
     --bg: #0a0a0f;
@@ -51,6 +54,11 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--green); }
+
+  .lang-switch { display: flex; gap: 0.4rem; font-size: 0.8rem; font-weight: 700; }
+  .lang-switch a { color: var(--text-dim); text-decoration: none; padding: 0.15rem 0.45rem; border: 1px solid var(--border); border-radius: 6px; }
+  .lang-switch a.on { color: var(--bg); background: var(--green); border-color: var(--green); }
+  @media (max-width: 1100px) { nav { flex-wrap: wrap; gap: 0.8rem; } .nav-links { flex-wrap: wrap; gap: 0.9rem; margin-left: 0; } }
 
   /* HERO */
   .hero {
@@ -269,6 +277,7 @@
     <a href="#ecossistema">Ecossistema</a>
     <a href="https://github.com/inematds/intelecto" target="_blank">GitHub</a>
   </div>
+  <div class="lang-switch"><a href="index.html" class="on">PT</a><a href="en/">EN</a><a href="es/">ES</a></div>
 </nav>
 
 <div class="hero">
