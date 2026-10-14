@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>INTELLECT — Features and Architecture Guide</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a2e;
+    --border: #2a2a3e;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --green: #00D26A;
+    --green-dim: #00a854;
+    --cyan: #00BCD4;
+    --purple: #6c63ff;
+    --red: #ef5350;
+    --teal: #00d4aa;
+    --amber: #ffa726;
+    --blue: #42a5f5;
+    --gray: #607d8b;
+    --violet: #ab47bc;
+    --lime: #66bb6a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    line-height: 1.7;
+  }
+
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(20px);
+  }
+  .nav-logo { font-family: monospace; font-size: 1.1rem; color: var(--green); font-weight: 700; text-decoration: none; }
+  .nav-links { display: flex; gap: 1.5rem; margin-left: auto; flex-wrap: wrap; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; margin-bottom: 1rem; }
+  .hero h1 span { color: var(--green); }
+  .hero p { font-size: 1.1rem; color: var(--text-dim); max-width: 700px; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  section { padding: 3rem 0; border-top: 1px solid var(--border); }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .section-sub { color: var(--text-dim); margin-bottom: 2.5rem; font-size: 0.95rem; }
+
+  /* CORREDOR */
+  .corredor {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .corredor-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .corredor-icon { font-size: 1.75rem; }
+  .corredor-title { font-size: 1.15rem; font-weight: 700; }
+  .corredor-sub { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.15rem; }
+  .corredor-body { padding: 1.5rem; }
+  .corredor-intro { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.7; }
+
+  .items-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0.625rem;
+    align-items: flex-start;
+  }
+  .item-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+  }
+  .item-dot.claudeclaw { background: #d97757; }
+  .item-dot.hermes { background: #eab308; }
+  .item-dot.aios { background: #7c3aed; }
+  .item-content { flex: 1; }
+  .item-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .item-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; }
+
+  /* ARQUITETURA */
+  .arch-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .arch-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .arch-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .arch-title { font-size: 1.1rem; font-weight: 700; }
+  .arch-lang { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem; }
+  .arch-body { padding: 1.5rem; }
+  .arch-desc { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.7; }
+
+  .arch-diagram {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    overflow-x: auto;
+    white-space: pre;
+    margin-bottom: 1.25rem;
+  }
+
+  .arch-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+  .pillar {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+  }
+  .pillar-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .pillar-desc { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    border: 1px solid;
+    margin-right: 0.35rem;
+    margin-bottom: 0.35rem;
+  }
+
+  /* FILE TREE */
+  .file-tree-block {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .file-tree-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+  }
+  .file-tree {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.7rem;
+    line-height: 1.85;
+    color: var(--text-dim);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .file-tree .fn { color: var(--green); }
+  .file-tree .fd { color: var(--cyan); }
+  .file-tree .star { color: var(--amber); }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 3rem;
+  }
+  footer a { color: var(--green); text-decoration: none; }
+</style>
+<link href="https://inematds.github.io/intelecto/doc/guia-funcionalidades.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/intelecto/doc/en/guia-funcionalidades.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/intelecto/doc/es/guia-funcionalidades.html" hreflang="es" rel="alternate"/></head>
+<body><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../guia-funcionalidades.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="guia-funcionalidades.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../es/guia-funcionalidades.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav>
+<a class="nav-logo" href="../../en/">INTELLECT</a>
+<div class="nav-links">
+<a href="../../en/">Home</a>
+<a href="../framework-comparison.html">Compare Frameworks</a>
+<a href="como-construir.html">How to Build</a>
+<a href="https://github.com/inematds/intelecto" target="_blank">GitHub</a>
+</div>
+</nav>
+<div class="hero container">
+<h1>Guide to <span>Features</span> and Architectures</h1>
+<p>What each aisle in the frameworks grocery store offers—and how the 9 main architecture patterns work under the hood.</p>
+</div>
+<!-- ÍNDICE -->
+<div class="container" style="padding-bottom: 3rem;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+<div style="background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem;">
+<div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem;">8 Corridors</div>
+<ol style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+<li><a href="#corredor-identidade" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">1</span>🧬 Identity and Personality</a></li>
+<li><a href="#corredor-seguranca" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">2</span>🛡 Security and Protection</a></li>
+<li><a href="#corredor-comunicacao" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">3</span>💬 Communication Channels</a></li>
+<li><a href="#corredor-memoria" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">4</span>🧠 Memory and Knowledge</a></li>
+<li><a href="#corredor-automacao" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">5</span>⚙ Automation and Scheduling</a></li>
+<li><a href="#corredor-integracoes" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">6</span>🔗 Integrations and Protocols</a></li>
+<li><a href="#corredor-skills" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">7</span>🧰 Ready-to-Use Skills and Tools</a></li>
+<li><a href="#corredor-arquitetura" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">8</span>🏗 Architecture Patterns</a></li>
+</ol>
+</div>
+<div style="background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem;">
+<div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 1rem;">9 Architectures</div>
+<ol style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+<li><a href="#arch-openclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--purple)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#6c63ff,#8b5cf6); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">OC</span>OpenClaw — Hub Gateway</a></li>
+<li><a href="#arch-zeroclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--red)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#ef5350,#ff7043); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">ZC</span>ZeroClaw — Trait Contracts</a></li>
+<li><a href="#arch-nanoclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--teal)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#00d4aa,#26c6da); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">NC</span>NanoClaw — Container Isolation</a></li>
+<li><a href="#arch-tinyclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--violet)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#ab47bc,#ce93d8); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">TC</span>TinyClaw — Agent Teams</a></li>
+<li><a href="#arch-ironclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--gray)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#607d8b,#90a4ae); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">IC</span>IronClaw — Zero-Trust Security</a></li>
+<li><a href="#arch-agentzero" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--lime)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#66bb6a,#81c784); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">A0</span>Agent Zero — Learning Loop</a></li>
+<li><a href="#arch-claudeclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='#d97757'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#d97757,#e8956f); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">CC</span>ClaudeClaw — Local Swarm + Hive Bus</a></li>
+<li><a href="#arch-hermes" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='#eab308'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#eab308,#facc15); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">HM</span>Hermes — Self-Curating Reflective Loop</a></li>
+<li><a href="#arch-aios" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='#7c3aed'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#7c3aed,#a78bfa); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">AI</span>AIOS — Agent-as-OS-Process</a></li>
+</ol>
+</div>
+</div>
+</div>
+<!-- CORREDORES -->
+<section>
+<div class="container">
+<h2>The 8 Feature Aisles</h2>
+<p class="section-sub">Each aisle groups a type of capability you can add to your assistant. Think of them as sections in a grocery store — you choose the ingredients that make sense for your project.</p>
+<!-- 1. Identidade -->
+<div class="corredor" id="corredor-identidade">
+<div class="corredor-header">
+<span class="corredor-icon">🧬</span>
+<div>
+<div class="corredor-title">Identity and Personality</div>
+<div class="corredor-sub">How your AI introduces itself</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">Defines who your AI is—its tone, values, way of speaking, and how it adapts to different contexts. Without this, you have a generic chatbot. With it, you have an assistant with its own voice.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Soul.md Personality File</div><div class="item-desc">Define your AI's personality, values, and communication style in a simple text file. How to write a character sheet for your AI.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">AIEOS Portable Identity Standard</div><div class="item-desc">Universal format for exporting AI personality (psychology, linguistics, motivations) to any compatible system.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Group-Isolated Memory</div><div class="item-desc">Each conversation group has its own brain. Work chats and family chats never mix context.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Interchangeable Agent Profiles</div><div class="item-desc">Prebuilt personas (developer, researcher, writer) that you can switch between instantly.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Dynamic Behavior Rules</div><div class="item-desc">Change the AI's behavior in the middle of a conversation, without restarting. Immediate adaptation to context.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Telegram Bots per Agent <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Each specialist agent (comms/content/ops/research) is its own bot on Telegram, with its own personality, context window, and avatar, and can be delegated to via @agente: prompt.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">User Modeling (Honcho) <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">User representations engine (dialectic agent) that builds an evolving model of who you are with every conversation; runs locally or in the cloud.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Agent Hub — Publish and Install Personas <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">The "PyPI for agents": a registry where you publish a versioned agent (semver) and install it with 1 command. Reusing personas moves beyond the lab.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">INTELECTO Files</div>
+<div class="file-tree"><span class="fd">intelecto/agent/</span>
+├── <span class="fn">context.py</span> <span class="star">★</span> Loads workspace/ and builds the final system prompt
+└── <span class="fn">loop.py</span>                   Passes the system prompt to the LLM on every turn
+
+<span class="fd">workspace/</span>
+├── <span class="fn">SOUL.md</span> <span class="star">★</span> Personality: tone, values, response style
+├── <span class="fn">AGENTS.md</span>                 Behavior and tool-use rules
+├── <span class="fn">USER.md</span>                   User profile and preferences
+└── <span class="fn">MEMORY.md</span>                 Bootstrap facts loaded at startup</div>
+</div>
+</div>
+</div>
+<!-- 2. Segurança -->
+<div class="corredor" id="corredor-seguranca">
+<div class="corredor-header">
+<span class="corredor-icon">🛡</span>
+<div>
+<div class="corredor-title">Security and Protection</div>
+<div class="corredor-sub">Protecting your data and systems</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">Layers of protection between your AI and the outside world—from tool sandboxing to prompt injection attack detection. Essential in any environment that accesses sensitive data.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">WASM Sandbox for Tools</div><div class="item-desc">Tools run in isolated WebAssembly containers. They physically cannot access your files or secrets. Lighter than Docker.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">VM Container Isolation</div><div class="item-desc">Each conversation runs in its own virtual machine. The strongest barrier between the AI and your operating system.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Defense Against Prompt Injection</div><div class="item-desc">Detects and blocks attempts to trick your AI with hidden instructions in web pages or incoming messages.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Secret Leak Detection</div><div class="item-desc">Checks tool outputs before they reach the AI to ensure API keys and passwords aren't accidentally exposed.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Encrypted Secret Storage</div><div class="item-desc">API keys encrypted with ChaCha20 or Fernet. Even if someone steals the file, they can't read it.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Execution Approval Gates</div><div class="item-desc">Three levels of control: read-only, supervised (asks permission), and full autonomy. You decide how much to trust it.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Dangerous Command Blocklist</div><div class="item-desc">Automatically blocks destructive commands (delete everything, format disks, restart) by substring matching.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Outbound Exfiltration Guard <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Scans every outgoing response with regex (API keys, Slack/GitHub tokens, AWS, long hex strings) and redacts secrets before sending them to the chat — a barrier against prompt-injection leaks.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Hot-Reload Kill Switches <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">.env flags reloaded every ~1.5s: disables LLM spawning, dashboard mutations, the scheduler, or War Room in under 2s, without restarting the process, with a rejection counter.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Egress Allowlist + Sandbox Hardening <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Execution sandbox (firejail/bubblewrap/docker), egress allowlist, and immutable audit log; blacklist ~/.ssh and ~/.aws to contain exfiltration.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Defense Against Prompt Injection (OWASP #1) <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Addresses OWASP #1 for LLM Apps: separates data from instructions when reading web/third-party content, with a threat model mapped to 4 attackers.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">INTELECTO Files</div>
+<div class="file-tree"><span class="fd">intelecto/security/</span>
+├── <span class="fn">secrets.py</span> <span class="star">★</span> Fernet + PBKDF2: encrypts keys with the hardware UUID
+└── <span class="fn">safety.py</span>                 Command blocklist + path traversal + audit log
+
+<span class="fd">intelecto/tools/</span>
+└── <span class="fn">shell.py</span>                  run_command with a 60s timeout and an embedded blocklist
+
+<span class="fd">~/.intelecto/</span>
+├── <span class="fn">.secrets</span>                  Encrypted keys (useless on different hardware)
+└── <span class="fn">audit.log</span>                 Log of all executed commands</div>
+</div>
+</div>
+</div>
+<!-- 3. Comunicação -->
+<div class="corredor" id="corredor-comunicacao">
+<div class="corredor-header">
+<span class="corredor-icon">💬</span>
+<div>
+<div class="corredor-title">Communication Channels</div>
+<div class="corredor-sub">Where your AI lives</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">The channel is your AI's "point of entry." It determines which app the user will interact with it in. Each channel has distinct characteristics — choose where your audience already is.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">WhatsApp</div><div class="item-desc">The most natural choice for everyday business use in Brazil. Supports text, images, and voice notes.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Telegram</div><div class="item-desc">Simpler setup (just one token). Rich media, inline buttons, and file sharing. Great for technical teams.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Discord</div><div class="item-desc">Ideal for managing communities and team channels. Supports slash commands.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Slack</div><div class="item-desc">Integration without a public IP via Socket Mode. Perfect for automating internal processes.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Email (IMAP/SMTP)</div><div class="item-desc">The AI reads your email and can reply. It filters spam, summarizes newsletters, and drafts responses.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Web Dashboard</div><div class="item-desc">Browser interface with real-time status, visible memory, and task progress.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Voice Wake Word</div><div class="item-desc">Say "hey claude" and your AI listens. Always-on voice control, like a private smart speaker.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Avatar in a Live Video Meeting <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Sends an agent into a real video call (Daily.co/Meet/Zoom) as a participant with a Pika avatar that speaks in real time.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Live Voice War Room <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">A meeting room with your agent team using live voice via Gemini Live, each agent with its own voice, sub-second latency, no Deepgram or Cartesia.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Unified Messaging Gateway <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">A gateway normalizes CLI, Discord, Slack, WhatsApp, HTTP, and cron into the same Message object — one brain, all the mouths, with the agent decoupled from the channel.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">INTELECTO Files</div>
+<div class="file-tree"><span class="fd">intelecto/channels/</span>
+├── <span class="fn">base.py</span> <span class="star">★</span> Abstract contract: start(on_message), send(), stop()
+└── <span class="fn">telegram.py</span>               Long polling, splitting at &gt;4096 chars, typing indicator
+
+<span class="fd"># To add new channels — implement BaseChannel:</span>
+<span class="fn">channels/whatsapp.py</span>          WhatsApp (without touching the agent's code)
+<span class="fn">channels/discord.py</span>           Discord (same contract)
+<span class="fn">channels/slack.py</span>             Slack Socket Mode</div>
+</div>
+</div>
+</div>
+<!-- 4. Memória -->
+<div class="corredor" id="corredor-memoria">
+<div class="corredor-header">
+<span class="corredor-icon">🧠</span>
+<div>
+<div class="corredor-title">Memory and Knowledge</div>
+<div class="corredor-sub">How your AI remembers</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">The difference between an AI that forgets everything when it restarts and one that has known you for months. The memory system you choose determines the cost, accuracy, and long-term recall capability.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Hybrid Vector + Keyword Search</div><div class="item-desc">Combines semantic understanding (what you mean) with exact search (specific words). The most precise option, but it comes with embedding costs.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">SQLite FTS5 (Keyword Search)</div><div class="item-desc">Full-text search with BM25 ranking. Zero API costs, no embedding models. Covers 90% of recall needs.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Two-Layer Memory System</div><div class="item-desc">Layer 1: quick facts in MEMORY.md. Layer 2: searchable history log. Simple and effective for small projects.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Solutions Memory</div><div class="item-desc">The AI automatically saves successful solutions. The next time it encounters a similar problem, it remembers what worked.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Document Knowledge Base</div><div class="item-desc">Upload PDFs, spreadsheets, and documents. AI searches and analyzes them. Your company's knowledge at your fingertips in chat.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Automatic Session Compaction</div><div class="item-desc">When conversations get too long, automatically summarizes older parts to keep the AI fast.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">5-Layer Memory with Decay <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Memory that extracts facts via Gemini (importance score), stores vector embeddings, searches across 5 fronts, consolidates patterns every 30min, and decays or gains salience based on usage.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Memory Hygiene and Sharing <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Periodic review that suggests (never writes on its own) what to pin, which conflicts to resolve, and which duplicates to merge, plus selective promotion of universal facts to the tier shared across agents.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Memory Curation in the Reflect Step <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">perceive→act→reflect→save loop: an inexpensive model (&lt;1k tokens) decides what’s worth remembering and curates memory on its own, instead of making you dictate everything.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Semantic File System (LSFS) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Storage that indexes by embeddings: you find a file by meaning in natural language ("the PDF about AIOS from last week"), not by path. ICLR 2025 paper; complements the FS, it doesn't replace it.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Curated Agentic Memory (A-MEM) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Memory where the agent itself decides what to keep, compresses redundant information, and indexes what can be searched — fighting context bloat in long-running agents.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">INTELECTO Files</div>
+<div class="file-tree"><span class="fd">intelecto/memory/</span>
+└── <span class="fn">store.py</span> <span class="star">★</span> SQLite FTS5 + BM25 + automatic deduplication (&gt;80% = update)
+
+<span class="fd">intelecto/agent/</span>
+└── <span class="fn">context.py</span>                memory.search(query) → injects results into the system prompt
+
+<span class="fd">~/.intelecto/</span>
+└── <span class="fn">memory.db</span>                 Persistent database — survives restarts
+
+<span class="fd"># Stored categories:</span>
+<span class="fn">fact</span>         · facts about you and your preferences
+<span class="fn">conversation</span> · summaries of important conversations
+<span class="fn">solution</span>     · solutions to recurring problems</div>
+</div>
+</div>
+</div>
+<!-- 5. Automação -->
+<div class="corredor" id="corredor-automacao">
+<div class="corredor-header">
+<span class="corredor-icon">⚙</span>
+<div>
+<div class="corredor-title">Automation and Scheduling</div>
+<div class="corredor-sub">Work while you sleep</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">Turns your AI from reactive to proactive. Instead of waiting for you to ask something, it runs tasks at set times, monitors events, and works in the background.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Cron Scheduling</div><div class="item-desc">"Every Monday at 9 a.m., send me a briefing for the day." It works like a reliable alarm clock for recurring tasks.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Heartbeat (Periodic Checks)</div><div class="item-desc">The AI wakes up every 30 minutes to check whether anything needs attention. Proactive, not just reactive.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Browser Automation</div><div class="item-desc">Controls a real browser: fills out forms, clicks buttons, extracts data, and takes screenshots. Automates repetitive web tasks.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Webhook Triggers</div><div class="item-desc">External services (Zapier, n8n, Shopify) trigger your AI via URL. Connects to any existing automation ecosystem.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Background Sub-Agents</div><div class="item-desc">Auxiliary AI for long-running tasks. The main agent stays responsive while workers handle the heavy lifting.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Agent Team Collaboration</div><div class="item-desc">Multiple specialized agents (@coder, @reviewer, @writer) automatically pass work to one another.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Mission Control Kanban <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Kanban board with one column per agent, tasks auto-assigned by Gemini, drag-and-drop to reassign, and a history drawer showing everything completed.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Acceptance Checks for Scheduled Tasks <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">A scheduled task only counts as successful if the output contains a defined marker — "a turn returned" is no longer mistaken for "the objective was completed."</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Proactive Agent via Heartbeat <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Built-in scheduler (APScheduler) with zombie detection, reclaim, and retries: briefings, reminders, and proactive check-ins that make the agent feel alive 24/7.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Northstar Objective Function <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Instead of question→answer, you set a goal and the agent uses a turn budget (~20) or generates 4-10 actions with a progress bar until it reaches the goal.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Agent-as-Process Scheduling (FIFO/Round-Robin) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Multiple LLM agents become processes scheduled by a Scheduler with fairness — instead of one long-running agent blocking all the others, the kernel shares access to the LLM (FIFO for 1–2 agents, Round-Robin for 3+).</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">INTELECTO Files — Roadmap Phase 2</div>
+<div class="file-tree"><span class="fd">intelecto/tools/</span> <span class="fd"># planned — not implemented in v0.1</span>
+├── <span class="fn">cron.py</span>                   Scheduling: "every Monday at 9 a.m., send me..."
+└── <span class="fn">web.py</span>                    Web search and page/URL fetching
+
+<span class="fd">intelecto/agent/</span>
+└── <span class="fn">loop.py</span>                   Already supports multiple rounds — a foundation for automation
+
+<span class="fd"># Implemented today:</span>
+<span class="fn">com.intelecto.agent.plist</span>     Auto-restart via macOS launchd (active now)
+<span class="fn">start.sh</span>                      Launcher with venv + automatic install</div>
+</div>
+</div>
+</div>
+<!-- 6. Integrações -->
+<div class="corredor" id="corredor-integracoes">
+<div class="corredor-header">
+<span class="corredor-icon">🔗</span>
+<div>
+<div class="corredor-title">Integrations and Protocols</div>
+<div class="corredor-sub">Connecting to the World</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">How your AI connects to model providers, external services, and standard protocols. This is where decisions about AI model cost, privacy, and scalability are made.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">OpenRouter — 100+ Models, 1 Key</div><div class="item-desc">Access Claude, GPT-4, Gemini, Mistral, DeepSeek, Llama, and over 100 models with a single API key. Switch models without changing the code.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Local LLM Support (Ollama)</div><div class="item-desc">Run models on your own computer. Zero API costs, total privacy, no internet. Use with OpenRouter: cloud for power, local for privacy.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Multi-Provider Failover</div><div class="item-desc">If Claude goes down, automatically switches to GPT or Gemini. With OpenRouter, you get 100+ models as fallbacks with a single key.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Task-Based Model Selection</div><div class="item-desc">Claude Sonnet for complex reasoning, Haiku for fast, low-cost responses, and DeepSeek R1 for code. Full control over cost and quality.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">MCP (Model Context Protocol)</div><div class="item-desc">A universal standard for connecting AI to external tools. One protocol, thousands of integrations—the “USB” for AI tools.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Specialized Media Providers (fal.ai, Kie.ai)</div><div class="item-desc">For images, sound, and video, use specialized providers. Text LLMs are weak at media—fal.ai and Kie.ai are the right choice for content creation.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Skills / Plugins System</div><div class="item-desc">Install new capabilities like apps on your phone. No coding required to add prebuilt integrations.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Hardware / IoT Control</div><div class="item-desc">Controls physical devices through GPIO, I2C, and SPI pins. AI can interact with the real world in embedded projects.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Normalized Provider Engine (ACP) <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">A single engine layer with adapters for the Claude SDK, native OpenRouter, and ACP (OpenCode/Gemini CLI/Codex/custom), with separate sessions per provider to keep histories from crossing.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">OAuth Health Monitor <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Notifies you on Telegram before the Claude OAuth token expires — essential for daemon deployment (launchd/systemd), where expiration causes silent failure.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Role-Based Multi-Brain Routing <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Routes models by role in the config (main/reflect/routing/fallbacks) and by subtask within the skill — a powerful model for the work, a cheaper one for triage.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Create Your Own MCP Server <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Create your own MCP server in Python (FastMCP) or Node (@modelcontextprotocol/sdk) with OAuth/JWT auth and publish it via Docker/npm/pip.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Framework Adapter Layer <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">An execution layer below the frameworks: replaces direct LLM calls with a syscall (adapter pattern), so LangChain/AutoGen/CrewAI/MetaGPT/OpenAGI inherit scheduling, fairness, and persistence — incremental migration.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">INTELECTO Files</div>
+<div class="file-tree"><span class="fd">intelecto/providers/</span>
+├── <span class="fn">base.py</span> <span class="star">★</span> Abstract contract: async chat() → LLMResponse
+├── <span class="fn">openrouter.py</span>              OpenRouter via LiteLLM (100+ models with 1 key)
+└── <span class="fn">ollama.py</span>                  Local Ollama (zero cost, zero cloud)
+
+<span class="fd">intelecto/</span>
+└── <span class="fn">config.py</span>                  Configures the default provider and model for each task
+
+<span class="fd">requirements.txt</span>
+└── <span class="fn">litellm ≥1.40.0</span>           Unified interface: OpenRouter, Ollama, any LLM
+
+<span class="fd"># Add a provider = implement BaseProvider:</span>
+<span class="fn">providers/gemini.py</span>  · <span class="fn">providers/groq.py</span>  · <span class="fn">providers/cohere.py</span></div>
+</div>
+</div>
+</div>
+<!-- 7. Skills -->
+<div class="corredor" id="corredor-skills">
+<div class="corredor-header">
+<span class="corredor-icon">🧰</span>
+<div>
+<div class="corredor-title">Built-In Skills and Ready-to-Use Tools</div>
+<div class="corredor-sub">What comes ready in the box</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">The longest corridor — these are the concrete capabilities your AI can perform today, without building them from scratch. It covers productivity, communication, smart home, development, and much more.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Google Workspace Suite</div><div class="item-desc">Gmail, Calendar, Drive, Sheets, Docs, and Slides. Full Google integration: send emails, create spreadsheets, manage your calendar.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">GitHub (Issues, PRs, CI, API)</div><div class="item-desc">Full workflow: manage issues, review pull requests, trigger CI. Manage code through chat.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Notion, Obsidian, Apple Notes, Bear</div><div class="item-desc">Integrations with leading note-taking apps. Create, edit, and search notes directly through the assistant.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Whisper Speech-to-Text + ElevenLabs TTS</div><div class="item-desc">Convert speech to text and text to natural-sounding speech. Works locally (no API) or in the cloud.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">AI Image Generation</div><div class="item-desc">Generate images via the OpenAI API, Gemini, or specialized providers like fal.ai. Supports inpainting and batch generation.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">URL / Video / Podcast Summarizer</div><div class="item-desc">Summarize web pages, YouTube videos, and podcasts. Get the essentials without reading or watching everything.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Smart Home Control (Philips Hue, Sonos)</div><div class="item-desc">Controls lights, speakers, and smart devices with natural language commands.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Coding Agent Orchestration</div><div class="item-desc">Run Codex CLI, Claude Code, or other coding agents programmatically. AI managing other AIs.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Composio (1000+ Apps)</div><div class="item-desc">One-click OAuth access to 1000+ apps: Gmail, Notion, GitHub, Slack, and much more via Composio.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Autonomous Skill Generation <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">The agent detects a repeated workflow (≥3x) during the reflect step and writes a draft SKILL.md for you to approve — skills born from use, with no programming.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Portable agentskills.io Skills <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Skills as a self-contained folder with SKILL.md (YAML frontmatter + markdown), an open standard portable across Hermes, Claude Code, and Codex.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Computer-Use Actions <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Real actions on your PC: browser vision with Chrome DevTools, visual screen reading, and actual cursor movements — can be enabled in the tools, with care.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Auto-Registered Skill Commands <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Any skill with user_invocable:true automatically becomes a /command in the Telegram menu (setMyCommands), without changing any code — just drop in the skill folder.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Computer Use via VM + MCP (LiteCUA) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Exposes the entire computer as MCP tools (screenshot/click/type) inside a sandboxed VM (KVM/Firecracker). Perceive-decide-act loop with a multimodal LLM to operate GUIs without an API.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">INTELECTO Files</div>
+<div class="file-tree"><span class="fd">intelecto/tools/</span>
+├── <span class="fn">base.py</span> <span class="star">★</span> Contract: name, description, parameters, execute()
+├── <span class="fn">registry.py</span>               Tool discovery and dispatch
+├── <span class="fn">filesystem.py</span>             read_file, write_file, list_directory
+└── <span class="fn">shell.py</span>                  run_command with a safety check and a 60s timeout
+
+<span class="fd"># Add a skill = create a new file inheriting from BaseTool:</span>
+<span class="fn">tools/github.py</span>  · <span class="fn">tools/notion.py</span>  · <span class="fn">tools/calendar.py</span>
+<span class="fd"># Without touching registry.py — automatic discovery</span></div>
+</div>
+</div>
+</div>
+<!-- 8. Arquitetura -->
+<div class="corredor" id="corredor-arquitetura">
+<div class="corredor-header">
+<span class="corredor-icon">🏗</span>
+<div>
+<div class="corredor-title">Architecture Patterns</div>
+<div class="corredor-sub">How to structure your framework</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">The structural patterns that define how your assistant’s components connect. Your choice here affects maintainability, scalability, and ease of extension.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Modularity via Traits / Abstract Classes</div><div class="item-desc">Each component is defined by a contract (interface). Swap implementations without touching the agent's code.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">WebSocket Gateway Hub</div><div class="item-desc">A central server that all channels connect to. The “control tower” pattern — maximum control, greater complexity.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Message Bus Architecture</div><div class="item-desc">Channels and agents communicate through a central queue. Clean separation, easy to add new channels.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">File-Based Message Queue</div><div class="item-desc">Messages stored as files in directories (incoming → processing → outgoing). Simple, reliable, no database.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Single-Binary Deployment</div><div class="item-desc">One executable file, no dependencies. Copy it anywhere and it works. The simplest deployment story possible.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Project-Based Workspace Isolation</div><div class="item-desc">Separate spaces per client or project, each with its own memory and secrets. No data mixing.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Shared Brain Bus (Hive Bus) <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Event bus (hive_mind table) that every agent writes to and every agent reads from: the whole team can see what each agent did in the last 24h within the memory context. <a href="#arch-claudeclaw" style="color:#d97757; text-decoration:none">view architecture →</a></div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Self-Improving Reflective Loop <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">A perceive→act→reflect→save loop in which the agent curates its own memory and creates its own skills through use—instead of relying on static channels, loops, and memory. <a href="#arch-hermes" style="color:#eab308; text-decoration:none">view architecture →</a></div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Agent-as-OS-Process (LLM Kernel) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">The LLM becomes the core of a kernel, and each agent is a scheduled process, with auditable syscalls and context switching — frameworks such as LangChain/AutoGen/CrewAI run on top. <a href="#arch-aios" style="color:#7c3aed; text-decoration:none">view architecture →</a></div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">INTELECTO Files</div>
+<div class="file-tree"><span class="fd">intelecto/</span>
+├── <span class="fn">main.py</span> <span class="star">★</span> Entry point: detects config, starts bot
+└── <span class="fn">config.py</span>                 Configuration singleton (~/.intelecto/config.json)
+
+<span class="fd">intelecto/agent/</span>
+├── <span class="fn">loop.py</span>                   Core: receives → thinks → responds (max 5 rounds)
+└── <span class="fn">context.py</span>                Builds system prompt + relevant memories
+
+<span class="fd"># Contracts — each subsystem implements its interface:</span>
+<span class="fn">providers/base.py</span>    async chat() → LLMResponse
+<span class="fn">channels/base.py</span>     start(), send(), stop()
+<span class="fn">memory/store.py</span>      save(), search(), forget(), recent()
+<span class="fn">tools/base.py</span>        name, description, execute()</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ARQUITETURAS -->
+<section>
+<div class="container">
+<h2>The 9 Architectures in Detail</h2>
+<p class="section-sub">How each framework organizes its components internally. These are the blueprints you'd follow when building with each approach.</p>
+<!-- OpenClaw -->
+<div class="arch-card" id="arch-openclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #6c63ff, #8b5cf6)">OC</div>
+<div>
+<div class="arch-title">OpenClaw — Hub Gateway</div>
+<div class="arch-lang">TypeScript · The "control tower" architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">OpenClaw uses a central WebSocket server (Gateway) as the single entry point for all channels. Messages from WhatsApp, Telegram, Slack, iMessage, and voice pass through the same hub before reaching the agent. This provides centralized session control, routing between multiple agents, and unified support for visual canvas and voice.</p>
+<div class="arch-diagram">          CHANNELS                    AGENTS
+  WhatsApp  Telegram  Slack       Agent A  Agent B
+  Discord   iMessage  WebChat     (Work)   (Personal)
+      \       |       /               \       /
+       \      |      /                 \     /
+        v     v     v                   v   v
+       +------------------+      +------------------+
+       |     GATEWAY       |------|   SESSION STORE   |
+       |  (WebSocket Hub)  |      |  (JSONL files)    |
+       +------------------+      +------------------+
+              |
+     +--------+--------+
+     |        |        |
+  TOOLS    CANVAS    VOICE
+  Browser  Live UI   Wake Word
+  Files    Diagrams  TTS/STT
+  Shell    React     ElevenLabs</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">Maximum control and visibility. Everything goes through the hub — logging, routing, and sessions are all in one place.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">The Gateway is a single point of failure. Harder to test and scale horizontally.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">Projects that need multiple channels, multiple agents, and a visual interface at the same time.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure</div>
+<div class="file-tree"><span class="fd">src/gateway/server/</span>
+├── <span class="fn">server.ts</span> <span class="star">★</span> Central WebSocket server — single entry point
+├── <span class="fn">server-channels.ts</span>        Connects and manages all channels in the gateway
+├── <span class="fn">server-chat.ts</span>            Chat sessions, history, and streaming
+├── <span class="fn">server-cron.ts</span>            Scheduled tasks integrated with the gateway
+├── <span class="fn">server-startup.ts</span>         Boot, health checks, and automatic recovery
+└── <span class="fn">ws-connection/</span>            Individual WebSocket Connection Management
+
+<span class="fn">src/channels/registry.ts</span>      Discovers and registers available channels
+<span class="fn">src/sessions/</span>                 Sessions stored as JSONL per agent
+<span class="fn">src/agents/pi-embedded-runner.ts</span>   Runner: receives → thinks → responds
+<span class="fn">src/gateway/protocol/</span>         Gateway messaging protocol</div>
+</div>
+</div>
+</div>
+<!-- ZeroClaw -->
+<div class="arch-card" id="arch-zeroclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #ef5350, #ff7043)">ZC</div>
+<div>
+<div class="arch-title">ZeroClaw — Trait Contracts (Rust)</div>
+<div class="arch-lang">Rust · The “LEGO of components” architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">Each subsystem (AI provider, channel, memory) is defined by a trait — a contract that says "any implementation must have these methods." The config.toml file decides which implementations to use at runtime. You can switch the AI provider from Claude to Ollama, or the channel from Telegram to WhatsApp, without touching the agent's code. The result is a memory footprint below 5MB and boot in 10ms.</p>
+<div class="arch-diagram">  config.toml define which implementations to use:
+
+  +-----------+   +-----------+   +----------+
+  | Provider  |   | Channel   |   | Memory   |
+  | (trait)   |   | (trait)   |   | (trait)  |
+  +-----------+   +-----------+   +----------+
+       ^               ^              ^
+       |               |              |
+  +----+----+    +-----+-----+  +----+----+
+  |OpenAI   |    |Telegram   |  |SQLite   |
+  |Claude   |    |Discord    |  |Markdown |
+  |Ollama   |    |Slack      |  |None     |
+  |Gemini   |    |WhatsApp   |  +---------+
+  |22 more..|    |Email      |
+  +---------+    |Webhook    |
+                 +-----------+
+
+  Swap ANY piece without touching the agent code</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">Maximum modularity and efficiency. Each component can be tested independently. Runs on $10 hardware.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">Rust has a steep learning curve. Its traits system can intimidate developers coming from dynamic languages.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">Projects that require extreme efficiency, have limited hardware, or need frequent AI provider switching.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure — separate Rust codebase</div>
+<div class="file-tree"><span class="fd">src/</span>
+├── <span class="fn">main.rs</span> <span class="star">★</span> Entry point and CLI
+└── <span class="fn">config.rs</span>                 Loads config.toml and instantiates implementations
+
+<span class="fd">traits/</span>
+├── <span class="fn">provider.rs</span> <span class="star">★</span> Trait Provider: async chat() → LLMResponse
+├── <span class="fn">channel.rs</span>                Trait Channel: start(), send(), stop()
+└── <span class="fn">memory.rs</span>                 Trait Memory: save(), search(), forget()
+
+<span class="fd">providers/</span>                    Interchangeable Provider implementations:
+├── <span class="fn">openai.rs</span> <span class="fn">claude.rs</span>      Cloud providers (OpenAI, Anthropic)
+└── <span class="fn">ollama.rs</span>                  Local model (zero cost, zero cloud)
+
+<span class="fd">channels/</span>                     Interchangeable Channel implementations:
+└── <span class="fn">telegram.rs</span> <span class="fn">discord.rs</span>   Switch channels without changing the agent</div>
+</div>
+</div>
+</div>
+<!-- NanoClaw -->
+<div class="arch-card" id="arch-nanoclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #00d4aa, #26c6da)">NC</div>
+<div>
+<div class="arch-title">NanoClaw — Container Isolation</div>
+<div class="arch-lang">TypeScript · The "separate brains" architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">NanoClaw solves a specific WhatsApp problem for businesses: how do you ensure that the context of a work group never leaks into the family group? The answer is radical — each conversation runs in its own isolated container, with its own CLAUDE.md file and separate filesystem. The host manages the WhatsApp connection and dispatches messages to the right container.</p>
+<div class="arch-diagram">  HOST (macOS/Linux)
+  +--------------------------------------------+
+  | WhatsApp Connection (Baileys)              |
+  | SQLite Message Store                       |
+  | Message Polling Loop                       |
+  | Task Scheduler                             |
+  +--------------------------------------------+
+           |              |              |
+  +-- Container --+  +-- Container --+  +-- Container --+
+  | Work Group    |  | Family Group  |  | Admin Chat   |
+  | Claude SDK    |  | Claude SDK    |  | Claude SDK   |
+  | Own CLAUDE.md |  | Own CLAUDE.md |  | Full access  |
+  | Sandboxed FS  |  | Sandboxed FS  |  | All groups   |
+  +---------------+  +---------------+  +--------------+
+
+  Each group = an isolated brain. They can't see each other.</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">Complete isolation between contexts. Ideal for enterprise use where data from different clients must not be mixed.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">Container overhead per group. Not the best choice for a single-user personal assistant.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">Companies with multiple WhatsApp groups that need fully separated contexts.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure — NanoClaw codebase</div>
+<div class="file-tree"><span class="fd">src/</span>
+├── <span class="fn">host.ts</span> <span class="star">★</span> Host: manages WhatsApp connection (Baileys)
+├── <span class="fn">message-store.ts</span>          SQLite: message queue per group
+└── <span class="fn">scheduler.ts</span>              Routes messages to the correct container
+
+<span class="fd">containers/</span>
+├── <span class="fn">manager.ts</span> <span class="star">★</span> Creates and destroys containers per group
+├── <span class="fn">dispatch.ts</span>               Routes messages to the right container
+└── <span class="fn">sandbox-fs.ts</span>             Filesystem isolated by container
+
+<span class="fd">agent-container/</span>
+├── <span class="fn">runner.ts</span>                 Runs Claude SDK inside the container
+└── <span class="fn">claude-md.ts</span>              Loads the group-specific CLAUDE.md</div>
+</div>
+</div>
+</div>
+<!-- TinyClaw -->
+<div class="arch-card" id="arch-tinyclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #ab47bc, #ce93d8)">TC</div>
+<div>
+<div class="arch-title">TinyClaw — Agent Teams</div>
+<div class="arch-lang">TypeScript · The "small AI company" architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">TinyClaw treats each agent as a specialized team collaborator. Messages enter a file-based queue (no database), and each agent picks them up from its own inbox. One agent can mention another (@reviewer, @writer) to pass the work along. Parallel processing: while @coder writes code, @reviewer can be analyzing another PR.</p>
+<div class="arch-diagram">  YOU (via Discord / Telegram / WhatsApp)
+       |
+       v
+  +------------------+
+  | Message Queue     |  incoming/ -&gt; processing/ -&gt; outgoing/
+  | (File-Based)     |  Each agent picks up messages from its own inbox
+  +------------------+
+       |
+  +----+----+----+----+
+  |         |         |
+  @coder   @reviewer  @writer
+  Claude   OpenAI    Claude
+  Opus     GPT-5     Sonnet
+  |         ^         ^
+  |         |         |
+  +---mention----------+  Agents pass work to each other
+  "[@reviewer: check this code]"
+
+  Parallel processing. Sequential per agent.</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">Each agent uses the model best suited to its specialty. Parallel processing for complex tasks.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">Coordination between agents can create circular dependencies. Debugging multi-agent workflows takes more work.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">Software development pipelines where review, writing, and coding happen in parallel.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure — OpenClaw (sub-agents)</div>
+<div class="file-tree"><span class="fd">src/agents/</span>
+├── <span class="fn">subagent-registry.ts</span> <span class="star">★</span> Logging and coordination of active subagents
+├── <span class="fn">openclaw-tools.ts</span>         Tools: spawn, parallel sessions, status
+├── <span class="fn">subagent-announce.ts</span>      @mentions notifications between agents
+└── <span class="fn">subagent-announce-queue.ts</span>  Inter-agent message queue
+
+<span class="fn">src/cron/isolated-agent/</span>     Runs agents in a fully isolated context
+<span class="fn">src/agents/lanes.ts</span>          Controls parallelism between agents
+
+File-based queue (no database):
+  incoming/ → processing/ → outgoing/
+  Each agent reads from its own inbox on disk</div>
+</div>
+</div>
+</div>
+<!-- IronClaw -->
+<div class="arch-card" id="arch-ironclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #607d8b, #90a4ae)">IC</div>
+<div>
+<div class="arch-title">IronClaw — Zero-Trust Security</div>
+<div class="arch-lang">TypeScript · The "layered fortress" architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">IronClaw starts from the principle that no input is trustworthy — not user messages, tool results, or LLM outputs. Each stage of the pipeline has its own security layer: prompt injection detection on input, a WASM sandbox for tool isolation, and a secret leak detector on output. The Job Scheduler allows up to 5 parallel executions with rate limiting.</p>
+<div class="arch-diagram">  Messages come in        Security Layers
+  CLI  Slack  Telegram     |
+       |                    v
+  +----v----+    +--------------------+
+  | Channel |    | Prompt Injection   |
+  | Manager |---&gt;| Pattern Detection  |
+  +---------+    +--------------------+
+       |                    |
+  +----v----+    +--------------------+
+  | Job     |    | WASM Sandbox       |
+  | Scheduler---&gt;| Capability Allowlist|
+  | (5x //) |    | Rate Limiting      |
+  |         |    | Credential Inject  |
+  +---------+    +--------------------+
+       |                    |
+  +----v----+    +--------------------+
+  |  LLM    |    | Leak Detector      |
+  | NEAR AI |    | Scans outputs      |
+  | +Ollama |    | for secrets        |
+  +---------+    +--------------------+</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">The most secure architecture available. Ideal for corporate environments or anywhere AI accesses sensitive data.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">Each layer adds latency. Configuring tool allowlists requires careful planning.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">Companies with compliance requirements, customer data, or where a wrong command could cause real harm.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure — OpenClaw (security layers)</div>
+<div class="file-tree"><span class="fd">src/security/</span>
+├── <span class="fn">audit.ts</span> <span class="star">★</span> Complete audit log of all agent actions
+├── <span class="fn">audit-fs.ts</span>               Monitoring and logging of filesystem operations
+└── <span class="fn">external-content.ts</span>       Prompt injection detection in external inputs
+
+<span class="fd">src/agents/</span>
+├── <span class="fn">sandbox/sandbox.ts</span>        WASM sandbox: completely isolates tools
+├── <span class="fn">tool-policy.ts</span>            Approval gates: 3 confidence levels
+├── <span class="fn">pi-tools.policy.ts</span>        Explicit Allowlist of Permitted Tools
+└── <span class="fn">bash-tools.ts</span>             Blocklist of dangerous commands (rm -rf, etc.)
+
+<span class="fn">src/channels/allowlists/</span>       User Allowlist by Channel
+<span class="fn">src/agents/context-window-guard.ts</span>  Context overflow protection</div>
+</div>
+</div>
+</div>
+<!-- Agent Zero -->
+<div class="arch-card" id="arch-agentzero">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #66bb6a, #81c784)">A0</div>
+<div>
+<div class="arch-title">Agent Zero — Learning Loop</div>
+<div class="arch-lang">Python · The “AI that learns by doing” architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">Agent Zero is built around a continuous improvement loop: before solving a problem, it checks memory ("Have I solved this before?"). Once it solves it, it saves the solution for future use. For complex tasks, it delegates to specialized sub-agents for research or code. Over time, it gets more efficient at the tasks you use most — and can rewrite its own behavior rules in the middle of a conversation.</p>
+<div class="arch-diagram">  You ask a question
+       |
+       v
+  +-----------+     +-----------+
+  | Agent 0   |----&gt;| Memory    |
+  | (Main)    |&lt;----| Search    |  "Have I solved this before?"
+  +-----------+     +-----------+
+       |
+  +----+----+
+  |         |
+  Sub-Agent  Sub-Agent    Delegation for
+  (Research)  (Code)      complex tasks
+  |         |
+  +----+----+
+       |
+  +----v----+     +-----------+
+  | Solution|----&gt;| Memory    |
+  | Found!  |     | SAVE      |  "Remember for next time"
+  +---------+     +-----------+
+
+  Gets smarter with every interaction</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">Learns through use. The "computer as a tool" paradigm lets it solve problems that prebuilt tools don't cover.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">Less predictable behavior—the AI may take unexpected paths. Requires more initial supervision.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">Research, exploratory analysis, and open-ended tasks where flexibility matters more than predictability.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure — separate Python codebase</div>
+<div class="file-tree"><span class="fd">agent_zero/</span>
+├── <span class="fn">agent.py</span> <span class="star">★</span> Main loop: question → memory → solve → save
+├── <span class="fn">memory.py</span>                 Searches for and stores solutions from previous sessions
+└── <span class="fn">context.py</span>               Builds system prompt with relevant memories
+
+<span class="fd">tools/</span>
+├── <span class="fn">web_search.py</span>             Web search for exploratory research
+├── <span class="fn">code_exec.py</span>              Sandboxed code execution
+└── <span class="fn">file_ops.py</span>               File and filesystem operations
+
+<span class="fd">workspace/</span>
+├── <span class="fn">memory.json</span>               Saved solutions from previous sessions
+└── <span class="fn">prompts/</span>                  Prompt templates by task type
+
+Flow: question → search memory → sub-agent → solution → save</div>
+</div>
+</div>
+</div>
+<!-- ClaudeClaw -->
+<div class="arch-card" id="arch-claudeclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #d97757, #e8956f)">CC</div>
+<div>
+<div class="arch-title">ClaudeClaw — Local Multi-Agent Swarm + Hive Bus</div>
+<div class="arch-lang">TypeScript/Node.js · The "pocket headquarters" architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">Instead of the single-agent loop (Telegram→loop→tool→memory), ClaudeClaw runs N specialist agents as independent bots on the SAME machine and DB. They delegate to each other (@agente:), meet in real time (text/voice War Room), and publish every action to a shared event bus (hive_mind table) that serves as both team memory AND visualization—a 3D anatomical brain. Alongside this is an operational containment plan: kill switches with hot reload + default-deny tool policy + exfiltration guard form a runtime security mesh over full-access execution.</p>
+<div class="arch-diagram">  YOU (Telegram · Dashboard · War Room · Mission Control)
+       |
+  +----+----+----+----+        delegation @agent:
+  |    |    |    |    |    &lt;----------------------+
+ @comms @content @ops @research                   |
+  bot   bot      bot   bot   (each one = its own bot, its own voice)
+  |     |        |     |                          |
+  +--+--+--------+--+--+--------------------------+
+     |              |
+     v              v
+  +------------------+      +------------------+
+  |   HIVE BUS        |-----&gt;| 3D Brain          |
+  | (hive_mind table) |      | Three.js/WebGL    |
+  | every action = event|    | lobes/synapses    |
+  +------------------+      +------------------+
+     |
+  +--+-------------------------------+
+  |  OPERATIONAL CONTAINMENT (runtime)|
+  |  Kill switches (hot-reload ~1.5s) |
+  |  Tool policy default-deny        |
+  |  Outbound exfiltration guard     |
+  +----------------------------------+</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">A team of agents that really talks: delegation, a live War Room, and a visible shared brain. Team memory becomes observability.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">Many surfaces and processes to maintain. Full-access execution requires the containment mesh (kill switches, default-deny, leak guard) to always be enabled.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">Who wants to orchestrate a team of specialized agents locally, with live meetings and full visibility into what each one did.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure — ClaudeClaw OS codebase</div>
+<div class="file-tree"><span class="fd">src/agents/</span>
+├── <span class="fn">registry.ts</span> <span class="star">★</span> One bot per specialist agent (comms/content/ops/research)
+├── <span class="fn">delegate.ts</span>               @agent delegation: between independent bots
+└── <span class="fn">war-room.ts</span>               Live room: /standup, /discuss, Gemini Live voice
+
+<span class="fd">src/hive/</span>
+├── <span class="fn">hive-mind.ts</span> <span class="star">★</span> Event bus: hive_mind table (all agents write/read)
+└── <span class="fn">brain-3d/</span>                3D anatomical brain (Three.js + UnrealBloom)
+
+<span class="fd">src/security/</span>
+├── <span class="fn">kill-switches.ts</span>          .env flags reloaded every ~1.5s (shuts down in &lt;2s)
+├── <span class="fn">tool-policy.ts</span>            Default-deny: side effects only by opt-in in agent.yaml
+└── <span class="fn">exfiltration-guard.ts</span>     Redacts secrets using regex before sending</div>
+</div>
+</div>
+</div>
+<!-- Hermes -->
+<div class="arch-card" id="arch-hermes">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #eab308, #facc15)">HM</div>
+<div>
+<div class="arch-title">Hermes — Reflective Loop + Self-Curating Memory + Autonomous Skills</div>
+<div class="arch-lang">Python · The “self-improving agent” architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">Hermes is a perceive→act→reflect→save loop. A single gateway normalizes any channel (CLI, Discord, Slack, WhatsApp, HTTP, cron) into a Message object. The reflect step uses a low-cost model to curate memory (local SQLite FTS5/BM25, in 3 layers) and detect repeated workflows — those patterns become auto-generated skills (SKILL.md in the agentskills.io format) that the agent reuses. Everything is model-agnostic (role-based routing) and proactive via heartbeat/cron. It is the counterpoint to frameworks that statically separate channel/loop/memory: here, the agent improves its own memory and skills through use.</p>
+<div class="arch-diagram">  CLI  Discord  Slack  WhatsApp  HTTP  cron
+    \     |       |       |       |     /
+     v    v       v       v       v    v
+  +------------------------------------------+
+  |   UNIFIED GATEWAY → Message object        |
+  +------------------------------------------+
+                    |
+       +------------v------------+
+       |   REFLECTIVE LOOP        |
+       |  perceive → act          |
+       |     ↓                    |
+       |  reflect (cheap model)  |----+ detects repeated workflow (≥3x)
+       |     ↓                    |    |
+       |  save                    |    v
+       +------------+-------------+  +------------------+
+                    |               | generated SKILL.md|
+       +------------v------------+  | (agentskills.io)  |
+       | 3-LAYER MEMORY           |  +------------------+
+       | SQLite FTS5 / BM25       |     reused in act
+       | conversations·facts·skills|
+       +-------------------------+</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">The agent improves itself: it curates memory with a low-cost model and writes its own skills based on usage. One brain, every channel.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">The reflect step and skill generation add steps and cost. Auto-generated skills require approval to prevent behavior drift.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">An always-on, multi-channel personal assistant that should get more efficient at recurring tasks without you having to program each one.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure — Hermes codebase</div>
+<div class="file-tree"><span class="fd">hermes/</span>
+├── <span class="fn">gateway.py</span> <span class="star">★</span> Normalizes every channel into a Message object
+├── <span class="fn">loop.py</span> <span class="star">★</span> perceive → act → reflect → save
+└── <span class="fn">reflect.py</span>                Low-cost model curates memory and detects workflows
+
+<span class="fd">hermes/memory/</span>
+└── <span class="fn">store.py</span>                 SQLite FTS5/BM25 — 3 layers (conversations·facts·skills)
+
+<span class="fd">hermes/skills/</span>
+├── <span class="fn">generator.py</span>             Writes SKILL.md as a draft based on usage (≥3x)
+└── <span class="fn">&lt;skill&gt;/SKILL.md</span>          Portable, self-contained folder (agentskills.io)
+
+<span class="fd">config.yaml</span>                    Provider, models by role, toolsets, channels, cron</div>
+</div>
+</div>
+</div>
+<!-- AIOS -->
+<div class="arch-card" id="arch-aios">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #7c3aed, #a78bfa)">AI</div>
+<div>
+<div class="arch-title">AIOS — Agent-as-OS-Process / LLM Kernel</div>
+<div class="arch-lang">Python · The “agent operating system” architecture</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">AIOS embeds the LLM as the core of a kernel and treats each LLM agent as an operating system PROCESS. Multiple agents coexist, sharing models, memory, and tools; the Scheduler (FIFO/Round-Robin) arbitrates who calls the LLM, the Context Manager takes snapshots and restores them to pause and resume agents, and everything flows through auditable syscalls. The agent communicates with the kernel through the Cerebrum SDK (separate repo), in Local or Remote mode. Frameworks such as LangChain, AutoGen, and CrewAI run ON TOP OF it via an adapter.</p>
+<div class="arch-diagram">  APPLICATION   Agent A   Agent B   Agent C   (processes)
+                LangChain  AutoGen   CrewAI    run on top
+       |           |          |          |
+       v           v          v          v
+  +------------------------------------------------+
+  |          CEREBRUM SDK (syscall wrappers)        |
+  |   Agent base · @tool · hub client · Local/Remote |
+  +------------------------------------------------+
+                    | syscalls (LLMCall, Mem R/W,
+                    |  ToolCall, ContextSwitch)
+                    v
+  +------------------------------------------------+
+  |               AIOS KERNEL                       |
+  |  llm_core · memory_manager · storage_manager    |
+  |  tool_manager · scheduler · context_manager     |
+  +------------------------------------------------+
+                    |
+                    v
+        OS · Providers (OpenRouter/Ollama/...)
+
+  aios-rs/  experimental rewrite of the kernel in Rust</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Strength</div><div class="pillar-desc">The only model that scales agents as processes—with multi-agent fairness, preemption, and truly shared resources. Existing frameworks run underneath via an adapter.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complexity</div><div class="pillar-desc">More resource-intensive and conceptually demanding (thinking in terms of syscalls and scheduling); overkill for a single agent/personal assistant—it shines in concurrent multi-agent setups.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Best for</div><div class="pillar-desc">Run multiple concurrent agents at scale, conduct long-running research with checkpoints, and share infrastructure where fairness and isolation between agents matter.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">File structure — kernel + SDK (repos mirroring Linux × glibc)</div>
+<div class="file-tree"><span class="fd">aios/kernel/</span>
+├── <span class="fn">llm_core.py</span> <span class="star">★</span> The LLM embedded as the kernel core
+├── <span class="fn">scheduler.py</span> <span class="star">★</span> Schedules process agents (FIFO / Round-Robin)
+├── <span class="fn">context_manager.py</span>        Agent snapshot / restore / migrate
+├── <span class="fn">memory_manager.py</span>         Volatile RAM per agent (lost on restart)
+├── <span class="fn">storage_manager.py</span>        Durable disk, shareable between agents
+└── <span class="fn">tool_manager.py</span>           Auditable ToolCall via syscall
+
+<span class="fd">aios/config/</span>config.yaml      <span class="fd">scripts/</span>run_terminal.py · run_web.py
+
+<span class="fd">Cerebrum/</span>                     SDK: Base agent · syscall wrappers · @tool · hub
+<span class="fd">aios-rs/</span>                      Experimental rewrite of the kernel in Rust</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer>
+  INTELLECT · <a href="https://github.com/inematds/intelecto" target="_blank">github.com/inematds/intelecto</a>
+</footer>
+</body>
+</html>

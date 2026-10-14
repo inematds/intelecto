@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>INTELECTO — Guía de funcionalidades y arquitecturas</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a2e;
+    --border: #2a2a3e;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --green: #00D26A;
+    --green-dim: #00a854;
+    --cyan: #00BCD4;
+    --purple: #6c63ff;
+    --red: #ef5350;
+    --teal: #00d4aa;
+    --amber: #ffa726;
+    --blue: #42a5f5;
+    --gray: #607d8b;
+    --violet: #ab47bc;
+    --lime: #66bb6a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    line-height: 1.7;
+  }
+
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(20px);
+  }
+  .nav-logo { font-family: monospace; font-size: 1.1rem; color: var(--green); font-weight: 700; text-decoration: none; }
+  .nav-links { display: flex; gap: 1.5rem; margin-left: auto; flex-wrap: wrap; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; margin-bottom: 1rem; }
+  .hero h1 span { color: var(--green); }
+  .hero p { font-size: 1.1rem; color: var(--text-dim); max-width: 700px; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  section { padding: 3rem 0; border-top: 1px solid var(--border); }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .section-sub { color: var(--text-dim); margin-bottom: 2.5rem; font-size: 0.95rem; }
+
+  /* CORREDOR */
+  .corredor {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .corredor-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .corredor-icon { font-size: 1.75rem; }
+  .corredor-title { font-size: 1.15rem; font-weight: 700; }
+  .corredor-sub { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.15rem; }
+  .corredor-body { padding: 1.5rem; }
+  .corredor-intro { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.7; }
+
+  .items-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0.625rem;
+    align-items: flex-start;
+  }
+  .item-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+  }
+  .item-dot.claudeclaw { background: #d97757; }
+  .item-dot.hermes { background: #eab308; }
+  .item-dot.aios { background: #7c3aed; }
+  .item-content { flex: 1; }
+  .item-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .item-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; }
+
+  /* ARQUITETURA */
+  .arch-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .arch-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .arch-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .arch-title { font-size: 1.1rem; font-weight: 700; }
+  .arch-lang { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem; }
+  .arch-body { padding: 1.5rem; }
+  .arch-desc { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.7; }
+
+  .arch-diagram {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    overflow-x: auto;
+    white-space: pre;
+    margin-bottom: 1.25rem;
+  }
+
+  .arch-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+  .pillar {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+  }
+  .pillar-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .pillar-desc { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    border: 1px solid;
+    margin-right: 0.35rem;
+    margin-bottom: 0.35rem;
+  }
+
+  /* FILE TREE */
+  .file-tree-block {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .file-tree-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+  }
+  .file-tree {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.7rem;
+    line-height: 1.85;
+    color: var(--text-dim);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .file-tree .fn { color: var(--green); }
+  .file-tree .fd { color: var(--cyan); }
+  .file-tree .star { color: var(--amber); }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 3rem;
+  }
+  footer a { color: var(--green); text-decoration: none; }
+</style>
+<link href="https://inematds.github.io/intelecto/doc/guia-funcionalidades.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/intelecto/doc/en/guia-funcionalidades.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/intelecto/doc/es/guia-funcionalidades.html" hreflang="es" rel="alternate"/></head>
+<body><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../guia-funcionalidades.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../en/guia-funcionalidades.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="guia-funcionalidades.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<nav>
+<a class="nav-logo" href="../../es/">INTELECTO</a>
+<div class="nav-links">
+<a href="../../es/">Inicio</a>
+<a href="../framework-comparison.html">Comparar frameworks</a>
+<a href="como-construir.html">Cómo construir</a>
+<a href="https://github.com/inematds/intelecto" target="_blank">GitHub</a>
+</div>
+</nav>
+<div class="hero container">
+<h1>Guía de <span>Funciones</span> y Arquitecturas</h1>
+<p>Qué ofrece cada pasillo de la tienda de comestibles de frameworks y cómo funcionan por dentro los 9 principales patrones de arquitectura.</p>
+</div>
+<!-- ÍNDICE -->
+<div class="container" style="padding-bottom: 3rem;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+<div style="background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem;">
+<div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem;">8 Corredores</div>
+<ol style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+<li><a href="#corredor-identidade" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">1</span>🧬 Identidad y Personalidad</a></li>
+<li><a href="#corredor-seguranca" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">2</span>🛡 Seguridad y Protección</a></li>
+<li><a href="#corredor-comunicacao" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">3</span>💬 Canales de comunicación</a></li>
+<li><a href="#corredor-memoria" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">4</span>🧠 Memoria y Conocimiento</a></li>
+<li><a href="#corredor-automacao" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">5</span>⚙ Automatización y programación</a></li>
+<li><a href="#corredor-integracoes" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">6</span>🔗 Integraciones y Protocolos</a></li>
+<li><a href="#corredor-skills" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">7</span>🧰 Skills y Herramientas Listas</a></li>
+<li><a href="#corredor-arquitetura" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--green)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="color:var(--text-dim); font-size:0.75rem; width:1rem">8</span>🏗 Patrones de arquitectura</a></li>
+</ol>
+</div>
+<div style="background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem;">
+<div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple); margin-bottom: 1rem;">9 Arquitecturas</div>
+<ol style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+<li><a href="#arch-openclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--purple)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#6c63ff,#8b5cf6); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">OC</span>OpenClaw — Hub Gateway</a></li>
+<li><a href="#arch-zeroclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--red)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#ef5350,#ff7043); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">ZC</span>ZeroClaw — Contratos de Trait</a></li>
+<li><a href="#arch-nanoclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--teal)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#00d4aa,#26c6da); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">NC</span>NanoClaw — Aislamiento por contenedor</a></li>
+<li><a href="#arch-tinyclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--violet)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#ab47bc,#ce93d8); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">TC</span>TinyClaw — Equipos de Agentes</a></li>
+<li><a href="#arch-ironclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--gray)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#607d8b,#90a4ae); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">IC</span>IronClaw — Seguridad Zero-Trust</a></li>
+<li><a href="#arch-agentzero" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='var(--lime)'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#66bb6a,#81c784); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">A0</span>Agent Zero — Bucle de aprendizaje</a></li>
+<li><a href="#arch-claudeclaw" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='#d97757'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#d97757,#e8956f); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">CC</span>ClaudeClaw — Enjambre local + Hive Bus</a></li>
+<li><a href="#arch-hermes" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='#eab308'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#eab308,#facc15); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">HM</span>Hermes — Bucle reflexivo autocurado</a></li>
+<li><a href="#arch-aios" onmouseout="this.style.color='var(--text)'" onmouseover="this.style.color='#7c3aed'" style="text-decoration:none; color:var(--text); display:flex; align-items:center; gap:0.6rem; font-size:0.9rem; transition: color 0.2s;"><span style="background:linear-gradient(135deg,#7c3aed,#a78bfa); color:#fff; font-size:0.65rem; font-weight:800; padding:0.15rem 0.4rem; border-radius:4px;">AI</span>AIOS — Agente-como-Proceso-de-SO</a></li>
+</ol>
+</div>
+</div>
+</div>
+<!-- CORREDORES -->
+<section>
+<div class="container">
+<h2>Los 8 pasillos de funcionalidades</h2>
+<p class="section-sub">Cada pasillo agrupa un tipo de capacidad que puedes agregar a tu asistente. Imagínalos como secciones de una tienda de comestibles: eliges los ingredientes que tienen sentido para tu proyecto.</p>
+<!-- 1. Identidade -->
+<div class="corredor" id="corredor-identidade">
+<div class="corredor-header">
+<span class="corredor-icon">🧬</span>
+<div>
+<div class="corredor-title">Identidad y personalidad</div>
+<div class="corredor-sub">Cómo se presenta tu IA</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">Define quién es tu IA: su tono, sus valores, su forma de hablar y cómo se adapta a diferentes contextos. Sin esto, tienes un chatbot genérico. Con esto, tienes un asistente con voz propia.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Archivo de personalidad Soul.md</div><div class="item-desc">Define la personalidad, los valores y el estilo de comunicación en un archivo de texto simple. Cómo escribir una ficha de personaje para tu IA.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Patrón de identidad portátil AIEOS</div><div class="item-desc">Formato universal para exportar la personalidad de la IA (psicología, lingüística, motivaciones) a cualquier sistema compatible.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Memoria aislada por grupo</div><div class="item-desc">Cada grupo de conversación tiene su propio cerebro. El chat de trabajo y el familiar nunca mezclan el contexto.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Perfiles de agente intercambiables</div><div class="item-desc">Personas preconfiguradas (desarrollador, investigador, escritor) entre las que puedes alternar al instante.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Reglas de comportamiento dinámicas</div><div class="item-desc">Cambia el comportamiento de la IA a mitad de la conversación, sin reiniciarla. Adaptación inmediata al contexto.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Bots por agente en Telegram <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Cada agente especialista (comms/content/ops/research) es su propio bot en Telegram, con personalidad, ventana de contexto y avatar propios, y se le pueden delegar tareas mediante @agente: prompt.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Modelado de usuario (Honcho) <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Motor de representaciones del usuario (agente dialéctico) que construye un modelo evolutivo de quién eres en cada conversación; funciona localmente o en la nube.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Agent Hub — Publicar e instalar personas <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">El «PyPI de los agentes»: un registry donde se publica un agente con versión (semver) y se instala con 1 comando. La reutilización de personas sale del laboratorio.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Archivos del INTELECTO</div>
+<div class="file-tree"><span class="fd">intelecto/agent/</span>
+├── <span class="fn">context.py</span> <span class="star">★</span> Carga workspace/ y arma el system prompt final
+└── <span class="fn">loop.py</span>                   Reenvía el system prompt al LLM en cada turno
+
+<span class="fd">workspace/</span>
+├── <span class="fn">SOUL.md</span> <span class="star">★</span> Personalidad: tono, valores, estilo de respuesta
+├── <span class="fn">AGENTS.md</span>                 Reglas de comportamiento y uso de herramientas
+├── <span class="fn">USER.md</span>                   Perfil y preferencias del usuario
+└── <span class="fn">MEMORY.md</span>                 Datos de bootstrap cargados al iniciar</div>
+</div>
+</div>
+</div>
+<!-- 2. Segurança -->
+<div class="corredor" id="corredor-seguranca">
+<div class="corredor-header">
+<span class="corredor-icon">🛡</span>
+<div>
+<div class="corredor-title">Seguridad y protección</div>
+<div class="corredor-sub">Protege tus datos y sistemas</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">Capas de protección entre tu IA y el mundo externo, desde el sandboxing de herramientas hasta la detección de ataques de prompt injection. Esencial en cualquier entorno que acceda a datos sensibles.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Sandbox WASM para herramientas</div><div class="item-desc">Las herramientas se ejecutan en contenedores WebAssembly aislados. Físicamente no pueden acceder a tus archivos ni secretos. Más ligeros que Docker.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Aislamiento por contenedor VM</div><div class="item-desc">Cada conversación se ejecuta en su propia máquina virtual. La barrera más sólida entre la IA y tu sistema operativo.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Defensa contra la inyección de prompts</div><div class="item-desc">Detecta y bloquea intentos de engañar a tu IA con instrucciones ocultas en páginas web o mensajes recibidos.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Detección de filtración de secretos</div><div class="item-desc">Verifica las salidas de las herramientas antes de que lleguen a la IA para evitar que se expongan accidentalmente claves de API y contraseñas.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Almacenamiento cifrado de secretos</div><div class="item-desc">Claves de API cifradas con ChaCha20 o Fernet. Aunque roben el archivo, no podrán leerlas.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Controles de aprobación de ejecución</div><div class="item-desc">Tres niveles de control: solo lectura, supervisado (pide permiso) y autonomía total. Tú decides cuánto confiar.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Lista de bloqueo de comandos peligrosos</div><div class="item-desc">Bloquea automáticamente comandos destructivos (borrar todo, formatear discos, reiniciar) mediante coincidencia de subcadenas.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Protección contra la exfiltración de datos <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Revisa todas las respuestas salientes con regex (claves de API, tokens de Slack/GitHub, AWS, cadenas hexadecimales largas) y oculta los secretos antes de enviarlas al chat: una barrera contra filtraciones por prompt injection.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Interruptores de apagado con recarga en caliente <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Las flags de .env se vuelven a leer cada ~1,5s: desactiva el spawn de LLM, las mutaciones del dashboard, el scheduler o War Room en menos de 2s, sin reiniciar el proceso y con un contador de rechazos.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Allowlist de salida + fortalecimiento del sandbox <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Sandbox de ejecución (firejail/bubblewrap/docker), allowlist de egress y audit log inmutable; blacklist de ~/.ssh y ~/.aws para contener la exfiltración.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Defensa contra la inyección de prompts (OWASP #1) <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Tratamiento del OWASP #1 de LLM Apps: separa los datos de las instrucciones al leer contenido web o de terceros, con un modelo de amenazas que identifica a 4 atacantes.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Archivos del INTELECTO</div>
+<div class="file-tree"><span class="fd">intelecto/security/</span>
+├── <span class="fn">secrets.py</span> <span class="star">★</span> Fernet + PBKDF2: cifra claves con el UUID del hardware
+└── <span class="fn">safety.py</span>                 Blocklist de comandos + path traversal + registro de auditoría
+
+<span class="fd">intelecto/tools/</span>
+└── <span class="fn">shell.py</span>                  run_command con timeout de 60s y blocklist integrada
+
+<span class="fd">~/.intelecto/</span>
+├── <span class="fn">.secrets</span>                  Claves cifradas (inútiles en otro hardware)
+└── <span class="fn">audit.log</span>                 Registro de todos los comandos ejecutados</div>
+</div>
+</div>
+</div>
+<!-- 3. Comunicação -->
+<div class="corredor" id="corredor-comunicacao">
+<div class="corredor-header">
+<span class="corredor-icon">💬</span>
+<div>
+<div class="corredor-title">Canales de comunicación</div>
+<div class="corredor-sub">Dónde vive tu IA</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">El canal es la «puerta de entrada» de tu IA. Define en qué aplicación interactuará el usuario con ella. Cada canal tiene características distintas: elige dónde ya está tu público.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">WhatsApp</div><div class="item-desc">El más natural para el uso empresarial diario en Brasil. Compatible con texto, imágenes y notas de voz.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Telegram</div><div class="item-desc">Configuración más sencilla (solo un token). Contenido multimedia, botones inline y uso compartido de archivos. Ideal para equipos técnicos.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Discord</div><div class="item-desc">Ideal para gestionar comunidades y canales de equipo. Compatible con comandos slash.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Slack</div><div class="item-desc">Integración sin IP pública mediante Socket Mode. Ideal para automatizar procesos internos.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Correo electrónico (IMAP/SMTP)</div><div class="item-desc">La IA lee tu correo y puede responder. Filtra el spam, resume boletines y redacta respuestas.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Panel web</div><div class="item-desc">Interfaz en el navegador con estado en tiempo real, memoria visible y progreso de tareas.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Palabra de activación por voz</div><div class="item-desc">Di «hey claude» y tu IA te escucha. Control por voz siempre activo, como un altavoz inteligente privado.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Avatar en reunión de video en vivo <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Envía un agente a una videollamada real (Daily.co/Meet/Zoom) como participante con un avatar Pika que habla en tiempo real.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">War Room con voz en vivo <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Sala de reuniones con tu equipo de agentes mediante voz en vivo a través de Gemini Live, cada agente con su propia voz, en menos de un segundo, sin Deepgram ni Cartesia.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Gateway de mensajería unificado <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Un gateway normaliza CLI, Discord, Slack, WhatsApp, HTTP y cron en el mismo objeto Message: un cerebro, todas las bocas, un agente independiente del canal.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Archivos del INTELECTO</div>
+<div class="file-tree"><span class="fd">intelecto/channels/</span>
+├── <span class="fn">base.py</span> <span class="star">★</span> Contrato abstracto: start(on_message), send(), stop()
+└── <span class="fn">telegram.py</span>               Long-polling, división en &gt;4096 caracteres, indicador de escritura
+
+<span class="fd"># Para agregar canales nuevos — implementa BaseChannel:</span>
+<span class="fn">channels/whatsapp.py</span>          WhatsApp (sin tocar el código del agente)
+<span class="fn">channels/discord.py</span>           Discord (mismo contrato)
+<span class="fn">channels/slack.py</span>             Slack Socket Mode</div>
+</div>
+</div>
+</div>
+<!-- 4. Memória -->
+<div class="corredor" id="corredor-memoria">
+<div class="corredor-header">
+<span class="corredor-icon">🧠</span>
+<div>
+<div class="corredor-title">Memoria y conocimiento</div>
+<div class="corredor-sub">Cómo recuerda tu IA</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">La diferencia entre una IA que lo olvida todo al reiniciarse y una que te conoce desde hace meses. La elección del sistema de memoria define el costo, la precisión y la capacidad de recuperación a largo plazo.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Búsqueda híbrida vectorial + por palabras clave</div><div class="item-desc">Combina comprensión semántica (lo que quieres decir) con búsqueda exacta (palabras específicas). Es la opción más precisa, pero tiene un costo de embedding.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">SQLite FTS5 (Búsqueda por palabras clave)</div><div class="item-desc">Búsqueda de texto completo con clasificación BM25. Costo cero de API, sin modelos de embeddings. Cubre el 90% de las necesidades de recall.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Sistema de Memoria de Dos Capas</div><div class="item-desc">Capa 1: datos rápidos en MEMORY.md. Capa 2: registro del historial con búsqueda. Simple y eficaz para proyectos pequeños.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Memoria de soluciones</div><div class="item-desc">La IA guarda automáticamente las soluciones que funcionan. La próxima vez que enfrentes un problema similar, recuerda qué funcionó.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Base de conocimiento en documentos</div><div class="item-desc">Sube PDFs, hojas de cálculo y documentos. La IA investiga y analiza. El conocimiento de tu empresa al alcance del chat.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Compactación automática de sesiones</div><div class="item-desc">Cuando las conversaciones se alargan demasiado, resume automáticamente las partes antiguas para mantener la IA rápida.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Memoria de 5 capas con decaimiento <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Memoria que extrae hechos mediante Gemini (puntuación de importancia), guarda embeddings vectoriales, busca en 5 frentes, consolida patrones cada 30min y pierde o gana relevancia según el uso.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Higiene y uso compartido de la memoria <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Revisión periódica que propone (nunca escribe por sí sola) qué fijar, qué conflictos resolver y qué duplicados combinar, además de la promoción selectiva de hechos universales al nivel compartido entre agentes.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Curación de memoria en el paso Reflect <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Bucle perceive→act→reflect→save: un modelo económico (&lt;1k tokens) decide qué vale la pena recordar y cura la memoria por sí solo, en lugar de que tú tengas que indicárselo todo.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Sistema de Archivos Semántico (LSFS) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Almacenamiento que indexa mediante embeddings: encuentras el archivo por su significado en lenguaje natural ("el PDF sobre AIOS de la semana pasada"), no por la ruta. Paper ICLR 2025; complementa el FS, no lo reemplaza.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Memoria agéntica curada (A-MEM) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Memoria en la que el propio agente decide qué guardar, comprime lo redundante e indexa lo que se puede buscar: combate la sobrecarga de contexto de los agentes de larga duración.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Archivos del INTELECTO</div>
+<div class="file-tree"><span class="fd">intelecto/memory/</span>
+└── <span class="fn">store.py</span> <span class="star">★</span> SQLite FTS5 + BM25 + deduplicación automática (&gt;80% = actualiza)
+
+<span class="fd">intelecto/agent/</span>
+└── <span class="fn">context.py</span>                memory.search(query) → inyecta resultados en el system prompt
+
+<span class="fd">~/.intelecto/</span>
+└── <span class="fn">memory.db</span>                 Base de datos persistente — sobrevive a los reinicios
+
+<span class="fd"># Categorías almacenadas:</span>
+<span class="fn">fact</span>         · hechos sobre ti y preferencias
+<span class="fn">conversation</span> · resúmenes de conversaciones importantes
+<span class="fn">solución</span>     · soluciones para problemas recurrentes</div>
+</div>
+</div>
+</div>
+<!-- 5. Automação -->
+<div class="corredor" id="corredor-automacao">
+<div class="corredor-header">
+<span class="corredor-icon">⚙</span>
+<div>
+<div class="corredor-title">Automatización y programación</div>
+<div class="corredor-sub">Trabaja mientras duermes</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">Transforma tu IA de reactiva a proactiva. En vez de esperar a que preguntes algo, ejecuta tareas en horarios definidos, monitorea eventos y trabaja en segundo plano.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Programación Cron</div><div class="item-desc">"Todos los lunes a las 9 h, envíame un resumen del día." Funciona como un despertador confiable para tareas recurrentes.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Heartbeat (comprobaciones periódicas)</div><div class="item-desc">La IA se activa cada 30 minutos para comprobar si algo requiere atención. Proactiva, no solo reactiva.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Automatización del navegador</div><div class="item-desc">Controla un navegador real: completa formularios, hace clic en botones, extrae datos y toma capturas de pantalla. Automatiza tareas repetitivas en la web.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Activadores vía webhook</div><div class="item-desc">Servicios externos (Zapier, n8n, Shopify) activan tu IA mediante una URL. Se conecta a cualquier ecosistema de automatización existente.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Subagentes en Segundo Plano</div><div class="item-desc">IA auxiliar para tareas largas. El agente principal sigue respondiendo mientras los trabajadores hacen el trabajo pesado.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Colaboración en equipo de agentes</div><div class="item-desc">Varios agentes especializados (@coder, @reviewer, @writer) se pasan el trabajo automáticamente.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Tablero Kanban de Mission Control <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Tablero kanban con una columna por agente, asignación automática de tareas por Gemini, arrastrar y soltar para reasignar y panel lateral con el historial de todo lo que se completó.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Verificaciones de aceptación en tareas programadas <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Una tarea programada solo cuenta como éxito si la salida contiene un marcador definido: un "turno completado" deja de confundirse con un "objetivo cumplido".</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Agente proactivo mediante heartbeat <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Scheduler integrado (APScheduler) con detección de zombies, reclaim y reintentos: informes, recordatorios y check-ins proactivos que hacen que el agente parezca activo 24/7.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Función objetivo Northstar <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">En lugar de pregunta→respuesta, le das una meta y el agente consume un presupuesto de turnos (~20) o genera 4-10 acciones con una barra de progreso hasta alcanzar el objetivo.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Programación de agentes como procesos (FIFO/Round-Robin) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Varios agentes LLM se convierten en procesos programados por un Scheduler con fairness: en lugar de que un agente de larga duración bloquee a todos, el kernel reparte el acceso al LLM (FIFO para 1-2 agentes, Round-Robin para 3+).</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Archivos del INTELECTO — Roadmap Phase 2</div>
+<div class="file-tree"><span class="fd">intelecto/tools/</span> <span class="fd"># planificado — no implementado en el v0.1</span>
+├── <span class="fn">cron.py</span>                   Programación: "todos los lunes a las 9 h, envíame..."
+└── <span class="fn">web.py</span>                    Búsqueda web y fetch de páginas/URLs
+
+<span class="fd">intelecto/agent/</span>
+└── <span class="fn">loop.py</span>                   Ya admite múltiples rondas: base para la automatización
+
+<span class="fd"># Implementado hoy:</span>
+<span class="fn">com.intelecto.agent.plist</span>     Reinicio automático mediante macOS launchd (activo ahora)
+<span class="fn">start.sh</span>                      Launcher con venv + instalación automática</div>
+</div>
+</div>
+</div>
+<!-- 6. Integrações -->
+<div class="corredor" id="corredor-integracoes">
+<div class="corredor-header">
+<span class="corredor-icon">🔗</span>
+<div>
+<div class="corredor-title">Integraciones y protocolos</div>
+<div class="corredor-sub">Conexión con el mundo</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">Cómo se conecta tu IA con proveedores de modelos, servicios externos y protocolos estándar. Aquí se toman las decisiones sobre costo, privacidad y escalabilidad de los modelos de IA.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">OpenRouter — 100+ modelos, 1 clave</div><div class="item-desc">Accede a Claude, GPT-4, Gemini, Mistral, DeepSeek, Llama y más de 100 modelos con una sola clave de API. Cambia de modelo sin modificar el código.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Soporte para LLM Local (Ollama)</div><div class="item-desc">Ejecuta modelos en tu propia computadora. Costo cero de API, privacidad total, sin internet. Úsalo junto con OpenRouter: nube para potencia, local para privacidad.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Conmutación por error entre varios proveedores</div><div class="item-desc">Si Claude falla, cambia automáticamente a GPT o Gemini. Con OpenRouter tienes más de 100 modelos como alternativas en una sola clave.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Selección de modelo por tarea</div><div class="item-desc">Claude Sonnet para razonamiento complejo, Haiku para respuestas rápidas y económicas, DeepSeek R1 para código. Control total del costo y la calidad.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">MCP (Model Context Protocol)</div><div class="item-desc">Estándar universal para conectar la IA con herramientas externas. Un protocolo, miles de integraciones: el «USB» de las herramientas de IA.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Proveedores de medios especializados (fal.ai, Kie.ai)</div><div class="item-desc">Para imágenes, sonido y video, usa proveedores especializados. Los LLM de texto son débiles en medios: fal.ai y Kie.ai son la opción adecuada para crear contenido.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Sistema de Skills / Plugins</div><div class="item-desc">Instala nuevas capacidades como aplicaciones en tu celular. No necesitas programar para agregar integraciones prediseñadas.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Control de hardware / IoT</div><div class="item-desc">Controla dispositivos físicos mediante pines GPIO, I2C y SPI. La IA puede interactuar con el mundo real en proyectos integrados.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Motor de proveedores normalizado (ACP) <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Capa de engine única con adapters para Claude SDK, OpenRouter nativo y ACP (OpenCode/Gemini CLI/Codex/custom), con sesiones separadas por provider para no cruzar el historial.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Monitor del estado de OAuth <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Te avisa por Telegram antes de que expire el token OAuth de Claude — esencial en un deploy daemon (launchd/systemd), donde la expiración provoca una falla silenciosa.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Enrutamiento Multi-Brain por Rol <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Enrutamiento de modelos por rol en la configuración (main/reflect/routing/fallbacks) y por subtarea dentro de la skill: un modelo potente para el trabajo, uno económico para la clasificación inicial.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Crea tu propio MCP Server <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Crea tu propio servidor MCP en Python (FastMCP) o Node (@modelcontextprotocol/sdk) con autenticación OAuth/JWT y publícalo mediante Docker/npm/pip.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Capa adaptadora de frameworks <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Capa de ejecución debajo de los frameworks: reemplaza la llamada directa al LLM por una syscall (patrón adapter) y LangChain/AutoGen/CrewAI/MetaGPT/OpenAGI heredan scheduling, fairness y persistencia — migración incremental.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Archivos del INTELECTO</div>
+<div class="file-tree"><span class="fd">intelecto/providers/</span>
+├── <span class="fn">base.py</span> <span class="star">★</span> Contrato abstracto: async chat() → LLMResponse
+├── <span class="fn">openrouter.py</span>              OpenRouter vía LiteLLM (100+ modelos con 1 clave)
+└── <span class="fn">ollama.py</span>                  Ollama local (costo cero, sin cloud)
+
+<span class="fd">intelecto/</span>
+└── <span class="fn">config.py</span>                  Configura el provider predeterminado y el modelo para cada tarea
+
+<span class="fd">requirements.txt</span>
+└── <span class="fn">litellm ≥1.40.0</span>           Interfaz unificada: OpenRouter, Ollama, cualquier LLM
+
+<span class="fd"># Agregar un proveedor = implementar BaseProvider:</span>
+<span class="fn">providers/gemini.py</span>  · <span class="fn">providers/groq.py</span>  · <span class="fn">providers/cohere.py</span></div>
+</div>
+</div>
+</div>
+<!-- 7. Skills -->
+<div class="corredor" id="corredor-skills">
+<div class="corredor-header">
+<span class="corredor-icon">🧰</span>
+<div>
+<div class="corredor-title">Skills Integradas y Herramientas Listas</div>
+<div class="corredor-sub">Lo que viene listo en la caja</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">El corredor más extenso: son las capacidades concretas que tu IA puede ejecutar hoy, sin implementarlas desde cero. Abarca productividad, comunicación, hogar inteligente, desarrollo y mucho más.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Suite Google Workspace</div><div class="item-desc">Gmail, Calendar, Drive, Sheets, Docs y Slides. Integración completa con Google: envía correos, crea hojas de cálculo y gestiona el calendario.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">GitHub (Issues, PRs, CI, API)</div><div class="item-desc">Flujo completo: gestiona issues, revisa pull requests y activa CI. Gestión de código por chat.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Notion, Obsidian, Apple Notes, Bear</div><div class="item-desc">Integraciones con las principales aplicaciones de notas. Crea, edita y busca notas directamente desde el asistente.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Whisper Speech-to-Text + ElevenLabs TTS</div><div class="item-desc">Convierte voz en texto y texto en voz natural. Funciona localmente (sin API) o en la nube.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Generación de imágenes con IA</div><div class="item-desc">Genera imágenes mediante la API de OpenAI, Gemini o proveedores especializados como fal.ai. Compatible con inpainting y generación por lotes.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Resumidor de URL / Video / Podcast</div><div class="item-desc">Resume páginas web, videos de YouTube y podcasts. Obtén lo esencial sin leer ni ver todo.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Control del hogar inteligente (Philips Hue, Sonos)</div><div class="item-desc">Controla luces, altavoces y dispositivos inteligentes mediante comandos en lenguaje natural.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Orquestación de agentes de codificación</div><div class="item-desc">Ejecuta Codex CLI, Claude Code u otros agentes de codificación de forma programática. IA que gestiona otras IA.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Composio (1000+ aplicaciones)</div><div class="item-desc">Acceso OAuth con un clic a más de 1000 apps: Gmail, Notion, GitHub, Slack y mucho más mediante Composio.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Generación autónoma de skills <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">El agente detecta un workflow repetido (≥3x) en el paso reflect y escribe por sí mismo una SKILL.md en borrador para que la apruebes: habilidades que surgen del uso, sin programar.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Skills Portátiles agentskills.io <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Skills como carpeta autocontenida con SKILL.md (frontmatter YAML + markdown), estándar abierto portable entre Hermes, Claude Code y Codex.</div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Acciones de uso de la computadora <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Acciones reales en la PC: visión del navegador con Chrome DevTools, lectura visual de la pantalla y movimientos reales del cursor — habilitables en las tools, con responsabilidad.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Comandos de Skill registrados automáticamente <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Cualquier skill con user_invocable:true se convierte automáticamente en un /comando en el menú de Telegram (setMyCommands), sin tocar código: solo suelta la carpeta de la skill.</div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Uso del computador mediante VM + MCP (LiteCUA) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">Expone toda la computadora como herramientas MCP (screenshot/click/type) dentro de una VM sandbox (KVM/Firecracker). Bucle percibir-decidir-actuar con LLM multimodal para operar interfaces gráficas sin API.</div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Archivos del INTELECTO</div>
+<div class="file-tree"><span class="fd">intelecto/tools/</span>
+├── <span class="fn">base.py</span> <span class="star">★</span> Contrato: name, description, parameters, execute()
+├── <span class="fn">registry.py</span>               Descubrimiento y dispatch de herramientas
+├── <span class="fn">filesystem.py</span>             read_file, write_file, list_directory
+└── <span class="fn">shell.py</span>                  run_command con comprobación de seguridad y timeout de 60s
+
+<span class="fd"># Agregar una skill = crear un archivo nuevo que herede de BaseTool:</span>
+<span class="fn">tools/github.py</span>  · <span class="fn">tools/notion.py</span>  · <span class="fn">tools/calendar.py</span>
+<span class="fd"># Sin tocar registry.py — descubrimiento automático</span></div>
+</div>
+</div>
+</div>
+<!-- 8. Arquitetura -->
+<div class="corredor" id="corredor-arquitetura">
+<div class="corredor-header">
+<span class="corredor-icon">🏗</span>
+<div>
+<div class="corredor-title">Patrones de arquitectura</div>
+<div class="corredor-sub">Cómo estructurar tu framework</div>
+</div>
+</div>
+<div class="corredor-body">
+<p class="corredor-intro">Los patrones estructurales que definen cómo se conectan los componentes de tu asistente. La elección aquí afecta la facilidad de mantenimiento, la escalabilidad y la facilidad de ampliación.</p>
+<div class="items-list">
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Modularidad mediante Traits / clases abstractas</div><div class="item-desc">Cada componente se define mediante un contrato (interfaz). Cambia las implementaciones sin tocar el código del agente.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Gateway WebSocket</div><div class="item-desc">Servidor central al que se conectan todos los canales. El patrón de «torre de control»: máximo control, mayor complejidad.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Arquitectura de bus de mensajes</div><div class="item-desc">Los canales y los agentes se comunican mediante una cola central. Separación clara y fácil de ampliar con nuevos canales.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Cola de mensajes basada en archivos</div><div class="item-desc">Mensajes almacenados como archivos en directorios (incoming → processing → outgoing). Simple, confiable, sin base de datos.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Implementación con binario único</div><div class="item-desc">Un archivo ejecutable, sin dependencias. Cópialo en cualquier lugar y funciona. La historia de implementación más simple posible.</div></div></div>
+<div class="item"><div class="item-dot"></div><div class="item-content"><div class="item-name">Aislamiento del espacio de trabajo por proyecto</div><div class="item-desc">Espacios separados por cliente o proyecto, cada uno con su propia memoria y secretos. Sin mezclar datos.</div></div></div>
+<div class="item"><div class="item-dot claudeclaw"></div><div class="item-content"><div class="item-name">Bus de cerebro compartido (Hive Bus) <span class="tag" style="color:#d97757; border-color:#d97757">ClaudeClaw</span></div><div class="item-desc">Bus de eventos (tabla hive_mind) en el que todos los agentes escriben y que todos leen: todo el equipo ve lo que cada agente hizo en las últimas 24h dentro del contexto de memoria. <a href="#arch-claudeclaw" style="color:#d97757; text-decoration:none">ver arquitectura →</a></div></div></div>
+<div class="item"><div class="item-dot hermes"></div><div class="item-content"><div class="item-name">Bucle reflexivo autoevolutivo <span class="tag" style="color:#eab308; border-color:#eab308">Hermes</span></div><div class="item-desc">Bucle perceive→act→reflect→save en el que el agente cura su propia memoria y genera sus propias habilidades a medida que lo usas, en lugar de usar un canal, un bucle y una memoria estáticos. <a href="#arch-hermes" style="color:#eab308; text-decoration:none">ver arquitectura →</a></div></div></div>
+<div class="item"><div class="item-dot aios"></div><div class="item-content"><div class="item-name">Agente-como-Proceso-de-SO (Kernel LLM) <span class="tag" style="color:#7c3aed; border-color:#7c3aed">AIOS</span></div><div class="item-desc">La LLM se convierte en el núcleo de un kernel y cada agente es un proceso planificado, con syscalls auditables y cambio de contexto — frameworks como LangChain/AutoGen/CrewAI se ejecutan encima. <a href="#arch-aios" style="color:#7c3aed; text-decoration:none">ver arquitectura →</a></div></div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Archivos del INTELECTO</div>
+<div class="file-tree"><span class="fd">intelecto/</span>
+├── <span class="fn">main.py</span> <span class="star">★</span> Punto de entrada: detecta la configuración e inicia el bot
+└── <span class="fn">config.py</span>                 Singleton de configuración (~/.intelecto/config.json)
+
+<span class="fd">intelecto/agent/</span>
+├── <span class="fn">loop.py</span>                   Core: recibe → piensa → responde (máx. 5 rondas)
+└── <span class="fn">context.py</span>                Arma el system prompt + memorias relevantes
+
+<span class="fd"># Contratos — cada subsistema implementa su interfaz:</span>
+<span class="fn">providers/base.py</span>    async chat() → LLMResponse
+<span class="fn">channels/base.py</span>     start(), send(), stop()
+<span class="fn">memory/store.py</span>      save(), search(), forget(), recent()
+<span class="fn">tools/base.py</span>        name, description, execute()</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ARQUITETURAS -->
+<section>
+<div class="container">
+<h2>Las 9 arquitecturas en detalle</h2>
+<p class="section-sub">Cómo organiza internamente sus componentes cada framework. Estos son los planos que seguirías al construir con cada enfoque.</p>
+<!-- OpenClaw -->
+<div class="arch-card" id="arch-openclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #6c63ff, #8b5cf6)">OC</div>
+<div>
+<div class="arch-title">OpenClaw — Hub Gateway</div>
+<div class="arch-lang">TypeScript · La arquitectura de "torre de control"</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">OpenClaw usa un servidor WebSocket central (Gateway) como único punto de entrada para todos los canales. Los mensajes de WhatsApp, Telegram, Slack, iMessage y voz pasan por el mismo hub antes de llegar al agente. Esto garantiza un control centralizado de las sesiones, el enrutamiento entre varios agentes y la compatibilidad unificada con canvas visual y voz.</p>
+<div class="arch-diagram">          CHANNELS                    AGENTS
+  WhatsApp  Telegram  Slack       Agent A  Agent B
+  Discord   iMessage  WebChat     (Work)   (Personal)
+      \       |       /               \       /
+       \      |      /                 \     /
+        v     v     v                   v   v
+       +------------------+      +------------------+
+       |     GATEWAY       |------|   SESSION STORE   |
+       |  (WebSocket Hub)  |      |  (JSONL files)    |
+       +------------------+      +------------------+
+              |
+     +--------+--------+
+     |        |        |
+  TOOLS    CANVAS    VOICE
+  Browser  Live UI   Wake Word
+  Files    Diagrams  TTS/STT
+  Shell    React     ElevenLabs</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">Máximo control y visibilidad. Todo pasa por el hub: los registros, el enrutamiento y las sesiones están en un solo lugar.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">El Gateway es el único punto de falla. Es más difícil de probar y de escalar horizontalmente.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Proyectos que necesitan varios canales, varios agentes e interfaz visual al mismo tiempo.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos</div>
+<div class="file-tree"><span class="fd">src/gateway/server/</span>
+├── <span class="fn">server.ts</span> <span class="star">★</span> Servidor central de WebSocket: punto único de entrada
+├── <span class="fn">server-channels.ts</span>        Conecta y gestiona todos los canales en el gateway
+├── <span class="fn">server-chat.ts</span>            Sesiones de chat, historial y streaming
+├── <span class="fn">server-cron.ts</span>            Tareas programadas integradas en el gateway
+├── <span class="fn">server-startup.ts</span>         Arranque, comprobaciones de estado y recuperación automática
+└── <span class="fn">ws-connection/</span>            Gestión de conexiones WebSocket individuales
+
+<span class="fn">src/channels/registry.ts</span>      Descubre y registra los canales disponibles
+<span class="fn">src/sessions/</span>                 Sesiones almacenadas en JSONL por agente
+<span class="fn">src/agents/pi-embedded-runner.ts</span>   Runner: recibe → piensa → responde
+<span class="fn">src/gateway/protocol/</span>         Protocolo de mensajes del gateway</div>
+</div>
+</div>
+</div>
+<!-- ZeroClaw -->
+<div class="arch-card" id="arch-zeroclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #ef5350, #ff7043)">ZC</div>
+<div>
+<div class="arch-title">ZeroClaw — Contratos de Trait (Rust)</div>
+<div class="arch-lang">Rust · La arquitectura «LEGO de componentes»</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">Cada subsistema (proveedor de IA, canal, memoria) se define mediante un trait: un contrato que dice «cualquier implementación debe tener estos métodos». El archivo config.toml decide qué implementaciones usar en runtime. Puedes cambiar el proveedor de IA de Claude a Ollama, o el canal de Telegram a WhatsApp, sin tocar el código del agente. El resultado es una huella de memoria inferior a 5MB y un arranque en 10ms.</p>
+<div class="arch-diagram">  config.toml define qué implementaciones usar:
+
+  +-----------+   +-----------+   +----------+
+  | Provider  |   | Channel   |   | Memory   |
+  | (trait)   |   | (trait)   |   | (trait)  |
+  +-----------+   +-----------+   +----------+
+       ^               ^              ^
+       |               |              |
+  +----+----+    +-----+-----+  +----+----+
+  |OpenAI   |    |Telegram   |  |SQLite   |
+  |Claude   |    |Discord    |  |Markdown |
+  |Ollama   |    |Slack      |  |None     |
+  |Gemini   |    |WhatsApp   |  +---------+
+  |22 more..|    |Email      |
+  +---------+    |Webhook    |
+                 +-----------+
+
+  Cambia CUALQUIER pieza sin tocar el código del agente</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">Máxima modularidad y eficiencia. Cada componente se puede probar de forma independiente. Funciona en hardware de $10.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">Rust tiene una curva de aprendizaje alta. El sistema de traits puede intimidar a quienes vienen de lenguajes dinámicos.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Proyectos que requieren una eficiencia extrema, hardware limitado o cambios frecuentes de proveedores de IA.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos — codebase Rust separado</div>
+<div class="file-tree"><span class="fd">src/</span>
+├── <span class="fn">main.rs</span> <span class="star">★</span> Punto de entrada y CLI
+└── <span class="fn">config.rs</span>                 Carga config.toml e instancia implementaciones
+
+<span class="fd">traits/</span>
+├── <span class="fn">provider.rs</span> <span class="star">★</span> Trait Provider: async chat() → LLMResponse
+├── <span class="fn">channel.rs</span>                Trait Channel: start(), send(), stop()
+└── <span class="fn">memory.rs</span>                 Trait Memory: save(), search(), forget()
+
+<span class="fd">providers/</span>                    Implementaciones intercambiables de Provider:
+├── <span class="fn">openai.rs</span> <span class="fn">claude.rs</span>      Proveedores de nube (OpenAI, Anthropic)
+└── <span class="fn">ollama.rs</span>                  Modelo local (costo cero, sin cloud)
+
+<span class="fd">channels/</span>                     Implementaciones intercambiables de Channel:
+└── <span class="fn">telegram.rs</span> <span class="fn">discord.rs</span>   Cambia de canal sin modificar el agente</div>
+</div>
+</div>
+</div>
+<!-- NanoClaw -->
+<div class="arch-card" id="arch-nanoclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #00d4aa, #26c6da)">NC</div>
+<div>
+<div class="arch-title">NanoClaw — Aislamiento por contenedor</div>
+<div class="arch-lang">TypeScript · La arquitectura de "cerebros separados"</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">NanoClaw resuelve un problema específico de WhatsApp para empresas: ¿cómo garantizar que el contexto de un grupo de trabajo nunca se filtre al grupo familiar? La respuesta es radical: cada conversación se ejecuta en su propio contenedor aislado, con su propio archivo CLAUDE.md y un sistema de archivos separado. El host gestiona la conexión de WhatsApp y envía los mensajes al contenedor correspondiente.</p>
+<div class="arch-diagram">  HOST (macOS/Linux)
+  +--------------------------------------------+
+  | WhatsApp Connection (Baileys)              |
+  | SQLite Message Store                       |
+  | Message Polling Loop                       |
+  | Task Scheduler                             |
+  +--------------------------------------------+
+           |              |              |
+  +-- Container --+  +-- Container --+  +-- Container --+
+  | Work Group    |  | Family Group  |  | Admin Chat   |
+  | Claude SDK    |  | Claude SDK    |  | Claude SDK   |
+  | Own CLAUDE.md |  | Own CLAUDE.md |  | Full access  |
+  | Sandboxed FS  |  | Sandboxed FS  |  | All groups   |
+  +---------------+  +---------------+  +--------------+
+
+  Cada grupo = cerebro aislado. No se ven entre sí.</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">Aislamiento total entre contextos. Ideal para uso empresarial, donde los datos de distintos clientes no se pueden mezclar.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">Sobrecarga de contenedores por grupo. No es lo mejor para un asistente personal de un solo usuario.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Empresas con varios grupos de WhatsApp que necesitan contextos totalmente separados.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos — base de código de NanoClaw</div>
+<div class="file-tree"><span class="fd">src/</span>
+├── <span class="fn">host.ts</span> <span class="star">★</span> Host: gestiona la conexión de WhatsApp (Baileys)
+├── <span class="fn">message-store.ts</span>          SQLite: cola de mensajes por grupo
+└── <span class="fn">scheduler.ts</span>              Enruta el mensaje al contenedor correcto
+
+<span class="fd">containers/</span>
+├── <span class="fn">manager.ts</span> <span class="star">★</span> Crea y destruye contenedores por grupo
+├── <span class="fn">dispatch.ts</span>               Enruta mensajes al contenedor correcto
+└── <span class="fn">sandbox-fs.ts</span>             Sistema de archivos aislado por contenedor
+
+<span class="fd">agent-container/</span>
+├── <span class="fn">runner.ts</span>                 Ejecuta Claude SDK dentro del contenedor
+└── <span class="fn">claude-md.ts</span>              Carga el CLAUDE.md específico del grupo</div>
+</div>
+</div>
+</div>
+<!-- TinyClaw -->
+<div class="arch-card" id="arch-tinyclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #ab47bc, #ce93d8)">TC</div>
+<div>
+<div class="arch-title">TinyClaw — Equipos de Agentes</div>
+<div class="arch-lang">TypeScript · La arquitectura de "pequeña empresa de IA"</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">TinyClaw trata a cada agente como un colaborador especializado de un equipo. Los mensajes entran en una cola basada en archivos (sin base de datos) y cada agente los toma de su propia bandeja de entrada. Un agente puede mencionar a otro (@reviewer, @writer) para pasarle el trabajo. Procesamiento paralelo: mientras @coder escribe código, @reviewer puede estar analizando otro PR.</p>
+<div class="arch-diagram">  TÚ (vía Discord / Telegram / WhatsApp)
+       |
+       v
+  +------------------+
+  | Message Queue     |  incoming/ -&gt; processing/ -&gt; outgoing/
+  | (File-Based)     |  Cada agente toma los mensajes de su propia bandeja de entrada
+  +------------------+
+       |
+  +----+----+----+----+
+  |         |         |
+  @coder   @reviewer  @writer
+  Claude   OpenAI    Claude
+  Opus     GPT-5     Sonnet
+  |         ^         ^
+  |         |         |
+  +---mención----------+  Los agentes se pasan el trabajo entre sí
+  "[@reviewer: revisa este código]"
+
+  Procesamiento paralelo. Secuencial por agente.</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">Cada agente usa el modelo más adecuado para su especialidad. Procesamiento paralelo de tareas complejas.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">La coordinación entre agentes puede crear dependencias circulares. Depurar flujos multiagente requiere más trabajo.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Pipelines de desarrollo de software donde la revisión, la escritura y la programación se realizan en paralelo.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos — OpenClaw (subagentes)</div>
+<div class="file-tree"><span class="fd">src/agents/</span>
+├── <span class="fn">subagent-registry.ts</span> <span class="star">★</span> Registro y coordinación de subagentes activos
+├── <span class="fn">openclaw-tools.ts</span>         Herramientas: spawn, sesiones paralelas, estado
+├── <span class="fn">subagent-announce.ts</span>      Notificaciones de @mentions entre agentes
+└── <span class="fn">subagent-announce-queue.ts</span>  Cola de mensajes entre agentes
+
+<span class="fn">src/cron/isolated-agent/</span>     Ejecuta agentes en un contexto totalmente aislado
+<span class="fn">src/agents/lanes.ts</span>          Control del paralelismo entre agentes
+
+Cola basada en archivos (sin base de datos):
+  incoming/ → processing/ → outgoing/
+  Cada agente lee su propia bandeja de entrada desde el disco</div>
+</div>
+</div>
+</div>
+<!-- IronClaw -->
+<div class="arch-card" id="arch-ironclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #607d8b, #90a4ae)">IC</div>
+<div>
+<div class="arch-title">IronClaw — Seguridad Zero-Trust</div>
+<div class="arch-lang">TypeScript · La arquitectura de "fortaleza en capas"</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">IronClaw parte del principio de que ninguna entrada es confiable: ni los mensajes del usuario, ni los resultados de las herramientas, ni las salidas del LLM. Cada etapa del pipeline tiene su propia capa de seguridad: detección de prompt injection en la entrada, WASM sandbox para aislar herramientas y detector de filtraciones de secretos en la salida. El Job Scheduler permite hasta 5 ejecuciones paralelas con control de rate limiting.</p>
+<div class="arch-diagram">  Entran mensajes        Capas de seguridad
+  CLI  Slack  Telegram     |
+       |                    v
+  +----v----+    +--------------------+
+  | Channel |    | Prompt Injection   |
+  | Manager |---&gt;| Pattern Detection  |
+  +---------+    +--------------------+
+       |                    |
+  +----v----+    +--------------------+
+  | Job     |    | WASM Sandbox       |
+  | Scheduler---&gt;| Capability Allowlist|
+  | (5x //) |    | Rate Limiting      |
+  |         |    | Credential Inject  |
+  +---------+    +--------------------+
+       |                    |
+  +----v----+    +--------------------+
+  |  LLM    |    | Leak Detector      |
+  | NEAR AI |    | Analiza salidas    |
+  | +Ollama |    | en busca de secretos|
+  +---------+    +--------------------+</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">La arquitectura más segura disponible. Ideal para entornos corporativos o donde la IA accede a datos sensibles.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">Cada capa agrega latencia. Configurar las allowlists de herramientas requiere una planificación cuidadosa.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Empresas con requisitos de compliance, datos de clientes o donde un comando incorrecto puede causar daños reales.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos — OpenClaw (capas de seguridad)</div>
+<div class="file-tree"><span class="fd">src/security/</span>
+├── <span class="fn">audit.ts</span> <span class="star">★</span> Registro de auditoría completo de todas las acciones del agente
+├── <span class="fn">audit-fs.ts</span>               Monitoreo y registro de operaciones del filesystem
+└── <span class="fn">external-content.ts</span>       Detección de inyección de prompts en entradas externas
+
+<span class="fd">src/agents/</span>
+├── <span class="fn">sandbox/sandbox.ts</span>        Sandbox WASM: aísla completamente las herramientas
+├── <span class="fn">tool-policy.ts</span>            Controles de aprobación: 3 niveles de confianza
+├── <span class="fn">pi-tools.policy.ts</span>        Allowlist explícita de herramientas permitidas
+└── <span class="fn">bash-tools.ts</span>             Blocklist de comandos peligrosos (rm -rf, etc.)
+
+<span class="fn">src/channels/allowlists/</span>       Allowlist de usuarios por canal
+<span class="fn">src/agents/context-window-guard.ts</span>  Protección contra el desbordamiento del contexto</div>
+</div>
+</div>
+</div>
+<!-- Agent Zero -->
+<div class="arch-card" id="arch-agentzero">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #66bb6a, #81c784)">A0</div>
+<div>
+<div class="arch-title">Agent Zero — Bucle de aprendizaje</div>
+<div class="arch-lang">Python · La arquitectura «IA que aprende haciendo»</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">Agent Zero se construye en torno a un ciclo de mejora continua: antes de resolver un problema, consulta la memoria («¿ya resolví esto antes?»). Cuando lo resuelve, guarda la solución para usarla en el futuro. Para tareas complejas, delega en subagentes especializados en investigación o código. Con el tiempo, se vuelve cada vez más eficiente en las tareas que más usas y puede reescribir sus propias reglas de comportamiento en medio de una conversación.</p>
+<div class="arch-diagram">  Haces una pregunta
+       |
+       v
+  +-----------+     +-----------+
+  | Agent 0   |----&gt;| Memory    |
+  | (Main)    |&lt;----| Search    |  "¿Ya resolví esto antes?"
+  +-----------+     +-----------+
+       |
+  +----+----+
+  |         |
+  Sub-Agent  Sub-Agent    Delegación para
+  (Research)  (Code)      tareas complejas
+  |         |
+  +----+----+
+       |
+  +----v----+     +-----------+
+  | ¡Solución |----&gt;| Memory    |
+  | encontrada! |     | GUARDAR    |  "Recordar para la próxima"
+  +---------+     +-----------+
+
+  Se vuelve más inteligente con cada interacción</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">Aprende con el uso. El paradigma «computadora como herramienta» le permite resolver problemas que las herramientas preconstruidas no cubren.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">Comportamiento menos predecible: la IA puede tomar caminos inesperados. Requiere más supervisión inicial.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Investigación, análisis exploratorio y tareas abiertas en las que la flexibilidad importa más que la previsibilidad.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos — codebase Python separado</div>
+<div class="file-tree"><span class="fd">agent_zero/</span>
+├── <span class="fn">agent.py</span> <span class="star">★</span> Bucle principal: pregunta → memoria → resuelve → guarda
+├── <span class="fn">memory.py</span>                 Busca y almacena soluciones de sesiones anteriores
+└── <span class="fn">context.py</span>               Arma el system prompt con memorias relevantes
+
+<span class="fd">tools/</span>
+├── <span class="fn">web_search.py</span>             Búsqueda web para investigación exploratoria
+├── <span class="fn">code_exec.py</span>              Ejecución de código en sandbox
+└── <span class="fn">file_ops.py</span>               Operaciones de archivos y filesystem
+
+<span class="fd">workspace/</span>
+├── <span class="fn">memory.json</span>               Soluciones guardadas de sesiones anteriores
+└── <span class="fn">prompts/</span>                  Plantillas de prompts por tipo de tarea
+
+Flujo: pregunta → busca en la memoria → subagente → solución → guarda</div>
+</div>
+</div>
+</div>
+<!-- ClaudeClaw -->
+<div class="arch-card" id="arch-claudeclaw">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #d97757, #e8956f)">CC</div>
+<div>
+<div class="arch-title">ClaudeClaw — Enjambre local multiagente + Hive Bus</div>
+<div class="arch-lang">TypeScript/Node.js · La arquitectura de "cuartel general de bolsillo"</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">En lugar del loop de un solo agente (Telegram→loop→tool→memoria), ClaudeClaw ejecuta N agentes especialistas como bots independientes en la MISMA máquina y DB. Delegan entre sí (@agente), se reúnen en tiempo real (War Room de texto/voz) y publican cada acción en un bus de eventos compartido (tabla hive_mind), que funciona como memoria del equipo Y como visualización: un cerebro anatómico 3D. Esto se complementa con un plan de contención operativa: kill switches con hot-reload + tool-policy que deniega por defecto + protección contra la exfiltración forman una malla de seguridad en tiempo de ejecución sobre la ejecución con acceso completo.</p>
+<div class="arch-diagram">  TÚ (Telegram · Dashboard · War Room · Mission Control)
+       |
+  +----+----+----+----+        delegación @agente:
+  |    |    |    |    |    &lt;----------------------+
+ @comms @content @ops @research                   |
+  bot   bot      bot   bot   (cada uno = bot propio, voz propia)
+  |     |        |     |                          |
+  +--+--+--------+--+--+--------------------------+
+     |              |
+     v              v
+  +------------------+      +------------------+
+  |   HIVE BUS        |-----&gt;|  Cerebro 3D       |
+  | (tabla hive_mind)|      |  Three.js/WebGL   |
+  | toda acción = evento|      |  lobos/sinapsis   |
+  +------------------+      +------------------+
+     |
+  +--+-------------------------------+
+  |  CONTENCIÓN OPERATIVA (runtime) |
+  |  Kill switches (hot-reload ~1.5s)|
+  |  Tool policy default-deny        |
+  |  Outbound exfiltration guard     |
+  +----------------------------------+</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">Un equipo de agentes que conversa de verdad: delegación, War Room en vivo y un cerebro compartido visible. La memoria del equipo se convierte en observabilidad.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">Muchas interfaces y procesos que mantener. La ejecución con acceso total exige que la red de contención (kill switches, default-deny, leak guard) esté siempre activa.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Quien quiera orquestar localmente un equipo de agentes especialistas, con reuniones en vivo y visibilidad total de lo que hizo cada uno.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos — base de código de ClaudeClaw OS</div>
+<div class="file-tree"><span class="fd">src/agents/</span>
+├── <span class="fn">registry.ts</span> <span class="star">★</span> Un bot por agente especialista (comms/content/ops/research)
+├── <span class="fn">delegate.ts</span>               Delegación @agente: entre bots independientes
+└── <span class="fn">war-room.ts</span>               Sala en vivo: /standup, /discuss, voz de Gemini Live
+
+<span class="fd">src/hive/</span>
+├── <span class="fn">hive-mind.ts</span> <span class="star">★</span> Bus de eventos: tabla hive_mind (todos escriben y leen)
+└── <span class="fn">brain-3d/</span>                Cerebro anatómico 3D (Three.js + UnrealBloom)
+
+<span class="fd">src/security/</span>
+├── <span class="fn">kill-switches.ts</span>          Las flags de .env se vuelven a leer cada ~1.5s (se desactiva en &lt;2s)
+├── <span class="fn">tool-policy.ts</span>            Denegar por defecto: efectos secundarios solo mediante opt-in en agent.yaml
+└── <span class="fn">exfiltration-guard.ts</span>     Elimina los secretos con regex antes de enviar</div>
+</div>
+</div>
+</div>
+<!-- Hermes -->
+<div class="arch-card" id="arch-hermes">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #eab308, #facc15)">HM</div>
+<div>
+<div class="arch-title">Hermes — Bucle reflexivo + memoria autocurada + habilidades autónomas</div>
+<div class="arch-lang">Python · La arquitectura «agente que se mejora a sí mismo»</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">Hermes es un ciclo perceive→act→reflect→save. Un gateway único normaliza cualquier canal (CLI, Discord, Slack, WhatsApp, HTTP, cron) en un objeto Message. El paso reflect usa un modelo económico para depurar la memoria (SQLite FTS5/BM25 local, en 3 capas) y detectar workflows repetidos; esos patrones se convierten en skills generadas automáticamente (SKILL.md con el estándar agentskills.io) que el agente empieza a reutilizar. Todo es independiente del modelo (enrutamiento por rol) y proactivo mediante heartbeat/cron. Es el contrapunto a los frameworks que separan el canal, el ciclo y la memoria de forma estática: aquí el agente mejora su propia memoria y sus propias habilidades con el uso.</p>
+<div class="arch-diagram">  CLI  Discord  Slack  WhatsApp  HTTP  cron
+    \     |       |       |       |     /
+     v    v       v       v       v    v
+  +------------------------------------------+
+  |   UNIFIED GATEWAY → objeto Message        |
+  +------------------------------------------+
+                    |
+       +------------v------------+
+       |   LOOP REFLEXIVO         |
+       |  perceive → act          |
+       |     ↓                    |
+       |  reflect (modelo barato) |----+ detecta workflow repetido (≥3x)
+       |     ↓                    |    |
+       |  save                    |    v
+       +------------+-------------+  +------------------+
+                    |               | SKILL.md gerada   |
+       +------------v------------+  | (agentskills.io)  |
+       | MEMÓRIA 3 CAMADAS        |  +------------------+
+       | SQLite FTS5 / BM25       |     reutilizada no act
+       | conversas·fatos·skills   |
+       +-------------------------+</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">El agente se mejora por sí solo: depura la memoria con un modelo económico y escribe sus propias skills a partir del uso. Un cerebro, todos los canales.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">El paso reflect y la generación de skills agregan etapas y costos. Las skills generadas automáticamente requieren aprobación para evitar que el comportamiento se desvíe.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Asistente personal de uso continuo y multicanal, que debe volverse más eficiente en las tareas recurrentes sin que tengas que programar cada una.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos — base de código de Hermes</div>
+<div class="file-tree"><span class="fd">hermes/</span>
+├── <span class="fn">gateway.py</span> <span class="star">★</span> Normaliza todos los canales en un objeto Message
+├── <span class="fn">loop.py</span> <span class="star">★</span> perceive → act → reflect → save
+└── <span class="fn">reflect.py</span>                Un modelo económico cura la memoria y detecta workflows
+
+<span class="fd">hermes/memory/</span>
+└── <span class="fn">store.py</span>                 SQLite FTS5/BM25 — 3 capas (conversaciones·hechos·skills)
+
+<span class="fd">hermes/skills/</span>
+├── <span class="fn">generator.py</span>             Escribe SKILL.md como borrador a partir del uso (≥3x)
+└── <span class="fn">&lt;skill&gt;/SKILL.md</span>          Carpeta autocontenida y portátil (agentskills.io)
+
+<span class="fd">config.yaml</span>                    Proveedor, modelos por función, conjuntos de herramientas, canales, cron</div>
+</div>
+</div>
+</div>
+<!-- AIOS -->
+<div class="arch-card" id="arch-aios">
+<div class="arch-header">
+<div class="arch-badge" style="background: linear-gradient(135deg, #7c3aed, #a78bfa)">AI</div>
+<div>
+<div class="arch-title">AIOS — Agente-como-Proceso-de-SO / Kernel LLM</div>
+<div class="arch-lang">Python · La arquitectura «sistema operativo de agentes»</div>
+</div>
+</div>
+<div class="arch-body">
+<p class="arch-desc">AIOS integra el LLM como núcleo de un kernel y trata cada agente LLM como un PROCESO del sistema operativo. Varios agentes coexisten y comparten modelos, memoria y herramientas; el Scheduler (FIFO/Round-Robin) decide quién llama al LLM, el Context Manager toma snapshots y restaura agentes para pausarlos y reanudarlos, y todo fluye mediante syscalls auditables. El agente se comunica con el kernel mediante el SDK Cerebrum (repo separado), en modo Local o Remote. Frameworks como LangChain, AutoGen y CrewAI se ejecutan SOBRE él mediante un adapter.</p>
+<div class="arch-diagram">  APPLICATION   Agente A   Agente B   Agente C   (procesos)
+                LangChain  AutoGen   CrewAI    se ejecutan encima
+       |           |          |          |
+       v           v          v          v
+  +------------------------------------------------+
+  |          CEREBRUM SDK (wrappers de syscall)      |
+  |   Agent base · @tool · hub client · Local/Remote |
+  +------------------------------------------------+
+                    | syscalls (LLMCall, Mem R/W,
+                    |  ToolCall, ContextSwitch)
+                    v
+  +------------------------------------------------+
+  |               AIOS KERNEL                       |
+  |  llm_core · memory_manager · storage_manager    |
+  |  tool_manager · scheduler · context_manager     |
+  +------------------------------------------------+
+                    |
+                    v
+        OS · Proveedores (OpenRouter/Ollama/...)
+
+  aios-rs/  reescritura experimental del kernel en Rust</div>
+<div class="arch-pillars">
+<div class="pillar"><div class="pillar-title" style="color: var(--purple)">Punto fuerte</div><div class="pillar-desc">Único modelo que escala agentes como procesos: fairness multiagente, preempción y recursos compartidos de verdad. Los frameworks existentes se ejecutan por debajo mediante un adapter.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--amber)">Complejidad</div><div class="pillar-desc">Más pesado y exigente desde el punto de vista conceptual (hay que pensar en syscalls y scheduling); excesivo para un solo agente o asistente personal: destaca en entornos multiagente concurrentes.</div></div>
+<div class="pillar"><div class="pillar-title" style="color: var(--cyan)">Ideal para</div><div class="pillar-desc">Operar múltiples agentes concurrentes a escala, realizar investigaciones de larga duración con checkpoints y contar con infraestructura compartida donde la equidad y el aislamiento entre agentes son importantes.</div></div>
+</div>
+<div class="file-tree-block">
+<div class="file-tree-label">Estructura de archivos — kernel + SDK (repos que reflejan Linux × glibc)</div>
+<div class="file-tree"><span class="fd">aios/kernel/</span>
+├── <span class="fn">llm_core.py</span> <span class="star">★</span> La LLM integrada como núcleo del kernel
+├── <span class="fn">scheduler.py</span> <span class="star">★</span> Programa agentes-proceso (FIFO / Round-Robin)
+├── <span class="fn">context_manager.py</span>        Snapshot / restore / migrate de agentes
+├── <span class="fn">memory_manager.py</span>         RAM volátil por agente (desaparece al reiniciar)
+├── <span class="fn">storage_manager.py</span>        Disco duradero, compartible entre agentes
+└── <span class="fn">tool_manager.py</span>           ToolCall mediante syscall, auditable
+
+<span class="fd">aios/config/</span>config.yaml      <span class="fd">scripts/</span>run_terminal.py · run_web.py
+
+<span class="fd">Cerebrum/</span>                     SDK: Agent base · wrappers de syscall · @tool · hub
+<span class="fd">aios-rs/</span>                      Reescritura experimental del kernel en Rust</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer>
+  INTELECTO · <a href="https://github.com/inematds/intelecto" target="_blank">github.com/inematds/intelecto</a>
+</footer>
+</body>
+</html>
